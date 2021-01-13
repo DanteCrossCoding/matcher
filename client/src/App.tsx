@@ -1,10 +1,11 @@
-
+import React from 'react';
+import logo from './logo.svg';
 import './App.css';
-const axios = require('axios');
+import axios from "axios";
 
 function App() {
-  const testBackend = () => {
-    axios.get('/test')
+  const testBackEnd = (): void => {
+    axios.get("/test")
     .then((res) => {
       console.log(res.data);
     })
@@ -13,8 +14,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
         <p>
-          <button onClick={testBackend}>Test Connection</button>
+          Edit <code>src/App.tsx</code> and save to reload.
+          <button onClick={testBackEnd}>Click Me</button>
         </p>
         <a
           className="App-link"
