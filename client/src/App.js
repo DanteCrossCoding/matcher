@@ -1,13 +1,20 @@
-import logo from './logo.svg';
+
 import './App.css';
+const axios = require('axios');
 
 function App() {
+  const testBackend = () => {
+    axios.get('/test')
+    .then((res) => {
+      console.log(res.data);
+    })
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <button onClick={testBackend}>Test Connection</button>
         </p>
         <a
           className="App-link"
