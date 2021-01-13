@@ -4,11 +4,12 @@ import './App.css';
 import axios from "axios";
 
 function App() {
-  const testBackEnd = (): void => {
+  const testBackEnd = (): string => {
     axios.get("/test")
     .then((res) => {
       console.log(res.data);
     })
+    return "Error";
   }
 
   return (
@@ -17,7 +18,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
-          <button onClick={testBackEnd}>Click Me</button>
+          <p> <button onClick={testBackEnd}>Test Backend</button></p>
         </p>
         <a
           className="App-link"
