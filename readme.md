@@ -22,9 +22,7 @@ Thinking about our project it didn't make sense to bring in an ORM as we'll prob
 
 So I've set it up with pg-promise, which is similar to what we used for the mid-term.
 
-You'll have to setup your database in a similar way to what we used for the midterm. Then and make a .env file using the example.
-
-Hope I didn't overstep! I was just inspired
+You'll have to setup your database in a similar way to what we used for the midterm. Then and make a .env file using the example. (Look at **Week 5 Day 5: Setup Local PG Database**)
 
 -Sean
 
