@@ -12,7 +12,7 @@ app.get('/test', (req: any, res: any) => {
 app.get('/', (req: any, res: any) => {
   db.any(`SELECT * FROM users`)
   .then((data: any) => {
-    res.send(data);
+    res.send(data[0].name);
   });
 });
 

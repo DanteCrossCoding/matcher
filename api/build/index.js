@@ -11,7 +11,7 @@ app.get('/test', (req, res) => {
 app.get('/', (req, res) => {
     db.any(`SELECT * FROM users`)
         .then((data) => {
-        res.send(data);
+        res.send(data[0].name);
     });
 });
 const port = process.env.PORT || 9000;
