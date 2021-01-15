@@ -5,6 +5,7 @@ import axios from "axios";
 import Partner from "./components/Partner";
 import PartnerList from './components/PartnerList';
 import usePartnerData from "./hooks/partnerData";
+import Matcher from './components/Matcher';
 
 function App() {
   const testBackEnd = (): string => {
@@ -56,7 +57,8 @@ function App() {
                 return <Partner name={partner.name} email={partner.email} />
               }
             })}
-            <PartnerList select={setSelected} selected={selected} partners={partnerTemp} />
+            <Matcher />
+            {/* <PartnerList select={setSelected} selected={selected} partners={partnerTemp} /> */}
           </div>
         </div>
       </div>
