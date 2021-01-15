@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.partners {
+  display: flex;
+  flex-direction: column;
+  .list :hover{
+    background-color: blue;
+  }
+}
+
+.current-partner {
+  text-align: center;
+  border-radius: 100;
+  margin-right: 50%;
+}
+
+.col-lg-12 {
+  display: flex;
+  justify-content: space-around;
+}
