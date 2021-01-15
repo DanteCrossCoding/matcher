@@ -45,6 +45,18 @@ const getRestaurantIdsWithFilter = (filter) => {
     });
 };
 exports.getRestaurantIdsWithFilter = getRestaurantIdsWithFilter;
+const getNameById = (id) => {
+    return axios_1.default
+        .get(`https://api.yelp.com/v3/businesses/${id}`, {
+        headers: { Authorization: `Bearer ${process.env.API_KEY_YELP}` },
+    })
+        .then((res) => {
+        return res.data.name;
+    })
+        .catch((err) => {
+        console.log(err);
+    });
+};
 /**
  * Input:
  *  Yelp API bussiness ID (string)
@@ -64,7 +76,10 @@ const getImageById = (id) => {
     });
 };
 exports.getImageById = getImageById;
-getImageById("XFVGGq47_5mUM9QQsRO8nA");
+let test = getNameById("XFVGGq47_5mUM9QQsRO8nA");
+test.then(res => console.log(res));
+test = getImageById("XFVGGq47_5mUM9QQsRO8nA");
+test.then(res => console.log(res));
 /**
  * Input:
  *  array
