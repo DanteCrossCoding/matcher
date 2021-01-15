@@ -18,6 +18,12 @@ function App() {
     document.title = "Matcher"
   }, [])
 
+  const partnerTemp: {[key: number]: {name: string}} = {
+    1: {name: "Bob Smith"},
+    2: {name: "Joe Bob"},
+    3: {name: "Claire Squish"}
+  }
+
   return (
     <body>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
@@ -45,7 +51,7 @@ function App() {
         <div className="row">
           <div className="col-lg-12">
             <Partner name="Bob Smith" email="test@test.com"/>
-            <PartnerList />
+            <PartnerList partners={partnerTemp}/>
           </div>
         </div>
       </div>
