@@ -85,13 +85,46 @@ const getImageById = (id: string) => {
     });
 };
 
+/**
+ * Input:
+ *  Yelp API Business ID (string)
+ * Output:
+ *  Returns array containing street address and city
+ */
 
+const getAddressById = (id: string) => {
+  let address: string[] = [];
+  return yelpApiConnection(id)
+  .then((res: any) => {
+    address.push(res.data.location.address1);
+    address.push(res.data.location.city);
+    return address;
+  })
+}
 
-let test = getNameById("XFVGGq47_5mUM9QQsRO8nA");
+const formatPhoneNumber = (num: string) => {
+  return num.slice(2, 5) + "-" + num.slice(5,8) + "-" + num.slice(8,12); 
+}
+
+const getPhoneNumberById = (id: string) => {
+  return yelpApiConnection(id)
+  .then((res: any) => {
+    return formatPhoneNumber(res.data.phone);
+  })
+}
+
+let test = getPhoneNumberById("XFVGGq47_5mUM9QQsRO8nA");
 test.then(res => console.log(res));
-test = getImageById("XFVGGq47_5mUM9QQsRO8nA");
-test.then(res => console.log(res));
 
+
+// let test = getNameById("XFVGGq47_5mUM9QQsRO8nA");
+// test.then(res => console.log(res));
+// test = getImageById("XFVGGq47_5mUM9QQsRO8nA");
+// test.then(res => console.log(res));
+// test = getAddressById("XFVGGq47_5mUM9QQsRO8nA");
+// test.then(res => console.log(res));
+// test = getPhoneNumberById("XFVGGq47_5mUM9QQsRO8nA");
+// test.then(res => console.log(res));
 /**
  * Input:
  *  array
