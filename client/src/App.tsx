@@ -32,7 +32,7 @@ function App() {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href='#'>Match</a>
+                <a className="nav-link" href="#">Match</a>
               </li>
             </ul>
           </div>
@@ -43,7 +43,7 @@ function App() {
         <div className="row">
           <div className="col-lg-12">
             <div className="current-partner">
-              My Partner
+              <h1 className="mt-5">My Partner</h1>
             </div>
             <div className="partners">
               <h1 className="mt-5">Partners</h1>
