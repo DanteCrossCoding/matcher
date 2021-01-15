@@ -57,7 +57,7 @@ const getImageById = (id) => {
         headers: { Authorization: `Bearer ${process.env.API_KEY_YELP}` },
     })
         .then((res) => {
-        console.log(res.data.image_url);
+        return res.data.image_url;
     })
         .catch((err) => {
         console.log(err);
