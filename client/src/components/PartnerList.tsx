@@ -9,7 +9,7 @@ function PartnerList(props: any) {
       <h1 className="mt-5">Partners</h1>
       <ul className="list">
       {props.partners.map((element: any) => {
-        return <PartnerListItem name={element.name}/>
+        return <PartnerListItem selected={props.selected} id={element.id} name={element.name}/>
       })}
       </ul>
     </div>

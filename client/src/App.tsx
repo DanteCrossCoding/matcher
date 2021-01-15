@@ -18,12 +18,6 @@ function App() {
     document.title = "Matcher"
   }, [])
 
-  // const partnerTemp: {[key: number]: {name: string}} = {
-  //   1: {name: "Bob Smith"},
-  //   2: {name: "Joe Bob"},
-  //   3: {name: "Claire Squish"}
-  // }
-
 const partnerTemp = [
     {id: 1, name: "Bob Smith"},
     {id: 2, name: "Joe Bob"},
@@ -57,7 +51,7 @@ const partnerTemp = [
         <div className="row">
           <div className="col-lg-12">
             <Partner name="Bob Smith" email="test@test.com"/>
-            <PartnerList partners={partnerTemp}/>
+            <PartnerList selected={2} partners={partnerTemp}/>
           </div>
         </div>
       </div>
