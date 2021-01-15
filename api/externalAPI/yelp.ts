@@ -1,4 +1,5 @@
 import axios from "axios";
+import { response } from "express";
 require("dotenv").config();
 
 const getRestaurants = (location: string) => {
@@ -102,9 +103,22 @@ const getAddressById = (id: string) => {
   })
 }
 
+/**
+ * Input:
+ *  String of 13 (eek) numbers
+ * Output:
+ *  Returns a string that is formatted like a phone number
+ */
 const formatPhoneNumber = (num: string) => {
   return num.slice(2, 5) + "-" + num.slice(5,8) + "-" + num.slice(8,12); 
 }
+
+/**
+ * Input:
+ *  Yelp API Business ID (string)
+ * Output:
+ *  Return a formatted string of the phone number associated with the business ID
+ */
 
 const getPhoneNumberById = (id: string) => {
   return yelpApiConnection(id)
@@ -113,18 +127,67 @@ const getPhoneNumberById = (id: string) => {
   })
 }
 
-let test = getPhoneNumberById("XFVGGq47_5mUM9QQsRO8nA");
-test.then(res => console.log(res));
+/**
+ * Input:
+ *  Yelp API Business ID (string)
+ * Output:
+ *  Returns the Rating associated with the Business ID
+ */
+
+const getRatingById = (id: string) => {
+  return yelpApiConnection(id)
+  .then((res: any) => {
+    return res.data.rating;
+  })
+}
+
+/**
+ * Input:
+ *  Yelp API Business ID (string)
+ * Output:
+ *  Returns the Price Range of associated with the Business ID
+ */
+
+const getPriceById = (id: string) => {
+  return yelpApiConnection(id)
+  .then((res: any) => {
+    return res.data.price;
+  });
+}
 
 
-// let test = getNameById("XFVGGq47_5mUM9QQsRO8nA");
-// test.then(res => console.log(res));
-// test = getImageById("XFVGGq47_5mUM9QQsRO8nA");
-// test.then(res => console.log(res));
-// test = getAddressById("XFVGGq47_5mUM9QQsRO8nA");
-// test.then(res => console.log(res));
-// test = getPhoneNumberById("XFVGGq47_5mUM9QQsRO8nA");
-// test.then(res => console.log(res));
+type Restaurant = {
+  name: string;
+  image_url: string;
+  phone: string;
+  address: string;
+  city: string;
+  rating: string;
+  price: string;
+}
+
+/**
+ * Input:
+ *  Yelp API Business ID (string)
+ * Output:
+ *  Returns an object containing the name, image_url, phone number, address, city, rating and price
+ */
+const createRestaurantProfile = (id: string) => {
+  const restaurant: Restaurant = {} as Restaurant;
+  return yelpApiConnection(id)
+  .then((res: any) => {
+    restaurant.name = res.data.name;
+    restaurant.image_url = res.data.image_url;
+    restaurant.phone = formatPhoneNumber(res.data.phone);
+    restaurant.address = res.data.location.address1;
+    restaurant.city = res.data.location.city;
+    restaurant.rating = res.data.rating;
+    restaurant.price = res.data.price;
+    return restaurant;
+  });
+}
+
+
 /**
  * Input:
  *  array
