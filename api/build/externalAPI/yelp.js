@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRestaurantsWithFilter = exports.getRestaurants = void 0;
+exports.getImageById = exports.getRestaurantIdsWithFilter = exports.getRestaurants = void 0;
 const axios_1 = __importDefault(require("axios"));
 require("dotenv").config();
 const getRestaurants = (location) => {
@@ -13,7 +13,7 @@ const getRestaurants = (location) => {
     })
         .then((res) => {
         for (const item of res.data.businesses) {
-            console.log(item.name);
+            console.log(item.id);
         }
     })
         .catch((err) => {
@@ -23,11 +23,11 @@ const getRestaurants = (location) => {
 exports.getRestaurants = getRestaurants;
 /**
  * Input:
- *  filter: string => Categories separated by ,
+ *  filter: string => Categories separated by comma(,) (ex: getRestaurantIdsWithFilter("sushi,japanese"))
  * Output:
- *  Returns an object containing restaurants from the location specified matching categories from the filter string
+ *  Returns an array containing 20 restaurant id's that match the passed in filter
  */
-const getRestaurantsWithFilter = (filter) => {
+const getRestaurantIdsWithFilter = (filter) => {
     let businesses = [];
     const location = "Vancouver, BC";
     return axios_1.default
@@ -36,7 +36,7 @@ const getRestaurantsWithFilter = (filter) => {
     })
         .then((res) => {
         for (const item of res.data.businesses) {
-            businesses.push(item.name);
+            businesses.push(item.id);
         }
         return businesses;
     })
@@ -44,8 +44,33 @@ const getRestaurantsWithFilter = (filter) => {
         console.log(err);
     });
 };
-exports.getRestaurantsWithFilter = getRestaurantsWithFilter;
-// Randomize array in place using Durstenfeld Shuffle algorithm
+exports.getRestaurantIdsWithFilter = getRestaurantIdsWithFilter;
+/**
+ * Input:
+ *  Yelp API bussiness ID (string)
+ * Output:
+ *  Returns the URL for the image associated with the idea
+ */
+const getImageById = (id) => {
+    return axios_1.default
+        .get(`https://api.yelp.com/v3/businesses/${id}`, {
+        headers: { Authorization: `Bearer ${process.env.API_KEY_YELP}` },
+    })
+        .then((res) => {
+        console.log(res.data.image_url);
+    })
+        .catch((err) => {
+        console.log(err);
+    });
+};
+exports.getImageById = getImageById;
+getImageById("XFVGGq47_5mUM9QQsRO8nA");
+/**
+ * Input:
+ *  array
+ * Output:
+ *  shuffles the order of an array in place using Durstenfeld Shuffle algorithm
+ */
 const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
