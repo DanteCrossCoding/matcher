@@ -18,11 +18,17 @@ function App() {
     document.title = "Matcher"
   }, [])
 
-  const partnerTemp: {[key: number]: {name: string}} = {
-    1: {name: "Bob Smith"},
-    2: {name: "Joe Bob"},
-    3: {name: "Claire Squish"}
-  }
+  // const partnerTemp: {[key: number]: {name: string}} = {
+  //   1: {name: "Bob Smith"},
+  //   2: {name: "Joe Bob"},
+  //   3: {name: "Claire Squish"}
+  // }
+
+const partnerTemp = [
+    {id: 1, name: "Bob Smith"},
+    {id: 2, name: "Joe Bob"},
+    {id: 3, name: "Claire Squish"}
+]  
 
   return (
     <body>

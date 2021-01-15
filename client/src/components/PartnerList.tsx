@@ -8,9 +8,8 @@ function PartnerList(props: any) {
     <div className="partners">
       <h1 className="mt-5">Partners</h1>
       <ul className="list">
-      {Object.keys(props.partners).map((key: any) => {
-        {console.log(props.partners[key].name)}
-        <PartnerListItem name={props.partners[key].name}/>
+      {props.partners.map((element: any) => {
+        return <PartnerListItem name={element.name}/>
       })}
       </ul>
     </div>

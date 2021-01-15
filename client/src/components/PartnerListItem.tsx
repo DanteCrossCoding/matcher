@@ -4,9 +4,9 @@ import '../bootstrap/vendor/bootstrap/css/bootstrap.css'
 
 function PartnerListItem(props: any) {
   return (
-    <li className="list-item">
-      <a>{props.name}</a>
-    </li>
+    <div>
+    <li className="list-item">{props.name}</li>
+    </div>
   );
 }
 
