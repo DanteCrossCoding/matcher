@@ -31,7 +31,7 @@ const getRestaurantIdsWithFilter = (filter) => {
     let businesses = [];
     const location = "vancouver, BC";
     return axios_1.default
-        .get(`https://api.yelp.com/v3/businesses/search?location=${location}&categories=${filter}&limit=5`, {
+        .get(`https://api.yelp.com/v3/businesses/search?location=${location}&categories=${filter}&limit=10`, {
         headers: { Authorization: `Bearer ${process.env.API_KEY_YELP}` },
     })
         .then((res) => {
