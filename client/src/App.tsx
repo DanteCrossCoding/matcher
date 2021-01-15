@@ -45,6 +45,8 @@ function App() {
             <div className="current-partner">
               <h1 className="mt-5">My Partner</h1>
               <img src="https://www.dovercourt.org/wp-content/uploads/2019/11/610-6104451_image-placeholder-png-user-profile-placeholder-image-png-286x300.jpg" width="200px" />
+              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut iure inventore placeat incidunt dolorum voluptates rem, a praesentium facilis nisi blanditiis vero, fugit et consequatur! Sed quidem deleniti quisquam debitis.</p>
+              <h5>email@email.com</h5>
             </div>
             <div className="partners">
               <h1 className="mt-5">Partners</h1>

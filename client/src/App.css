@@ -42,6 +42,11 @@
   flex-direction: column;
 }
 
+.current-partner {
+  text-align: center;
+  margin-right: 50%;
+}
+
 .col-lg-12 {
   display: flex;
   justify-content: space-around;
