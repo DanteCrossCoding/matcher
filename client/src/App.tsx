@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './App.css';
+import './App.scss';
 import './bootstrap/vendor/bootstrap/css/bootstrap.css'
 import axios from "axios";
 
@@ -50,7 +50,7 @@ function App() {
             </div>
             <div className="partners">
               <h1 className="mt-5">Partners</h1>
-              <ul>
+              <ul className="list">
                 <li>
                   Partner 1
                 </li>

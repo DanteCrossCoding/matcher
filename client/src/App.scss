@@ -40,10 +40,14 @@
 .partners {
   display: flex;
   flex-direction: column;
+  .list :hover{
+    background-color: blue;
+  }
 }
 
 .current-partner {
   text-align: center;
+  border-radius: 100;
   margin-right: 50%;
 }
 
