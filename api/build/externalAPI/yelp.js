@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getImageById = exports.getRestaurantIdsWithFilter = exports.getRestaurants = void 0;
+exports.createRestaurantProfile = exports.getImageById = exports.getRestaurantIdsWithFilter = exports.getRestaurants = void 0;
 const axios_1 = __importDefault(require("axios"));
 require("dotenv").config();
 const getRestaurants = (location) => {
@@ -29,9 +29,9 @@ exports.getRestaurants = getRestaurants;
  */
 const getRestaurantIdsWithFilter = (filter) => {
     let businesses = [];
-    const location = "Vancouver, BC";
+    const location = "vancouver, BC";
     return axios_1.default
-        .get(`https://api.yelp.com/v3/businesses/search?location=${location}&categories=restaurants,${filter}`, {
+        .get(`https://api.yelp.com/v3/businesses/search?location=${location}&categories=${filter}&limit=5`, {
         headers: { Authorization: `Bearer ${process.env.API_KEY_YELP}` },
     })
         .then((res) => {
@@ -52,7 +52,7 @@ const yelpApiConnection = (id) => {
 };
 /**
  * Input:
- *  Yelp API bussiness ID (string)
+ *  Yelp API business ID (string)
  * Output:
  *  Returns the Name of the Restaurant associated with ID
  */
@@ -67,7 +67,7 @@ const getNameById = (id) => {
 };
 /**
  * Input:
- *  Yelp API bussiness ID (string)
+ *  Yelp API business ID (string)
  * Output:
  *  Returns the URL for the image associated with the ID
  */
@@ -89,8 +89,7 @@ exports.getImageById = getImageById;
  */
 const getAddressById = (id) => {
     let address = [];
-    return yelpApiConnection(id)
-        .then((res) => {
+    return yelpApiConnection(id).then((res) => {
         address.push(res.data.location.address1);
         address.push(res.data.location.city);
         return address;
@@ -112,8 +111,7 @@ const formatPhoneNumber = (num) => {
  *  Return a formatted string of the phone number associated with the business ID
  */
 const getPhoneNumberById = (id) => {
-    return yelpApiConnection(id)
-        .then((res) => {
+    return yelpApiConnection(id).then((res) => {
         return formatPhoneNumber(res.data.phone);
     });
 };
@@ -124,8 +122,7 @@ const getPhoneNumberById = (id) => {
  *  Returns the Rating associated with the Business ID
  */
 const getRatingById = (id) => {
-    return yelpApiConnection(id)
-        .then((res) => {
+    return yelpApiConnection(id).then((res) => {
         return res.data.rating;
     });
 };
@@ -136,8 +133,7 @@ const getRatingById = (id) => {
  *  Returns the Price Range of associated with the Business ID
  */
 const getPriceById = (id) => {
-    return yelpApiConnection(id)
-        .then((res) => {
+    return yelpApiConnection(id).then((res) => {
         return res.data.price;
     });
 };
@@ -149,8 +145,7 @@ const getPriceById = (id) => {
  */
 const createRestaurantProfile = (id) => {
     const restaurant = {};
-    return yelpApiConnection(id)
-        .then((res) => {
+    return yelpApiConnection(id).then((res) => {
         restaurant.name = res.data.name;
         restaurant.image_url = res.data.image_url;
         restaurant.phone = formatPhoneNumber(res.data.phone);
@@ -161,6 +156,7 @@ const createRestaurantProfile = (id) => {
         return restaurant;
     });
 };
+exports.createRestaurantProfile = createRestaurantProfile;
 /**
  * Input:
  *  array
@@ -175,3 +171,10 @@ const shuffleArray = (array) => {
         array[j] = temp;
     }
 };
+let test = getRestaurantIdsWithFilter("chinese");
+test.then((res) => shuffleArray(res));
+test
+    .then((res) => {
+    return createRestaurantProfile(res[0]);
+})
+    .then((res) => console.log(res));

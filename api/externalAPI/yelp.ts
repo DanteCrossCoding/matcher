@@ -28,10 +28,10 @@ const getRestaurants = (location: string) => {
  */
 const getRestaurantIdsWithFilter = (filter: string) => {
   let businesses: string[] = [];
-  const location: string = "Vancouver, BC";
+  const location: string = "vancouver, BC";
   return axios
     .get(
-      `https://api.yelp.com/v3/businesses/search?location=${location}&categories=restaurants,${filter}`,
+      `https://api.yelp.com/v3/businesses/search?location=${location}&categories=${filter}&limit=5`,
       {
         headers: { Authorization: `Bearer ${process.env.API_KEY_YELP}` },
       }
@@ -40,6 +40,7 @@ const getRestaurantIdsWithFilter = (filter: string) => {
       for (const item of res.data.businesses) {
         businesses.push(item.id);
       }
+
       return businesses;
     })
     .catch((err: any) => {
@@ -49,13 +50,13 @@ const getRestaurantIdsWithFilter = (filter: string) => {
 
 const yelpApiConnection = (id: string) => {
   return axios.get(`https://api.yelp.com/v3/businesses/${id}`, {
-      headers: { Authorization: `Bearer ${process.env.API_KEY_YELP}` },
-  })
-}
+    headers: { Authorization: `Bearer ${process.env.API_KEY_YELP}` },
+  });
+};
 
 /**
  * Input:
- *  Yelp API bussiness ID (string)
+ *  Yelp API business ID (string)
  * Output:
  *  Returns the Name of the Restaurant associated with ID
  */
@@ -72,7 +73,7 @@ const getNameById = (id: string) => {
 
 /**
  * Input:
- *  Yelp API bussiness ID (string)
+ *  Yelp API business ID (string)
  * Output:
  *  Returns the URL for the image associated with the ID
  */
@@ -95,13 +96,12 @@ const getImageById = (id: string) => {
 
 const getAddressById = (id: string) => {
   let address: string[] = [];
-  return yelpApiConnection(id)
-  .then((res: any) => {
+  return yelpApiConnection(id).then((res: any) => {
     address.push(res.data.location.address1);
     address.push(res.data.location.city);
     return address;
-  })
-}
+  });
+};
 
 /**
  * Input:
@@ -110,8 +110,8 @@ const getAddressById = (id: string) => {
  *  Returns a string that is formatted like a phone number
  */
 const formatPhoneNumber = (num: string) => {
-  return num.slice(2, 5) + "-" + num.slice(5,8) + "-" + num.slice(8,12); 
-}
+  return num.slice(2, 5) + "-" + num.slice(5, 8) + "-" + num.slice(8, 12);
+};
 
 /**
  * Input:
@@ -121,11 +121,10 @@ const formatPhoneNumber = (num: string) => {
  */
 
 const getPhoneNumberById = (id: string) => {
-  return yelpApiConnection(id)
-  .then((res: any) => {
+  return yelpApiConnection(id).then((res: any) => {
     return formatPhoneNumber(res.data.phone);
-  })
-}
+  });
+};
 
 /**
  * Input:
@@ -135,11 +134,10 @@ const getPhoneNumberById = (id: string) => {
  */
 
 const getRatingById = (id: string) => {
-  return yelpApiConnection(id)
-  .then((res: any) => {
+  return yelpApiConnection(id).then((res: any) => {
     return res.data.rating;
-  })
-}
+  });
+};
 
 /**
  * Input:
@@ -149,12 +147,10 @@ const getRatingById = (id: string) => {
  */
 
 const getPriceById = (id: string) => {
-  return yelpApiConnection(id)
-  .then((res: any) => {
+  return yelpApiConnection(id).then((res: any) => {
     return res.data.price;
   });
-}
-
+};
 
 type Restaurant = {
   name: string;
@@ -164,7 +160,7 @@ type Restaurant = {
   city: string;
   rating: string;
   price: string;
-}
+};
 
 /**
  * Input:
@@ -174,8 +170,7 @@ type Restaurant = {
  */
 const createRestaurantProfile = (id: string) => {
   const restaurant: Restaurant = {} as Restaurant;
-  return yelpApiConnection(id)
-  .then((res: any) => {
+  return yelpApiConnection(id).then((res: any) => {
     restaurant.name = res.data.name;
     restaurant.image_url = res.data.image_url;
     restaurant.phone = formatPhoneNumber(res.data.phone);
@@ -185,8 +180,7 @@ const createRestaurantProfile = (id: string) => {
     restaurant.price = res.data.price;
     return restaurant;
   });
-}
-
+};
 
 /**
  * Input:
@@ -204,4 +198,17 @@ const shuffleArray = (array: any) => {
   }
 };
 
-export { getRestaurants, getRestaurantIdsWithFilter, getImageById };
+let test = getRestaurantIdsWithFilter("chinese");
+test.then((res: any) => shuffleArray(res));
+test
+  .then((res: any) => {
+    return createRestaurantProfile(res[0]);
+  })
+  .then((res) => console.log(res));
+
+export {
+  getRestaurants,
+  getRestaurantIdsWithFilter,
+  getImageById,
+  createRestaurantProfile,
+};
