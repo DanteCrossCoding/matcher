@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.scss';
 import './bootstrap/vendor/bootstrap/css/bootstrap.css'
 import axios from "axios";
@@ -18,11 +18,13 @@ function App() {
     document.title = "Matcher"
   }, [])
 
-const partnerTemp = [
-    {id: 1, name: "Bob Smith"},
-    {id: 2, name: "Joe Bob"},
-    {id: 3, name: "Claire Squish"}
-]  
+  const partnerTemp = [
+    { id: 1, name: "Bob Smith", email: "test@test.com" },
+    { id: 2, name: "Joe Bob", email: "abc@abc.com" },
+    { id: 3, name: "Claire Squish", email: "farts@farts.com" }
+  ]
+
+  const [selected, setSelected] = useState(2)
 
   return (
     <body>
@@ -50,8 +52,12 @@ const partnerTemp = [
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <Partner name="Bob Smith" email="test@test.com"/>
-            <PartnerList selected={2} partners={partnerTemp}/>
+            {partnerTemp.map((partner) => {
+              if (partner.id === selected) {
+                return <Partner name={partner.name} email={partner.email} />
+              }
+            })}
+            <PartnerList select={setSelected} selected={selected} partners={partnerTemp} />
           </div>
         </div>
       </div>
