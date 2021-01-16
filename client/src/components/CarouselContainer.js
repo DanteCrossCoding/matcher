@@ -18,27 +18,30 @@ export default function CarouselContainer(props) {
     socket.emit('answer', answer)
     setResponse(prev => [...prev, `${answer.ans}: ${answer.restaurant}`])
   };
-
+  
   const handleSelect = (selectedIndex, e) => {
-    if (selectedIndex > index) {
-      sendAnswerSetState({ans: "yay", user: props.user, restaurant: props.restaurants[index]})
+    if (selectedIndex === 9 && index === 0) {
+      sendAnswerSetState({ans: "nay", user: props.user, restaurant: props.restaurants[index].name})
+    }
+    else if (selectedIndex > index) {
+      sendAnswerSetState({ans: "yay", user: props.user, restaurant: props.restaurants[index].name})
     }
     else {
-      sendAnswerSetState({ans: "nay", user: props.user, restaurant: props.restaurants[index]})
+      sendAnswerSetState({ans: "nay", user: props.user, restaurant: props.restaurants[index].name})
     }
     setIndex(index + 1);
   };
 
   const carouselItems = props.restaurants.map((restaurant) => {
     return (
-      <Carousel.Item key={restaurant}>
+      <Carousel.Item key={restaurant.name}>
         <img
-          className="d-block w-100"
-          src={picture}
+          className="d-block w-100 carousel-img"
+          src={restaurant.image_url}
           alt="First slide"
         />
-        <Carousel.Caption key={restaurant}>
-          <p>{restaurant}</p>
+        <Carousel.Caption key={restaurant.name}>
+          <p>{restaurant.name}</p>
         </Carousel.Caption>
       </Carousel.Item>
     );
