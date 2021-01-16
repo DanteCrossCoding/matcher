@@ -40,10 +40,29 @@
 .partners {
   display: flex;
   flex-direction: column;
-  .list :hover{
+}
+
+.list {
+  background-color: whitesmoke;
+  color: black;
+  list-style-type: none;
+  padding: 0%;
+  .list-item {
+    padding: 5px;
+    text-align: center;
+    border: 1px solid black;
+  }
+  :hover{
+  background-color: blue;
+  color: white;
+  }
+  .selected {
     background-color: blue;
+    color: white;
   }
 }
+
+
 
 .current-partner {
   text-align: center;

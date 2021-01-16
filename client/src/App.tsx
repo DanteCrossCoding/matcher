@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import './App.scss';
 import './bootstrap/vendor/bootstrap/css/bootstrap.css'
 import axios from "axios";
+import Partner from "./components/Partner";
+import PartnerList from './components/PartnerList';
+import usePartnerData from "./hooks/partnerData";
 
 function App() {
   const testBackEnd = (): string => {
@@ -15,6 +18,12 @@ function App() {
   useEffect(() => {
     document.title = "Matcher"
   }, [])
+
+  const {
+    selected,
+    setSelected,
+    partnerTemp
+  } = usePartnerData()
 
   return (
     <body>
@@ -42,23 +51,12 @@ function App() {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <div className="current-partner">
-              <h1 className="mt-5">My Partner</h1>
-              <img src="https://www.dovercourt.org/wp-content/uploads/2019/11/610-6104451_image-placeholder-png-user-profile-placeholder-image-png-286x300.jpg" width="200px" />
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut iure inventore placeat incidunt dolorum voluptates rem, a praesentium facilis nisi blanditiis vero, fugit et consequatur! Sed quidem deleniti quisquam debitis.</p>
-              <h5>email@email.com</h5>
-            </div>
-            <div className="partners">
-              <h1 className="mt-5">Partners</h1>
-              <ul className="list">
-                <li>
-                  Partner 1
-                </li>
-                <li>
-                  Partner 2
-                </li>
-              </ul>
-            </div>
+            {partnerTemp.map((partner) => {
+              if (partner.id === selected) {
+                return <Partner name={partner.name} email={partner.email} />
+              }
+            })}
+            <PartnerList select={setSelected} selected={selected} partners={partnerTemp} />
           </div>
         </div>
       </div>
