@@ -34,13 +34,14 @@ server.listen(port, () => {
                     yay: [],
                     nay: [],
                 };
+                socket.emit('response', ansObj[ans]);
             });
             socket.on('answer', (ans) => {
                 if (ans.ans === 'yay') {
-                    ansObj[ans.user]['yay'].push('yay');
+                    ansObj[ans.user]['yay'].push(ans.restaurant);
                 }
                 else {
-                    ansObj[ans.user]['nay'].push('nay');
+                    ansObj[ans.user]['nay'].push(ans.restaurant);
                 }
                 console.log(ansObj);
             });

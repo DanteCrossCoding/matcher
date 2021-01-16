@@ -35,13 +35,15 @@ const port = process.env.PORT || 9000;
 
 server.listen(port, () => {
   console.log("Server started listening on port " + port);
+
+
   const restaurants = getRestaurantIdsWithFilter("chinese");
   restaurants.then((res: any) => {
 
+    
     let ansObj: any = {};
 
-
-
+    
     io.on("connection", (socket: any) => {
     
       socket.on('new match session', (ans: any) => {
@@ -53,16 +55,18 @@ server.listen(port, () => {
           yay: [],
           nay: [],
         }
+        socket.emit('response', ansObj[ans])
       })
     
       socket.on('answer', (ans: any) => {
         if (ans.ans === 'yay') {
-          ansObj[ans.user]['yay'].push('yay');
+          ansObj[ans.user]['yay'].push(ans.restaurant);
         } else {
-          ansObj[ans.user]['nay'].push('nay');
+          ansObj[ans.user]['nay'].push(ans.restaurant);
         }
         console.log(ansObj)
       });
+
     });
     
   });
