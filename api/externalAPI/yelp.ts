@@ -198,17 +198,18 @@ const shuffleArray = (array: any) => {
   }
 };
 
-let test = getRestaurantIdsWithFilter("chinese");
-test.then((res: any) => shuffleArray(res));
-test
-  .then((res: any) => {
-    return createRestaurantProfile(res[0]);
-  })
-  .then((res) => console.log(res));
+  let test = getRestaurantIdsWithFilter("chinese");
+  test.then((res: any) => shuffleArray(res));
+  test
+    .then((res: any) => {
+      return createRestaurantProfile(res[0]);
+    })
+    .then((res) => console.log(res));
 
 export {
   getRestaurants,
   getRestaurantIdsWithFilter,
   getImageById,
   createRestaurantProfile,
+  shuffleArray
 };

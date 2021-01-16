@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createRestaurantProfile = exports.getImageById = exports.getRestaurantIdsWithFilter = exports.getRestaurants = void 0;
+exports.shuffleArray = exports.createRestaurantProfile = exports.getImageById = exports.getRestaurantIdsWithFilter = exports.getRestaurants = void 0;
 const axios_1 = __importDefault(require("axios"));
 require("dotenv").config();
 const getRestaurants = (location) => {
@@ -171,6 +171,7 @@ const shuffleArray = (array) => {
         array[j] = temp;
     }
 };
+exports.shuffleArray = shuffleArray;
 let test = getRestaurantIdsWithFilter("chinese");
 test.then((res) => shuffleArray(res));
 test

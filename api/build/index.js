@@ -1,10 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const express = require("express");
+const yelp_1 = require("./externalAPI/yelp");
 require('dotenv').config();
 const pg = require('pg-promise')();
 const db = pg(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
+const express = require("express");
+const http = require("http");
 const app = express();
+const server = http.createServer(app);
+const io = require("socket.io")(server);
 app.get('/test', (req, res) => {
     res.send("Backend connected!");
 });
@@ -15,5 +19,31 @@ app.get('/', (req, res) => {
     });
 });
 const port = process.env.PORT || 9000;
-app.listen(port);
-console.log("Server started listening on port " + port);
+server.listen(port, () => {
+    console.log("Server started listening on port " + port);
+    const restaurants = yelp_1.getRestaurantIdsWithFilter("chinese");
+    restaurants.then((res) => {
+        let ansObj = {};
+        io.on("connection", (socket) => {
+            socket.on('new match session', (ans) => {
+                console.log("starting new session");
+                let resCopy = [...res];
+                yelp_1.shuffleArray(resCopy);
+                ansObj[ans] = {
+                    restaurants: [...resCopy],
+                    yay: [],
+                    nay: [],
+                };
+            });
+            socket.on('answer', (ans) => {
+                if (ans.ans === 'yay') {
+                    ansObj[ans.user]['yay'].push('yay');
+                }
+                else {
+                    ansObj[ans.user]['nay'].push('nay');
+                }
+                console.log(ansObj);
+            });
+        });
+    });
+});
