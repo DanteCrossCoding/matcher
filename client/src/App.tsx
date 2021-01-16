@@ -6,6 +6,8 @@ import Partner from "./components/Partner";
 import PartnerList from './components/PartnerList';
 import usePartnerData from "./hooks/partnerData";
 import Matcher from './components/Matcher';
+import Nav from './components/Nav';
+import useMainView from './hooks/mainView';
 
 function App() {
   const testBackEnd = (): string => {
@@ -26,6 +28,11 @@ function App() {
     partnerTemp
   } = usePartnerData()
 
+  const {
+    view,
+    setView
+  } = useMainView();
+
   return (
     <body>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
@@ -35,16 +42,7 @@ function App() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarResponsive">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item active">
-                <a className="nav-link" href="/">Partner Management
-              <span className="sr-only">(current)</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">Match</a>
-              </li>
-            </ul>
+            <Nav view={view} setView={setView}/>
           </div>
         </div>
       </nav>
