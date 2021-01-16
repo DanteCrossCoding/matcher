@@ -1,9 +1,18 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.shuffleArray = exports.createRestaurantProfile = exports.getImageById = exports.getRestaurantIdsWithFilter = exports.getRestaurants = void 0;
+exports.createRestaurantProfilesArr = exports.shuffleArray = exports.createRestaurantProfile = exports.getImageById = exports.getRestaurantIdsWithFilter = exports.getRestaurants = void 0;
 const axios_1 = __importDefault(require("axios"));
 require("dotenv").config();
 const getRestaurants = (location) => {
@@ -157,6 +166,23 @@ const createRestaurantProfile = (id) => {
     });
 };
 exports.createRestaurantProfile = createRestaurantProfile;
+const createRestaurantProfilesArr = function (idArr) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const restaurant0 = yield createRestaurantProfile(idArr[0]);
+        const restaurant1 = yield createRestaurantProfile(idArr[1]);
+        const restaurant2 = yield createRestaurantProfile(idArr[2]);
+        const restaurant3 = yield createRestaurantProfile(idArr[3]);
+        const restaurant4 = yield createRestaurantProfile(idArr[4]);
+        const restaurant5 = yield createRestaurantProfile(idArr[5]);
+        const restaurant6 = yield createRestaurantProfile(idArr[6]);
+        const restaurant7 = yield createRestaurantProfile(idArr[7]);
+        const restaurant8 = yield createRestaurantProfile(idArr[8]);
+        const restaurant9 = yield createRestaurantProfile(idArr[9]);
+        const restaurants = [restaurant0, restaurant1, restaurant2, restaurant3, restaurant4, restaurant5, restaurant6, restaurant7, restaurant8, restaurant9];
+        return restaurants;
+    });
+};
+exports.createRestaurantProfilesArr = createRestaurantProfilesArr;
 /**
  * Input:
  *  array

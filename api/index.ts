@@ -3,6 +3,7 @@ import {
   getRestaurantIdsWithFilter,
   getImageById,
   createRestaurantProfile,
+  createRestaurantProfilesArr,
   shuffleArray
  } from "./externalAPI/yelp"
  
@@ -40,34 +41,34 @@ server.listen(port, () => {
   const restaurants = getRestaurantIdsWithFilter("chinese");
   restaurants.then((res: any) => {
 
-    
-    let ansObj: any = {};
+    createRestaurantProfilesArr(res).then(res => {
+      
+      let ansObj: any = {};
 
     
-    io.on("connection", (socket: any) => {
+      io.on("connection", (socket: any) => {
     
-      socket.on('new match session', (ans: any) => {
-        console.log("starting new session");
-        let resCopy = [...res]
-        shuffleArray(resCopy);
-        ansObj[ans] = {
-          restaurants: [...resCopy],
-          yay: [],
-          nay: [],
-        }
-        socket.emit('response', ansObj[ans])
-      })
+        socket.on('new match session', (ans: any) => {
+          console.log("starting new session");
+          let resCopy = [...res]
+          shuffleArray(resCopy);
+          ansObj[ans] = {
+            restaurants: [...resCopy],
+            yay: [],
+            nay: [],
+          }
+          socket.emit('response', ansObj[ans])
+        })
     
-      socket.on('answer', (ans: any) => {
-        if (ans.ans === 'yay') {
-          ansObj[ans.user]['yay'].push(ans.restaurant);
-        } else {
-          ansObj[ans.user]['nay'].push(ans.restaurant);
-        }
-        console.log(ansObj)
+        socket.on('answer', (ans: any) => {
+          if (ans.ans === 'yay') {
+            ansObj[ans.user]['yay'].push(ans.restaurant);
+          } else {
+            ansObj[ans.user]['nay'].push(ans.restaurant);
+          }
+          console.log(ansObj)
+        });
       });
-
-    });
-    
-  });
+    })
+  })
 });

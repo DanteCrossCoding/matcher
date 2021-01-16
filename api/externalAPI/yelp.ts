@@ -182,6 +182,21 @@ const createRestaurantProfile = (id: string) => {
   });
 };
 
+const createRestaurantProfilesArr = async function (idArr: any) {
+  const restaurant0 = await createRestaurantProfile(idArr[0]);
+  const restaurant1 = await createRestaurantProfile(idArr[1]);
+  const restaurant2 = await createRestaurantProfile(idArr[2]);
+  const restaurant3 = await createRestaurantProfile(idArr[3]);
+  const restaurant4 = await createRestaurantProfile(idArr[4]);
+  const restaurant5 = await createRestaurantProfile(idArr[5]);
+  const restaurant6 = await createRestaurantProfile(idArr[6]);
+  const restaurant7 = await createRestaurantProfile(idArr[7]);
+  const restaurant8 = await createRestaurantProfile(idArr[8]);
+  const restaurant9 = await createRestaurantProfile(idArr[9]);
+  const restaurants = [restaurant0, restaurant1, restaurant2, restaurant3, restaurant4, restaurant5, restaurant6, restaurant7, restaurant8, restaurant9]
+  return restaurants;
+}
+
 /**
  * Input:
  *  array
@@ -211,5 +226,6 @@ export {
   getRestaurantIdsWithFilter,
   getImageById,
   createRestaurantProfile,
-  shuffleArray
+  shuffleArray,
+  createRestaurantProfilesArr
 };

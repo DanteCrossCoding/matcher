@@ -10,12 +10,13 @@ const ENDPOINT = "http://localhost:9000";
 const socket = io(ENDPOINT)
 
 export default function CarouselContainer(props) {
+  
   const [index, setIndex] = useState(0);
   const [response, setResponse] = useState([])
 
   const sendAnswerSetState = function (answer) {
     socket.emit('answer', answer)
-    setResponse(prev => [...prev, answer.ans])
+    setResponse(prev => [...prev, `${answer.ans}: ${answer.restaurant}`])
   };
 
   const handleSelect = (selectedIndex, e) => {
