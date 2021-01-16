@@ -5,7 +5,7 @@ import '../bootstrap/vendor/bootstrap/css/bootstrap.css'
 function Matcher() {
 
   const topStyle = {
-    width: "105%" //110% is full stars
+    width: "80%" //110% is full stars
   };
 
   return (
@@ -19,6 +19,9 @@ function Matcher() {
         <div className="bottom">
           <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
         </div>
+      </div>
+      <div className="description">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi nobis reiciendis ipsa eveniet corrupti iste, sunt odit, assumenda, itaque veritatis quisquam? Facere, magni? Officiis delectus eius accusantium minima animi modi?
       </div>
     </div>
   )
