@@ -38,7 +38,7 @@ export default function CarouselContainer(props) {
 
   const carouselItems = props.restaurants.map((restaurant) => {
     return (
-      <Carousel.Item key={restaurant.name}>
+      <Carousel.Item key={restaurant.name }>
         <img
           className="d-block w-100 carousel-img"
           src={restaurant.image_url}

@@ -19,6 +19,7 @@ function App() {
       socket.emit('restaurant request', 'user')
       await socket.on('restaurant response', (response) => {
         setRestaurant(response);
+        console.log(response)
       })
     }
     getUserRestaurants();

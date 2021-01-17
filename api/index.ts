@@ -35,7 +35,7 @@ server.listen(port, () => {
   console.log("Server started listening on port " + port);
 
 
-  const restaurants = getRestaurantIdsWithFilter("chinese");
+  const restaurants = getRestaurantIdsWithFilter("Japanese");
   restaurants.then((res: any) => {
 
     createRestaurantProfilesArr(res).then(res => {
@@ -161,7 +161,7 @@ server.listen(port, () => {
         })
 
         socket.on('restaurant request', (user: any) => {
-          socket.emit('restaurant response', testorants)
+          socket.emit('restaurant response', res)
         })
       });
     })
