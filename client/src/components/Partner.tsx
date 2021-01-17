@@ -6,7 +6,7 @@ function Partner(props :any) {
   return (
     <div className="current-partner">
       <h1>{props.name}</h1>
-      <img id='profile' src="https://www.dovercourt.org/wp-content/uploads/2019/11/610-6104451_image-placeholder-png-user-profile-placeholder-image-png-286x300.jpg" width="200px" alt="Profile"/>
+      <img id='profile' src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="Profile"/>
   <h5>{props.email}</h5>
     </div>
   );

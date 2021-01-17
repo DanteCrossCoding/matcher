@@ -44,7 +44,7 @@
 }
 
 .list {
-  background-color: whitesmoke;
+  background-color: gainsboro;
   color: black;
   list-style-type: none;
   padding: 0%;
@@ -102,7 +102,6 @@
 
 .current-partner {
   text-align: center;
-  border-radius: 100;
   background-color: gainsboro;
   padding: 15px;
   padding-left: 30px;
@@ -113,6 +112,8 @@
     padding: 10px;
   }
   #profile {
+    height: auto;
+    width: 200px;
     border-radius: 50%;
   }
 }
