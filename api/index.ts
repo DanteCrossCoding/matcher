@@ -40,12 +40,13 @@ server.listen(port, () => {
 
     createRestaurantProfilesArr(res).then(res => {
 
-      let ansObj = {};
+      let ansObj: any = {};
 
     
-      io.on("connection", (socket) => {
+      io.on("connection", (socket: any) => {
+      
     
-        socket.on('new match session', (user) => {
+        socket.on('new match session', (user: any) => {
           console.log("starting new session");
           let resCopy = [...res]
           shuffleArray(resCopy);
@@ -57,14 +58,15 @@ server.listen(port, () => {
           socket.emit('response', ansObj[user])
         })
     
-        socket.on('answer', (ans) => {
+        socket.on('answer', (ans: any) => {
           if (ans.ans === 'yay') {
-            ansObj[ans.user]['yay'].push(ans.restaurant);
             for (const user in ansObj) {
-              if (user['yay'].includes(ans.restaurant)) {
-                console.log("WE GOT A MATCH");
+              if (ansObj[user]['yay'].includes(ans.restaurant)) {
+                console.log('A MATCH')
+                socket.emit('match', ans.restaurant)
               }
             }
+            ansObj[ans.user]['yay'].push(ans.restaurant);
           } else {
             ansObj[ans.user]['nay'].push(ans.restaurant);
           }

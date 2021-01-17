@@ -10,6 +10,10 @@ const ENDPOINT = "http://localhost:9000";
 const socket = io(ENDPOINT)
 
 export default function CarouselContainer(props) {
+
+  socket.on('match', (match) => {
+    console.log(`We have a match!! ${match}`)
+  })
   
   const [index, setIndex] = useState(0);
   const [response, setResponse] = useState([])

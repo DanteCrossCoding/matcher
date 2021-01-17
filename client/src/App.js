@@ -21,10 +21,15 @@ function App() {
 
   const startMatch = function() {
     socket.emit('new match session', user)
+    console.log("matching started")
   } 
 
   socket.on('response', (response) => {
     setRestaurant(prev => [...prev, response.restaurants])
+  })
+
+  socket.on('match', (match) => {
+    console.log(`We have a match!! ${match}`)
   })
 
   const testoraunts =  

@@ -39,6 +39,12 @@ server.listen(port, () => {
                 });
                 socket.on('answer', (ans) => {
                     if (ans.ans === 'yay') {
+                        for (const user in ansObj) {
+                            if (ansObj[user]['yay'].includes(ans.restaurant)) {
+                                console.log('A MATCH');
+                                socket.emit('match', ans.restaurant);
+                            }
+                        }
                         ansObj[ans.user]['yay'].push(ans.restaurant);
                     }
                     else {
