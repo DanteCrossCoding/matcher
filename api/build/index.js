@@ -43,6 +43,7 @@ server.listen(port, () => {
                             if (ansObj[user]['yay'].includes(ans.restaurant)) {
                                 console.log('A MATCH');
                                 socket.emit('match', ans.restaurant);
+                                break;
                             }
                         }
                         ansObj[ans.user]['yay'].push(ans.restaurant);
@@ -51,6 +52,9 @@ server.listen(port, () => {
                         ansObj[ans.user]['nay'].push(ans.restaurant);
                     }
                     console.log(ansObj);
+                });
+                socket.on('reset', () => {
+                    ansObj = {};
                 });
             });
         });

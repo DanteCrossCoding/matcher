@@ -62,6 +62,11 @@ export default function CarouselContainer(props) {
           onClick={props.start}
           name={"Start"}
         />
+        <Button
+          class={"button button--danger"}
+          onClick={props.reset}
+          name={"reset"}
+        />
       </div>
     </div>
      

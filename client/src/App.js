@@ -24,6 +24,11 @@ function App() {
     console.log("matching started")
   } 
 
+  const resetMatch = function() {
+    socket.emit('reset', 'rest')
+    console.log("match reset")
+  }
+
   socket.on('response', (response) => {
     setRestaurant(prev => [...prev, response.restaurants])
   })
@@ -122,6 +127,7 @@ function App() {
           </h1>
             <CarouselContainer
               start={startMatch}
+              reset={resetMatch}
               restaurants={testoraunts}
               user={user}
             />
