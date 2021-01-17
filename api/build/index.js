@@ -127,7 +127,7 @@ server.listen(port, () => {
                     ansObj = {};
                 });
                 socket.on('restaurant request', (user) => {
-                    socket.emit('restaurant response', res);
+                    socket.emit('restaurant response', testorants);
                 });
             });
         });

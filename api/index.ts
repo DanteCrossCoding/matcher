@@ -161,7 +161,7 @@ server.listen(port, () => {
         })
 
         socket.on('restaurant request', (user: any) => {
-          socket.emit('restaurant response', res)
+          socket.emit('restaurant response', testorants)
         })
       });
     })
