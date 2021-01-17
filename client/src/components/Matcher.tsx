@@ -2,10 +2,10 @@ import React from 'react';
 import '../App.scss';
 import '../bootstrap/vendor/bootstrap/css/bootstrap.css'
 
-function Matcher() {
+function Matcher(props: any) {
 
   const topStyle = {
-    width: "10%" //160% is full stars
+    width: `${props.rating * 32}%` //160% is full stars
   };
 
   return (
