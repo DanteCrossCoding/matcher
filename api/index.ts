@@ -35,7 +35,7 @@ server.listen(port, () => {
   console.log("Server started listening on port " + port);
 
 
-  const restaurants = getRestaurantIdsWithFilter("Japanese");
+  const restaurants = getRestaurantIdsWithFilter("japanese");
   restaurants.then((res: any) => {
 
     createRestaurantProfilesArr(res).then(res => {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Restaurant.scss";
 import { Carousel } from "react-bootstrap"
-import picture from "./tacoShack.png"
 import Button from "./Button"
 import io from 'socket.io-client';
 

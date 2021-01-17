@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 const port = process.env.PORT || 9000;
 server.listen(port, () => {
     console.log("Server started listening on port " + port);
-    const restaurants = yelp_1.getRestaurantIdsWithFilter("Japanese");
+    const restaurants = yelp_1.getRestaurantIdsWithFilter("japanese");
     restaurants.then((res) => {
         yelp_1.createRestaurantProfilesArr(res).then(res => {
             const testorants = [{ name: 'Dumpling House',

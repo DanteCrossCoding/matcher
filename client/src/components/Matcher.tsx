@@ -1,8 +1,9 @@
 import React from 'react';
 import '../App.scss';
 import '../bootstrap/vendor/bootstrap/css/bootstrap.css'
+import CarouselContainer from "./CarouselContainer"
 
-function Matcher() {
+function Matcher(props: any) {
 
   const topStyle = {
     width: "10%" //160% is full stars
@@ -11,7 +12,17 @@ function Matcher() {
   return (
     <div className="restaurant">
       <h2>Restaurant Name</h2>
-      <img src="https://lunawood.com/wp-content/uploads/2018/02/placeholder-image-300x225.png" />
+      <div>
+          <h1>
+          User {props.user}
+          </h1>
+            <CarouselContainer
+              start={props.start}
+              reset={props.reset}
+              restaurants={props.restaurants}
+              user={props.user}
+            />
+      </div>
       <div className="rating">
         <div className="top" style={topStyle}>
           <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>

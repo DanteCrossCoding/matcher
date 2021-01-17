@@ -5,9 +5,19 @@ import Matcher from './Matcher'
 import PartnerList from './PartnerList'
 
 function View(props: any) {
-  const match = <Matcher />
+  
+  const match = <Matcher 
+    start={props.start}
+    reset={props.reset}
+    restaurants={props.restaurants}
+    user={props.user}
+  />
 
-  const partnerList = <PartnerList select={props.select} selected={props.selected} partners={props.partners} />
+  const partnerList = <PartnerList 
+      select={props.select} 
+      selected={props.selected} 
+      partners={props.partners} 
+    />
 
   let final;
 

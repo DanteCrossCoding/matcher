@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
 import './App.scss';
 import './bootstrap/vendor/bootstrap/css/bootstrap.css'
-import CarouselContainer from "./components/CarouselContainer"
 import io from 'socket.io-client';
+import './App.scss';
+import './bootstrap/vendor/bootstrap/css/bootstrap.css'
+import axios from "axios";
+import Partner from "./components/Partner";
+import PartnerList from './components/PartnerList';
+import usePartnerData from "./hooks/partnerData";
+import Matcher from './components/Matcher';
+import Nav from './components/Nav';
+import useMainView from './hooks/mainView';
+import View from './components/View';
 
 const ENDPOINT = "http://localhost:9000";
 
@@ -19,13 +28,23 @@ function App() {
       socket.emit('restaurant request', 'user')
       await socket.on('restaurant response', (response) => {
         setRestaurant(response);
-        console.log(response)
       })
     }
     getUserRestaurants();
     document.title = "Matcher"
     setUser(Math.floor(Math.random() * 10).toString());
   }, [])
+
+  const {
+    selected,
+    setSelected,
+    partnerTemp
+  } = usePartnerData()
+
+  const {
+    view,
+    pageChange
+  } = useMainView();
 
   const startMatch = function() {
     socket.emit('new match session', user)
@@ -39,7 +58,6 @@ function App() {
 
   socket.on('connection', (response) => {
     console.log('connected')
-    /* setRestaurant(prev => [...prev, response.restaurants]) */
   })
 
   socket.on('match', (match) => {
@@ -47,19 +65,42 @@ function App() {
   })
 
   return (
-      <div>
-        <header className="App-header">
-          <h1>
-          User {user}
-          </h1>
-            <CarouselContainer
+    <body>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div className="container">
+          <a className="navbar-brand" href="/">Matcher</a>
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarResponsive">
+            <Nav view={view} pageChange={pageChange}/>
+          </div>
+        </div>
+      </nav>
+
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12">
+            {partnerTemp.map((partner) => {
+              if (partner.id === selected) {
+                return <Partner name={partner.name} email={partner.email} />
+              }
+            })}
+            <View 
+              view={view} 
+              select={setSelected} 
+              selected={selected} 
+              partners={partnerTemp}
               start={startMatch}
               reset={resetMatch}
               restaurants={restaurants}
-              user={user}
+              user={user} 
             />
-        </header>
+          </div>
+        </div>
       </div>
+
+    </body>
   );
 }
 
