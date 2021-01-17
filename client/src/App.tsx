@@ -8,6 +8,7 @@ import usePartnerData from "./hooks/partnerData";
 import Matcher from './components/Matcher';
 import Nav from './components/Nav';
 import useMainView from './hooks/mainView';
+import View from './components/View';
 
 function App() {
   const testBackEnd = (): string => {
@@ -30,7 +31,7 @@ function App() {
 
   const {
     view,
-    setView
+    pageChange
   } = useMainView();
 
   return (
@@ -42,7 +43,7 @@ function App() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarResponsive">
-            <Nav view={view} setView={setView}/>
+            <Nav view={view} pageChange={pageChange}/>
           </div>
         </div>
       </nav>
@@ -55,8 +56,7 @@ function App() {
                 return <Partner name={partner.name} email={partner.email} />
               }
             })}
-            <Matcher />
-            {/* <PartnerList select={setSelected} selected={selected} partners={partnerTemp} /> */}
+            <View view={view} select={setSelected} selected={selected} partners={partnerTemp} />
           </div>
         </div>
       </div>

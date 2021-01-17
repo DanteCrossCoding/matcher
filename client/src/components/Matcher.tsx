@@ -5,7 +5,7 @@ import '../bootstrap/vendor/bootstrap/css/bootstrap.css'
 function Matcher() {
 
   const topStyle = {
-    width: "80%" //110% is full stars
+    width: "10%" //160% is full stars
   };
 
   return (
