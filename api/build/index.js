@@ -21,7 +21,16 @@ app.get('/', (req, res) => {
 const port = process.env.PORT || 9000;
 server.listen(port, () => {
     console.log("Server started listening on port " + port);
-    const restaurants = yelp_1.getRestaurantIdsWithFilter("japanese");
+    /* Known working queries:
+    "japanese"
+    "chinese"
+    "seafood"
+    "italian"
+    "brunch"
+    "vietnamese"
+    "mexican"
+     */
+    const restaurants = yelp_1.getRestaurantIdsWithFilter("mexican");
     restaurants.then((res) => {
         yelp_1.createRestaurantProfilesArr(res).then(res => {
             const testorants = [{ name: 'Dumpling House',
@@ -98,10 +107,7 @@ server.listen(port, () => {
             io.on("connection", (socket) => {
                 socket.on('new match session', (user) => {
                     console.log("starting new session");
-                    let resCopy = [...res];
-                    yelp_1.shuffleArray(resCopy);
                     ansObj[user] = {
-                        restaurants: [...resCopy],
                         yay: [],
                         nay: [],
                     };
@@ -127,7 +133,9 @@ server.listen(port, () => {
                     ansObj = {};
                 });
                 socket.on('restaurant request', (user) => {
-                    socket.emit('restaurant response', res);
+                    const resCopy = [...res];
+                    yelp_1.shuffleArray(resCopy);
+                    socket.emit('restaurant response', resCopy);
                 });
             });
         });

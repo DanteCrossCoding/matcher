@@ -34,8 +34,16 @@ const port = process.env.PORT || 9000;
 server.listen(port, () => {
   console.log("Server started listening on port " + port);
 
-
-  const restaurants = getRestaurantIdsWithFilter("japanese");
+/* Known working queries:
+"japanese"
+"chinese"
+"seafood"
+"italian"
+"brunch"
+"vietnamese"
+"mexican"
+ */
+  const restaurants = getRestaurantIdsWithFilter("mexican");
   restaurants.then((res: any) => {
 
     createRestaurantProfilesArr(res).then(res => {
@@ -130,10 +138,7 @@ server.listen(port, () => {
     
         socket.on('new match session', (user: any) => {
           console.log("starting new session");
-          let resCopy = [...res]
-          shuffleArray(resCopy);
           ansObj[user] = {
-            restaurants: [...resCopy],
             yay: [],
             nay: [],
           }
@@ -161,7 +166,9 @@ server.listen(port, () => {
         })
 
         socket.on('restaurant request', (user: any) => {
-          socket.emit('restaurant response', res)
+          const resCopy = [...res]
+          shuffleArray(resCopy)
+          socket.emit('restaurant response', resCopy)
         })
       });
     })

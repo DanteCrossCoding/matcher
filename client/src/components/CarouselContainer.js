@@ -35,15 +35,15 @@ export default function CarouselContainer(props) {
     setIndex(index + 1);
   };
 
-  const carouselItems = props.restaurants.map((restaurant) => {
+  const carouselItems = props.restaurants.map((restaurant, index) => {
     return (
-      <Carousel.Item key={restaurant.name }>
+      <Carousel.Item key={index}>
         <img
           className="d-block w-100 carousel-img"
           src={restaurant.image_url}
           alt="First slide"
         />
-        <Carousel.Caption key={restaurant.name}>
+        <Carousel.Caption key={index}>
           <p>{restaurant.name}</p>
         </Carousel.Caption>
       </Carousel.Item>
