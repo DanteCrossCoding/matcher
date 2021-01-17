@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Restaurant.scss";
+import "./Carousel.scss";
 import { Carousel } from "react-bootstrap"
 import Button from "./Button"
 import io from 'socket.io-client';
