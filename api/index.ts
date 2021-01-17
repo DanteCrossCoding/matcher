@@ -40,45 +40,7 @@ server.listen(port, () => {
 
     createRestaurantProfilesArr(res).then(res => {
 
-      let ansObj: any = {};
-
-    
-      io.on("connection", (socket: any) => {
-      
-    
-        socket.on('new match session', (user: any) => {
-          console.log("starting new session");
-          let resCopy = [...res]
-          shuffleArray(resCopy);
-          ansObj[user] = {
-            restaurants: [...resCopy],
-            yay: [],
-            nay: [],
-          }
-          socket.emit('connection', ansObj[user])
-        })
-    
-        socket.on('answer', (ans: any) => {
-          if (ans.ans === 'yay') {
-            for (const user in ansObj) {
-              if (ansObj[user]['yay'].includes(ans.restaurant)) {
-                console.log('A MATCH')
-                socket.emit('match', ans.restaurant)
-                break;
-              }
-            }
-            ansObj[ans.user]['yay'].push(ans.restaurant);
-          } else {
-            ansObj[ans.user]['nay'].push(ans.restaurant);
-          }
-          console.log(ansObj)
-        });
-
-        socket.on('reset', () => {
-          ansObj = {};
-        })
-
-        const testoraunts =  
+      const testorants =  
   [ { name: 'Dumpling House',
     image_url:
      'https://s3-media3.fl.yelpcdn.com/bphoto/BhSkksnrQr2XEriwIIsacQ/o.jpg',
@@ -160,8 +122,46 @@ server.listen(port, () => {
     rating: 4.5,
     price: '$$' } ]
 
+      let ansObj: any = {};
+
+    
+      io.on("connection", (socket: any) => {
+      
+    
+        socket.on('new match session', (user: any) => {
+          console.log("starting new session");
+          let resCopy = [...res]
+          shuffleArray(resCopy);
+          ansObj[user] = {
+            restaurants: [...resCopy],
+            yay: [],
+            nay: [],
+          }
+          socket.emit('connection', ansObj[user])
+        })
+    
+        socket.on('answer', (ans: any) => {
+          if (ans.ans === 'yay') {
+            for (const user in ansObj) {
+              if (ansObj[user]['yay'].includes(ans.restaurant)) {
+                console.log('A MATCH')
+                socket.emit('match', ans.restaurant)
+                break;
+              }
+            }
+            ansObj[ans.user]['yay'].push(ans.restaurant);
+          } else {
+            ansObj[ans.user]['nay'].push(ans.restaurant);
+          }
+          console.log(ansObj)
+        });
+
+        socket.on('reset', () => {
+          ansObj = {};
+        })
+
         socket.on('restaurant request', (user: any) => {
-          socket.emit('restaurant response', testoraunts)
+          socket.emit('restaurant response', res)
         })
       });
     })
