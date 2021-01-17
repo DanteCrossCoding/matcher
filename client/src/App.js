@@ -15,6 +15,13 @@ function App() {
 
 
   useEffect(() => {
+    const getUserRestaurants = async function() {
+      socket.emit('restaurant request', 'user')
+      await socket.on('restaurant response', (response) => {
+        setRestaurant(response);
+      })
+    }
+    getUserRestaurants();
     document.title = "Matcher"
     setUser(Math.floor(Math.random() * 10).toString());
   }, [])
@@ -29,8 +36,9 @@ function App() {
     console.log("match reset")
   }
 
-  socket.on('response', (response) => {
-    setRestaurant(prev => [...prev, response.restaurants])
+  socket.on('connection', (response) => {
+    console.log('connected')
+    /* setRestaurant(prev => [...prev, response.restaurants]) */
   })
 
   socket.on('match', (match) => {
@@ -128,7 +136,7 @@ function App() {
             <CarouselContainer
               start={startMatch}
               reset={resetMatch}
-              restaurants={testoraunts}
+              restaurants={restaurants}
               user={user}
             />
         </header>
