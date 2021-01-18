@@ -13,6 +13,8 @@
   }
 }
 
+
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -23,6 +25,8 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+
 
 .App-link {
   color: #61dafb;
@@ -36,6 +40,7 @@
     transform: rotate(360deg);
   }
 }
+
 
 .partners {
   display: flex;
@@ -66,7 +71,13 @@
   margin: 50px;
   padding: 25px;
   text-align: center;
-  background-color: gainsboro;
+  border-radius: 25px;
+  background-color: rgb(223, 226, 226);
+  h2 {
+    background-color: #846c9c;
+    color: white;
+    border-radius: 15px;
+  }
   .rating {
     unicode-bidi: bidi-override;
     font-size: 35px;
@@ -99,18 +110,36 @@
 
 .current-partner {
   text-align: center;
-  border-radius: 100;
-  background-color: gainsboro;
+  border-radius: 25px;
+  background-color:rgb(223, 226, 226);
   padding: 15px;
   padding-left: 30px;
   padding-right: 30px;
   margin: 50px;
+  h1{
+    color: white;
+    background-color: #846c9c;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    margin-bottom: 0;
+  }
   h5 {
     padding: 10px;
+    color: white;
+    background-color: #846c9c;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
   }
+}
+
+.img {
+  border-radius: 25px;
+  border: 2px solid black;
 }
 
 .col-lg-12 {
   display: flex;
   justify-content: space-around;
+  background-color: #b9c5cf;
+  border-radius: 25px;
 }
