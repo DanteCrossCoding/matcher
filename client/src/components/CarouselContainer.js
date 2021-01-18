@@ -12,14 +12,9 @@ export default function CarouselContainer(props) {
   const [index, setIndex] = useState(0);
   const [response, setResponse] = useState([]);
   const [restaurant, setRestaurant] = useState();
-  const [user, setUser] = useState("");
-
-  useEffect(() => {
-    setUser(Math.floor(Math.random() * 10).toString());
-  }, []);
 
   const startMatch = function () {
-    socket.emit("new match session", user);
+    socket.emit("new match session", props.user);
     console.log("matching started");
     setIndex(index + 1);
     setRestaurant(props.restaurants[index + 1]);
@@ -65,21 +60,21 @@ export default function CarouselContainer(props) {
     if (selectedIndex === 9 && index === 0) {
       sendAnswerSetState({
         ans: "nay",
-        user: user,
+        user: props.user,
         restaurantPhone: props.restaurants[index].phone,
         restaurant: props.restaurants[index],
       });
     } else if (selectedIndex > index) {
       sendAnswerSetState({
         ans: "yay",
-        user: user,
+        user: props.user,
         restaurantPhone: props.restaurants[index].phone,
         restaurant: props.restaurants[index],
       });
     } else {
       sendAnswerSetState({
         ans: "nay",
-        user: user,
+        user: props.user,
         restaurantPhone: props.restaurants[index].phone,
         restaurant: props.restaurants[index],
       });

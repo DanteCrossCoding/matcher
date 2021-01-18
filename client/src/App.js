@@ -34,6 +34,7 @@ function App() {
   const [match, setMatch] = useState();
   const { selected, setSelected, partnerTemp } = usePartnerData();
   const { view, pageChange } = useMainView();
+  const [user, setUser] = useState("");
   
   useEffect(() => {
     const getUserRestaurants = async function () {
@@ -43,6 +44,7 @@ function App() {
         setRestaurants(response);
       });
     };
+    setUser(Math.floor(Math.random() * 10).toString());
     getUserRestaurants();
     document.title = "Matcher";
   }, []);
@@ -118,6 +120,7 @@ function App() {
               changeCat={changeCategory}
               reset={resetMatch}
               restaurants={restaurants}
+              user={user}
             />
           </div>
         </div>
