@@ -44,7 +44,7 @@ function App() {
         setRestaurants(response);
       });
     };
-    setUser(Math.floor(Math.random() * 10).toString());
+    setUser(Math.floor(Math.random() * 10).toString()); // THIS ONE DANTE
     getUserRestaurants();
     document.title = "Matcher";
   }, []);

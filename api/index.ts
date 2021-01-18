@@ -64,7 +64,7 @@ server.listen(port, () => {
           socket.emit('connection', ansObj[user])
         })
     
-        socket.on('answer', (ans: any) => {
+        socket.on('answer', (ans: any) => { // THIS IS THE MATCHER LOGIC JOHN
           if (ans.ans === 'yay') {
             for (const user in ansObj) {
               if (ansObj[user]['yay'].includes(ans.restaurantPhone)) {
