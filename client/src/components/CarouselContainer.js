@@ -9,6 +9,22 @@ const ENDPOINT = "http://localhost:9000";
 const socket = io(ENDPOINT);
 
 export default function CarouselContainer(props) {
+  const [index, setIndex] = useState(0);
+  const [response, setResponse] = useState([]);
+  const [restaurant, setRestaurant] = useState();
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    setUser(Math.floor(Math.random() * 10).toString());
+  }, [])
+
+  const startMatch = function () {
+    socket.emit("new match session", user);
+    console.log("matching started");
+    setIndex(index + 1)
+    setRestaurant(props.restaurants[index + 1]);
+  };
+
   socket.on("match", (match) => {
     console.log(`We have a match!! ${match}`);
   });
@@ -17,14 +33,12 @@ export default function CarouselContainer(props) {
     width: "10%", //160% is full stars
   };
 
-  const [index, setIndex] = useState(0);
-  const [response, setResponse] = useState([]);
-  const [restaurant, setRestaurant] = useState();
-
   const sendAnswerSetState = function (answer) {
     socket.emit("answer", answer);
     setResponse((prev) => [...prev, `${answer.ans}: ${answer.restaurant}`]);
   };
+
+  
 
   const handleSelect = (selectedIndex, e) => {
     if (selectedIndex === 9 && index === 0) {
@@ -77,13 +91,13 @@ export default function CarouselContainer(props) {
       <div className="button-row">
         <Button
           class={"button button--confirm"}
-          onClick={props.start}
+          onClick={startMatch}
           name={"Start"}
         />
         <Button
           class={"button button--danger"}
           onClick={props.reset}
-          name={"reset"}
+          name={"Reset"}
         />
       </div>
       <div className="rating">
