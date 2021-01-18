@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "setup": "npm i && cd client && npm i && cd ../api && npm i",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node api/build/index.js",
     "server": "nodemon api/build/index.js",
