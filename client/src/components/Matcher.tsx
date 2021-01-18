@@ -15,6 +15,7 @@ function Matcher(props: any) {
           reset={props.reset}
           restaurants={props.restaurants}
           user={props.user}
+          rating={props.rating}
         />
       </div>
       <FormContainer changeCat={props.changeCat}/>

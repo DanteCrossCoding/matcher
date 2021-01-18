@@ -28,8 +28,21 @@ export default function CarouselContainer(props) {
     console.log("connected");
   });
 
+  const rating = restaurant ? restaurant.rating : 0;
+
+  /* 
+  1 star: 35%
+  1.5 star: 55%
+  2 star: 75% 
+  2.5 star: 90%
+  3 star: 110%
+  3.5 star: 127%
+  4 star: 145%
+  4.5 star: 150%
+  5 star: 180% 
+  */
   const topStyle = {
-    width: "10%", //160% is full stars
+    width: `${rating * 36}%` //180% is full stars
   };
 
   const sendAnswerSetState = function (answer) {

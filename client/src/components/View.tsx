@@ -13,6 +13,7 @@ function View(props: any) {
     user={props.user}
     changeCat={props.changeCat}
     foundMatch={props.foundMatch}
+    rating={2.5}
   />
 
   const partnerList = <PartnerList 

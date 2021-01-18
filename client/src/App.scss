@@ -45,17 +45,20 @@
 .partners {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .list {
-  background-color: whitesmoke;
+  background-color: gainsboro;
   color: black;
   list-style-type: none;
   padding: 0%;
+  width: 150%;
   .list-item {
     padding: 5px;
     text-align: center;
     border: 1px solid black;
+
   }
   :hover {
     background-color: blue;
@@ -110,25 +113,23 @@
 
 .current-partner {
   text-align: center;
-  border-radius: 25px;
-  background-color:rgb(223, 226, 226);
+  background-color: gainsboro;
   padding: 15px;
   padding-left: 30px;
   padding-right: 30px;
   margin: 50px;
-  h1{
-    color: white;
-    background-color: #846c9c;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-    margin-bottom: 0;
-  }
+  width: auto;
   h5 {
     padding: 10px;
     color: white;
     background-color: #846c9c;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
+  }
+  #profile {
+    height: auto;
+    width: 200px;
+    border-radius: 50%;
   }
 }
 
