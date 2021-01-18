@@ -52,15 +52,12 @@ function App() {
   const resetMatch = function () {
     socket.emit("reset", "reset");
     console.log("match reset");
+    setMatch();
   };
 
   const changeCategory = function (category) {
     socket.emit("new category", category);
   };
-
-  socket.on("connection", (response) => {
-    console.log("connected");
-  });
 
   socket.on("match", (match) => {
     console.log(`We have a match!! ${match}`);

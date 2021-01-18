@@ -142,6 +142,7 @@ server.listen(port, () => {
             yay: [],
             nay: [],
           }
+          console.log(ansObj)
           socket.emit('connection', ansObj[user])
         })
     

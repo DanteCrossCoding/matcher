@@ -29,6 +29,10 @@ export default function CarouselContainer(props) {
     console.log(`We have a match!! ${match}`);
   });
 
+  socket.on("connection", (response) => {
+    console.log("connected");
+  });
+
   const topStyle = {
     width: "10%", //160% is full stars
   };
@@ -61,19 +65,19 @@ export default function CarouselContainer(props) {
     if (selectedIndex === 9 && index === 0) {
       sendAnswerSetState({
         ans: "nay",
-        user: props.user,
+        user: user,
         restaurant: props.restaurants[index].name,
       });
     } else if (selectedIndex > index) {
       sendAnswerSetState({
         ans: "yay",
-        user: props.user,
+        user: user,
         restaurant: props.restaurants[index].name,
       });
     } else {
       sendAnswerSetState({
         ans: "nay",
-        user: props.user,
+        user: user,
         restaurant: props.restaurants[index].name,
       });
     }
