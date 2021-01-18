@@ -66,7 +66,6 @@ function App() {
 
   socket.on("query response", (response) => {
     console.log("setting new restaurants...");
-    response.unshift(paddingRestaurant);
     setRestaurants(response);
   });
 
