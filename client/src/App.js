@@ -20,14 +20,14 @@ const socket = io(ENDPOINT)
 function App() {
 
   const [user, setUser] = useState("");
-  const [restaurants, setRestaurant] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
 
 
   useEffect(() => {
     const getUserRestaurants = async function() {
       socket.emit('restaurant request', 'user')
       await socket.on('restaurant response', (response) => {
-        setRestaurant(response);
+        setRestaurants(response);
       })
     }
     getUserRestaurants();
@@ -62,6 +62,10 @@ function App() {
 
   socket.on('match', (match) => {
     console.log(`We have a match!! ${match}`)
+  })
+
+  socket.on('query response', (response) => {
+    setRestaurants(response);
   })
 
   return (
