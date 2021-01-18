@@ -1,6 +1,7 @@
 import React from 'react';
 import '../App.scss';
 import '../bootstrap/vendor/bootstrap/css/bootstrap.css'
+import '../bootstrap/vendor/bootstrap/css/custom.css'
 
 function Nav(props: any) {
   let partner: string = "nav-item";
