@@ -32,7 +32,9 @@ const paddingRestaurant = {
 function App() {
   const [restaurants, setRestaurants] = useState([]);
   const [match, setMatch] = useState();
-
+  const { selected, setSelected, partnerTemp } = usePartnerData();
+  const { view, pageChange } = useMainView();
+  
   useEffect(() => {
     const getUserRestaurants = async function () {
       socket.emit("restaurant request", "user");
@@ -45,9 +47,7 @@ function App() {
     document.title = "Matcher";
   }, []);
 
-  const { selected, setSelected, partnerTemp } = usePartnerData();
-
-  const { view, pageChange } = useMainView();
+  
 
   const resetMatch = function () {
     socket.emit("reset", "reset");

@@ -66,19 +66,22 @@ export default function CarouselContainer(props) {
       sendAnswerSetState({
         ans: "nay",
         user: user,
-        restaurant: props.restaurants[index].name,
+        restaurantPhone: props.restaurants[index].phone,
+        restaurant: props.restaurants[index],
       });
     } else if (selectedIndex > index) {
       sendAnswerSetState({
         ans: "yay",
         user: user,
-        restaurant: props.restaurants[index].name,
+        restaurantPhone: props.restaurants[index].phone,
+        restaurant: props.restaurants[index],
       });
     } else {
       sendAnswerSetState({
         ans: "nay",
         user: user,
-        restaurant: props.restaurants[index].name,
+        restaurantPhone: props.restaurants[index].phone,
+        restaurant: props.restaurants[index],
       });
     }
     setIndex(index + 1);
