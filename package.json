@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "setup": "npm i && cd client && npm i && cd ../api && npm i",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node api/build/index.js",
     "server": "nodemon api/build/index.js",
@@ -29,7 +30,9 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "nodemon": "^2.0.7",
+    "pg": "^8.5.1",
     "pg-promise": "^10.8.7",
+    "pgtools": "^0.3.0",
     "request-promise-native": "^1.0.9"
   },
   "devDependencies": {

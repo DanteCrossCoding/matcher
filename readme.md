@@ -4,6 +4,10 @@ Quick setup guide for you guys:
 You'll probably have to npm install in both the root directory and the client directory as React uses its own modules by the looks of it
 
 ```
+Install packages and setup postgres database:
+"npm run setup"
+
+```
 Start Express server:
 "npm run server"
 ```
