@@ -16,12 +16,12 @@ export default function CarouselContainer(props) {
 
   useEffect(() => {
     setUser(Math.floor(Math.random() * 10).toString());
-  }, [])
+  }, []);
 
   const startMatch = function () {
     socket.emit("new match session", user);
     console.log("matching started");
-    setIndex(index + 1)
+    setIndex(index + 1);
     setRestaurant(props.restaurants[index + 1]);
   };
 
@@ -38,7 +38,24 @@ export default function CarouselContainer(props) {
     setResponse((prev) => [...prev, `${answer.ans}: ${answer.restaurant}`]);
   };
 
-  
+  const matchingStarted = function () {
+    if (index > 0) {
+      return (
+        <Button
+          class={"button button--danger"}
+          onClick={props.reset}
+          name={"Reset"}
+        />
+      );
+    }
+    return (
+      <Button
+        class={"button button--confirm"}
+        onClick={startMatch}
+        name={"Start"}
+      />
+    );
+  };
 
   const handleSelect = (selectedIndex, e) => {
     if (selectedIndex === 9 && index === 0) {
@@ -89,16 +106,7 @@ export default function CarouselContainer(props) {
         {carouselItems}
       </Carousel>
       <div className="button-row">
-        <Button
-          class={"button button--confirm"}
-          onClick={startMatch}
-          name={"Start"}
-        />
-        <Button
-          class={"button button--danger"}
-          onClick={props.reset}
-          name={"Reset"}
-        />
+        {matchingStarted()}
       </div>
       <div className="rating">
         <div className="top" style={topStyle}>
