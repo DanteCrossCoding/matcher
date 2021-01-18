@@ -1,33 +1,27 @@
 import React from "react";
 
 import "./Button.scss";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Dropdown, DropdownButton } from "react-bootstrap";
 
 // Renders button Component
 export default function FormContainer(props) {
+
+  const handleSelect = function (event) {
+    props.changeCat(event);
+  }
+
   return (
-    <Form inline>
-      <Form.Label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">
-        Choose Cuisine
-      </Form.Label>
-      <Form.Control
-        as="select"
-        className="my-1 mr-sm-2"
-        id="inlineFormCustomSelectPref"
-        custom
-      >
-        <option value="0">Choose...</option>
-        <option value="japanese">Japanese</option>
-        <option value="chinese">Chinese</option>
-        <option value="seafood">Seafood</option>
-        <option value="italian">Italian</option>
-        <option value="brunch">Brunch</option>
-        <option value="vietnamese">Vietnamese</option>
-        <option value="mexican">Mexican</option>
-      </Form.Control>
-      <Button /* onClick={} */ type="submit" className="my-1">
-        Submit
-      </Button>
-    </Form>
+    
+  <DropdownButton onSelect={handleSelect} id="dropdown-basic-button" title="Select New Category">
+    <Dropdown.Item eventKey="japanese">Japanese</Dropdown.Item>
+    <Dropdown.Item eventKey="chinese">Chinese</Dropdown.Item>
+    <Dropdown.Item eventKey="seafood">Seafood</Dropdown.Item>
+    <Dropdown.Item eventKey="italian">Italian</Dropdown.Item>
+    <Dropdown.Item eventKey="brunch">Brunch</Dropdown.Item>
+    <Dropdown.Item eventKey="vietnamese">Vietnamese</Dropdown.Item>
+    <Dropdown.Item eventKey="mexican">Mexican</Dropdown.Item>
+  </DropdownButton>
   );
 }
+
+

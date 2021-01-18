@@ -137,6 +137,16 @@ server.listen(port, () => {
                     yelp_1.shuffleArray(resCopy);
                     socket.emit('restaurant response', resCopy);
                 });
+                socket.on('new category', (category) => {
+                    const restaurants = yelp_1.getRestaurantIdsWithFilter(category);
+                    restaurants.then((res) => {
+                        yelp_1.createRestaurantProfilesArr(res).then(res => {
+                            const resCopy = [...res];
+                            yelp_1.shuffleArray(resCopy);
+                            socket.emit('query response', resCopy);
+                        });
+                    });
+                });
             });
         });
     });

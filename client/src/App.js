@@ -56,6 +56,10 @@ function App() {
     console.log("match reset")
   }
 
+  const changeCategory = function(category) {
+    socket.emit('new category', category)
+  }
+
   socket.on('connection', (response) => {
     console.log('connected')
   })
@@ -65,6 +69,7 @@ function App() {
   })
 
   socket.on('query response', (response) => {
+    console.log('setting new restaurants...')
     setRestaurants(response);
   })
 
@@ -95,6 +100,7 @@ function App() {
               select={setSelected} 
               selected={selected} 
               partners={partnerTemp}
+              changeCat={changeCategory}
               start={startMatch}
               reset={resetMatch}
               restaurants={restaurants}

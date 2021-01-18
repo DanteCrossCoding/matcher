@@ -16,7 +16,7 @@ function Matcher(props: any) {
           user={props.user}
         />
       </div>
-      <FormContainer/>
+      <FormContainer changeCat={props.changeCat}/>
     </div>
   );
 }

@@ -13,6 +13,10 @@ export default function CarouselContainer(props) {
     console.log(`We have a match!! ${match}`);
   });
 
+  const topStyle = {
+    width: "10%", //160% is full stars
+  };
+
   const [index, setIndex] = useState(0);
   const [response, setResponse] = useState([]);
   const [restaurant, setRestaurant] = useState();
@@ -54,16 +58,9 @@ export default function CarouselContainer(props) {
           src={restaurant.image_url}
           alt="First slide"
         />
-        <Carousel.Caption key={index}>
-          <p>{restaurant.name}</p>
-        </Carousel.Caption>
       </Carousel.Item>
     );
   });
-
-  const topStyle = {
-    width: "10%", //160% is full stars
-  };
 
   return (
     <div>

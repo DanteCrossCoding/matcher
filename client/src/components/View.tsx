@@ -11,6 +11,7 @@ function View(props: any) {
     reset={props.reset}
     restaurants={props.restaurants}
     user={props.user}
+    changeCat={props.changeCat}
   />
 
   const partnerList = <PartnerList 

@@ -170,6 +170,19 @@ server.listen(port, () => {
           shuffleArray(resCopy)
           socket.emit('restaurant response', resCopy)
         })
+
+        socket.on('new category', (category: any) => {
+          const restaurants = getRestaurantIdsWithFilter(category);
+          restaurants.then((res: any) => {
+
+            createRestaurantProfilesArr(res).then(res => {
+              const resCopy = [...res]
+              shuffleArray(resCopy)
+              socket.emit('query response', resCopy)
+            })
+          })
+
+        })
       });
     })
   })
