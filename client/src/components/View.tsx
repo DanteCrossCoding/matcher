@@ -12,6 +12,7 @@ function View(props: any) {
     restaurants={props.restaurants}
     user={props.user}
     changeCat={props.changeCat}
+    foundMatch={props.foundMatch}
   />
 
   const partnerList = <PartnerList 

@@ -70,6 +70,7 @@ export default function CarouselContainer(props) {
         interval={null}
         activeIndex={index}
         onSelect={handleSelect}
+        fade={true}
       >
         {carouselItems}
       </Carousel>

@@ -150,7 +150,7 @@ server.listen(port, () => {
             for (const user in ansObj) {
               if (ansObj[user]['yay'].includes(ans.restaurant)) {
                 console.log('A MATCH')
-                socket.emit('match', ans.restaurant)
+                socket.broadcast.emit('match', ans.restaurant)
                 break;
               }
             }

@@ -12,6 +12,7 @@ import Matcher from './components/Matcher';
 import Nav from './components/Nav';
 import useMainView from './hooks/mainView';
 import View from './components/View';
+import { Alert } from "react-bootstrap"; 
 
 const ENDPOINT = "http://localhost:9000";
 
@@ -21,6 +22,7 @@ function App() {
 
   const [user, setUser] = useState("");
   const [restaurants, setRestaurants] = useState([]);
+  const [match, setMatch] = useState();
 
 
   useEffect(() => {
@@ -66,12 +68,23 @@ function App() {
 
   socket.on('match', (match) => {
     console.log(`We have a match!! ${match}`)
+    setMatch(match);
   })
 
   socket.on('query response', (response) => {
     console.log('setting new restaurants...')
     setRestaurants(response);
   })
+
+  const foundMatch = function () {
+    if (match) {
+      return (
+        <Alert variant={'success'} >
+          Success! There was a match: {match}
+        </Alert>
+      )
+    }
+  }
 
   return (
     <body>
@@ -96,6 +109,7 @@ function App() {
               }
             })}
             <View 
+              foundMatch={foundMatch}
               view={view} 
               select={setSelected} 
               selected={selected} 

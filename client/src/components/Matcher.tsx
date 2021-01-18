@@ -8,6 +8,7 @@ function Matcher(props: any) {
 
   return (
     <div className="restaurant">
+      {props.foundMatch()}
       <div>
         <CarouselContainer
           start={props.start}
