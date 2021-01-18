@@ -30,17 +30,6 @@ export default function CarouselContainer(props) {
 
   const rating = restaurant ? restaurant.rating : 0;
 
-  /* 
-  1 star: 35%
-  1.5 star: 55%
-  2 star: 75% 
-  2.5 star: 90%
-  3 star: 110%
-  3.5 star: 127%
-  4 star: 145%
-  4.5 star: 150%
-  5 star: 180% 
-  */
   const topStyle = {
     width: `${rating * 36}%` //180% is full stars
   };
@@ -153,10 +142,6 @@ export default function CarouselContainer(props) {
             <tr>
               <th scope="row">City</th>
               <td>{restaurant ? restaurant.city : "?"}</td>
-            </tr>
-            <tr>
-              <th scope="row">Rating</th>
-              <td>{restaurant ? restaurant.rating : "?"}</td>
             </tr>
             <tr>
               <th scope="row">Price</th>
