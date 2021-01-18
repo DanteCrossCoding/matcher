@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './App.scss';
 import './bootstrap/vendor/bootstrap/css/bootstrap.css'
+import './bootstrap/vendor/bootstrap/css/custom.css'
 import axios from "axios";
 import Partner from "./components/Partner";
 import PartnerList from './components/PartnerList';
