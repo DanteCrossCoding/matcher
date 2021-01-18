@@ -5,7 +5,7 @@ import Matcher from './Matcher'
 import PartnerList from './PartnerList'
 
 function View(props: any) {
-  const match = <Matcher />
+  const match = <Matcher rating={2.5}/>
 
   const partnerList = <PartnerList select={props.select} selected={props.selected} partners={props.partners} />
 

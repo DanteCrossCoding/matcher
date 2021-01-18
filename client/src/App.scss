@@ -40,17 +40,20 @@
 .partners {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .list {
-  background-color: whitesmoke;
+  background-color: gainsboro;
   color: black;
   list-style-type: none;
   padding: 0%;
+  width: 150%;
   .list-item {
     padding: 5px;
     text-align: center;
     border: 1px solid black;
+
   }
   :hover {
     background-color: blue;
@@ -99,14 +102,19 @@
 
 .current-partner {
   text-align: center;
-  border-radius: 100;
   background-color: gainsboro;
   padding: 15px;
   padding-left: 30px;
   padding-right: 30px;
   margin: 50px;
+  width: auto;
   h5 {
     padding: 10px;
+  }
+  #profile {
+    height: auto;
+    width: 200px;
+    border-radius: 50%;
   }
 }
 
