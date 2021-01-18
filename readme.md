@@ -4,6 +4,13 @@ Quick setup guide for you guys:
 You'll probably have to npm install in both the root directory and the client directory as React uses its own modules by the looks of it
 
 ```
+Copy the `.env.example` file in the api folder to `.env.development` and fill in the necessary PostgreSQL configuration. The `node-postgres` library uses these environment variables by default.
+
+```
+Install packages and setup postgres database:
+"npm run setup"
+
+```
 Start Express server:
 "npm run server"
 ```
