@@ -32,13 +32,13 @@ server.listen(port, () => {
      */
     let ansObj = {};
     io.on("connection", (socket) => {
-        socket.on('new match session', (user) => {
+        socket.on('new match session', (response) => {
             console.log("starting new session");
-            ansObj[user] = {
+            ansObj[response.user] = {
                 yay: [],
                 nay: [],
             };
-            const restaurants = yelp_1.getRestaurantIdsWithFilter("mexican");
+            const restaurants = yelp_1.getRestaurantIdsWithFilter(response.category);
             restaurants.then((res) => {
                 yelp_1.createRestaurantProfilesArr(res).then(res => {
                     const resCopy = [...res];

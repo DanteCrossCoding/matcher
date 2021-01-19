@@ -37,8 +37,9 @@ export default function CarouselContainer(props) {
     socket.emit("new category", category);
   };
 
-  const startMatch = function () {
-    socket.emit("new match session", props.user);
+  const startMatch = function (category) {
+    const responseObj = {category: category, user: props.user}
+    socket.emit("new match session", responseObj);
     console.log("matching started");
   };
 
@@ -133,17 +134,19 @@ export default function CarouselContainer(props) {
               </tbody>
             </table>
           </div>
-          <FormContainer changeCat={changeCategory}/>
+          <FormContainer 
+            handleSelect={changeCategory}
+            title={"Select New Category"}
+          />
         </div>
       ); 
     }
     return (
       <div>
         <h1>Welcome!</h1>
-        <Button
-          class={"button button--confirm"}
-          onClick={startMatch}
-          name={"Start"}
+        <FormContainer 
+          handleSelect={startMatch}
+          title={"Select a Category to Start"}
         />
       </div>
     )

@@ -49,13 +49,13 @@ server.listen(port, () => {
       io.on("connection", (socket: any) => {
       
     
-        socket.on('new match session', (user: any) => {
+        socket.on('new match session', (response: any) => {
           console.log("starting new session");
-          ansObj[user] = {
+          ansObj[response.user] = {
             yay: [],
             nay: [],
           }
-          const restaurants = getRestaurantIdsWithFilter("mexican");
+          const restaurants = getRestaurantIdsWithFilter(response.category);
           restaurants.then((res: any) => {
             createRestaurantProfilesArr(res).then(res => {
               const resCopy = [...res]
