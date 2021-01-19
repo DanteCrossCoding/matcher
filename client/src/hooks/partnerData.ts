@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useState } from "react"
 
 export default function usePartnerData() {
@@ -6,6 +7,8 @@ export default function usePartnerData() {
     { id: 2, name: "Joe Bob", email: "abc@abc.com" },
     { id: 3, name: "Claire Squish", email: "farts@farts.com" }
   ]
+
+  axios.get('/users')
 
   const [Selected, setSelected] = useState(2)
 

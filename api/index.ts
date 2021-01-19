@@ -16,6 +16,8 @@ const http = require("http");
 const app = express();
 const server = http.createServer(app);
 
+const users = require("./routes/users");
+
 const io = require("socket.io")(server);
 
 app.get('/test', (req: any, res: any) => {
@@ -28,6 +30,14 @@ app.get('/', (req: any, res: any) => {
     res.send(data[0].name);
   });
 });
+
+app.get('/users', (req: any, res: any) => {
+  db.any('SELECT * FROM users')
+  .then((data: any) => {
+    res.send(data)
+  })
+
+})
 
 const port = process.env.PORT || 9000;
 

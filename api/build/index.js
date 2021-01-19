@@ -8,6 +8,7 @@ const express = require("express");
 const http = require("http");
 const app = express();
 const server = http.createServer(app);
+const users = require("./routes/users");
 const io = require("socket.io")(server);
 app.get('/test', (req, res) => {
     res.send("Backend connected!");
@@ -16,6 +17,12 @@ app.get('/', (req, res) => {
     db.any(`SELECT * FROM users`)
         .then((data) => {
         res.send(data[0].name);
+    });
+});
+app.get('/users', (req, res) => {
+    db.any('SELECT * FROM users')
+        .then((data) => {
+        res.send(data);
     });
 });
 const port = process.env.PORT || 9000;

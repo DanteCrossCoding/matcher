@@ -32,7 +32,7 @@ function App() {
   const { selected, setSelected, partnerTemp } = usePartnerData();
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
-  
+
   useEffect(() => {
     const getUserRestaurants = async function () {
       socket.emit("restaurant request", "user");
@@ -46,7 +46,7 @@ function App() {
     document.title = "Matcher";
   }, []);
 
-  
+
 
   const resetMatch = function () {
     socket.emit("reset", "reset");
