@@ -7,5 +7,5 @@ body {
 }
 
 .Login {
-  display: flex;
+  justify-content: center;
 }
