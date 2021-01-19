@@ -13,6 +13,7 @@ export default function CarouselContainer(props) {
   const [index, setIndex] = useState(0);
   const [response, setResponse] = useState([]);
   const [restaurant, setRestaurant] = useState();
+  const [restaurants, setRestaurants] = useState([]);
 
   const rating = restaurant ? restaurant.rating : 0;
 
@@ -20,19 +21,25 @@ export default function CarouselContainer(props) {
     width: `${rating * 36}%` //180% is full stars
   };
 
-  socket.on("match", (match) => {
-    console.log(`We have a match!! ${match}`);
+  socket.on("query response", (response) => {
+    console.log("setting new restaurants...");
+    setRestaurant(response[0])
+    setRestaurants(response);
+    setIndex(0)
   });
 
   socket.on("connection", (response) => {
-    console.log("connected");
+    setRestaurant(response[0])
+    setRestaurants(response);
   });
+
+  const changeCategory = function (category) {
+    socket.emit("new category", category);
+  };
 
   const startMatch = function () {
     socket.emit("new match session", props.user);
     console.log("matching started");
-    setIndex(index + 1);
-    setRestaurant(props.restaurants[index + 1]);
   };
 
   const sendAnswerSetState = function (answer) {
@@ -40,53 +47,109 @@ export default function CarouselContainer(props) {
     setResponse((prev) => [...prev, `${answer.ans}: ${answer.restaurant}`]);
   };
 
-  const matchingStarted = function () {
-    if (index > 0) {
-      return (
-        <Button
-          class={"button button--danger"}
-          onClick={props.reset}
-          name={"Reset"}
-        />
-      );
-    }
-    return (
-      <Button
-        class={"button button--confirm"}
-        onClick={startMatch}
-        name={"Start"}
-      />
-    );
-  };
-
   const handleSelect = (selectedIndex, e) => {
     if (selectedIndex === 9 && index === 0) {
       sendAnswerSetState({
         ans: "nay",
         user: props.user,
-        restaurantPhone: props.restaurants[index].phone,
-        restaurant: props.restaurants[index],
+        restaurantPhone: restaurants[index].phone,
+        restaurant: restaurants[index],
       });
     } else if (selectedIndex > index) {
       sendAnswerSetState({
         ans: "yay",
         user: props.user,
-        restaurantPhone: props.restaurants[index].phone,
-        restaurant: props.restaurants[index],
+        restaurantPhone: restaurants[index].phone,
+        restaurant: restaurants[index],
       });
     } else {
       sendAnswerSetState({
         ans: "nay",
         user: props.user,
-        restaurantPhone: props.restaurants[index].phone,
-        restaurant: props.restaurants[index],
+        restaurantPhone: restaurants[index].phone,
+        restaurant: restaurants[index],
       });
     }
     setIndex(index + 1);
-    setRestaurant(props.restaurants[index + 1]);
+    setRestaurant(restaurants[index + 1]);
   };
 
-  const carouselItems = props.restaurants.map((restaurant, index) => {
+  const matchingStarted = function () {
+    if (restaurant) {
+      return (
+        <div>
+          <h1>{restaurant.name}</h1>
+          <Carousel
+            indicators={false}
+            interval={null}
+            activeIndex={index}
+            onSelect={handleSelect}
+            fade={true}
+          >
+            {carouselItems}
+          </Carousel>
+          <div className="button-row">
+            <Button
+              class={"button button--danger"}
+              onClick={props.reset}
+              name={"Reset"}
+            />
+          </div>
+          <div className="rating">
+            <div className="top" style={topStyle}>
+              <span>★</span>
+              <span>★</span>
+              <span>★</span>
+              <span>★</span>
+              <span>★</span>
+            </div>
+            <div className="bottom">
+              <span>☆</span>
+              <span>☆</span>
+              <span>☆</span>
+              <span>☆</span>
+              <span>☆</span>
+            </div>
+          </div>
+          <div className="description">
+            <table className="table">
+              <tbody>
+                <tr>
+                  <th scope="row">Phone</th>
+                  <td>{restaurant ? restaurant.phone : "?"}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Address</th>
+                  <td>{restaurant ? restaurant.address : "?"}</td>
+                </tr>
+                <tr>
+                  <th scope="row">City</th>
+                  <td>{restaurant ? restaurant.city : "?"}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Price</th>
+                  <td>{restaurant ? restaurant.price : "?"}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <FormContainer changeCat={changeCategory}/>
+        </div>
+      ); 
+    }
+    return (
+      <div>
+        <h1>Welcome!</h1>
+        <Button
+          class={"button button--confirm"}
+          onClick={startMatch}
+          name={"Start"}
+        />
+      </div>
+    )
+  };
+
+  const carouselItems = restaurants.map((restaurant, index) => {
     return (
       <Carousel.Item key={index}>
         <img
@@ -100,58 +163,8 @@ export default function CarouselContainer(props) {
 
   return (
     <div>
-      <h1>{restaurant ? restaurant.name : "Welcome"}</h1>
-      <Carousel
-        indicators={false}
-        interval={null}
-        activeIndex={index}
-        onSelect={handleSelect}
-        fade={true}
-      >
-        {carouselItems}
-      </Carousel>
-      <div className="button-row">
-        {matchingStarted()}
-      </div>
-      <div className="rating">
-        <div className="top" style={topStyle}>
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-        </div>
-        <div className="bottom">
-          <span>☆</span>
-          <span>☆</span>
-          <span>☆</span>
-          <span>☆</span>
-          <span>☆</span>
-        </div>
-      </div>
-      <div className="description">
-        <table class="table">
-          <tbody>
-            <tr>
-              <th scope="row">Phone</th>
-              <td>{restaurant ? restaurant.phone : "?"}</td>
-            </tr>
-            <tr>
-              <th scope="row">Address</th>
-              <td>{restaurant ? restaurant.address : "?"}</td>
-            </tr>
-            <tr>
-              <th scope="row">City</th>
-              <td>{restaurant ? restaurant.city : "?"}</td>
-            </tr>
-            <tr>
-              <th scope="row">Price</th>
-              <td>{restaurant ? restaurant.price : "?"}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <FormContainer changeCat={props.changeCat}/>
+
+      {matchingStarted()}
     </div>
   );
 }

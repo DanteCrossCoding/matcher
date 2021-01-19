@@ -10,12 +10,8 @@ function Matcher(props: any) {
       {props.foundMatch()}
       <div>
         <CarouselContainer
-          start={props.start}
           reset={props.reset}
-          restaurants={props.restaurants}
           user={props.user}
-          rating={props.rating}
-          changeCat={props.changeCat}
         />
       </div>
     </div>

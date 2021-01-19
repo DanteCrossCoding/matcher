@@ -7,13 +7,9 @@ import PartnerList from './PartnerList'
 function View(props: any) {
   
   const match = <Matcher 
-    start={props.start}
     reset={props.reset}
-    restaurants={props.restaurants}
     user={props.user}
-    changeCat={props.changeCat}
     foundMatch={props.foundMatch}
-    rating={2.5}
   />
 
   const partnerList = <PartnerList 

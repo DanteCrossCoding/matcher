@@ -43,11 +43,6 @@ server.listen(port, () => {
 "vietnamese"
 "mexican"
  */
-  const restaurants = getRestaurantIdsWithFilter("mexican");
-  restaurants.then((res: any) => {
-
-    createRestaurantProfilesArr(res).then(res => {
-
       let ansObj: any = {};
 
     
@@ -60,8 +55,16 @@ server.listen(port, () => {
             yay: [],
             nay: [],
           }
+          const restaurants = getRestaurantIdsWithFilter("mexican");
+          restaurants.then((res: any) => {
+            createRestaurantProfilesArr(res).then(res => {
+              console.log("initial load: " + res[0])
+              const resCopy = [...res]
+              shuffleArray(resCopy)
+              socket.emit('connection', res)
+            })
+          })
           console.log(ansObj)
-          socket.emit('connection', ansObj[user])
         })
     
         socket.on('answer', (ans: any) => { // THIS IS THE MATCHER LOGIC JOHN
@@ -85,11 +88,11 @@ server.listen(port, () => {
           ansObj = {};
         })
 
-        socket.on('restaurant request', (user: any) => {
+        /* socket.on('restaurant request', (user: any) => {
           const resCopy = [...res]
           shuffleArray(resCopy)
           socket.emit('restaurant response', resCopy)
-        })
+        }) */
 
         socket.on('new category', (category: any) => {
           const restaurants = getRestaurantIdsWithFilter(category);
@@ -104,8 +107,6 @@ server.listen(port, () => {
 
         })
       });
-    })
-  })
 });
 
 /* const testorants =  

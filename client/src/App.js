@@ -18,7 +18,7 @@ const ENDPOINT = "http://localhost:9000";
 
 const socket = io(ENDPOINT);
 
-const paddingRestaurant = {
+/* const paddingRestaurant = {
   name: "null",
   image_url:
     "https://s3-media3.fl.yelpcdn.com/bphoto/BhSkksnrQr2XEriwIIsacQ/o.jpg",
@@ -27,25 +27,24 @@ const paddingRestaurant = {
   city: "Vancouver",
   rating: 4,
   price: "$$",
-};
+}; */
 
 function App() {
-  const [restaurants, setRestaurants] = useState([]);
   const [match, setMatch] = useState();
   const { selected, setSelected, partnerTemp } = usePartnerData();
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
   
   useEffect(() => {
-    const getUserRestaurants = async function () {
+    /* const getUserRestaurants = async function () {
       socket.emit("restaurant request", "user");
       await socket.on("restaurant response", (response) => {
         response.unshift(paddingRestaurant);
         setRestaurants(response);
       });
-    };
+    }; */
     setUser(Math.floor(Math.random() * 10).toString()); // THIS ONE DANTE
-    getUserRestaurants();
+    /* getUserRestaurants(); */
     document.title = "Matcher";
   }, []);
 
@@ -63,20 +62,10 @@ function App() {
     setMatch();
   };
 
-  const changeCategory = function (category) {
-    socket.emit("new category", category);
-  };
-
   socket.on("match", (match) => {
     console.log(`We have a match!! ${match}`);
     setMatch(match);
   });
-
-  socket.on("query response", (response) => {
-    console.log("setting new restaurants...");
-    setRestaurants(response);
-  });
-
 
   return (
     <body>
@@ -116,9 +105,7 @@ function App() {
               select={setSelected}
               selected={selected}
               partners={partnerTemp}
-              changeCat={changeCategory}
               reset={resetMatch}
-              restaurants={restaurants}
               user={user}
             />
           </div>

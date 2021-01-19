@@ -30,53 +30,56 @@ server.listen(port, () => {
     "vietnamese"
     "mexican"
      */
-    const restaurants = yelp_1.getRestaurantIdsWithFilter("mexican");
-    restaurants.then((res) => {
-        yelp_1.createRestaurantProfilesArr(res).then(res => {
-            let ansObj = {};
-            io.on("connection", (socket) => {
-                socket.on('new match session', (user) => {
-                    console.log("starting new session");
-                    ansObj[user] = {
-                        yay: [],
-                        nay: [],
-                    };
-                    console.log(ansObj);
-                    socket.emit('connection', ansObj[user]);
-                });
-                socket.on('answer', (ans) => {
-                    if (ans.ans === 'yay') {
-                        for (const user in ansObj) {
-                            if (ansObj[user]['yay'].includes(ans.restaurantPhone)) {
-                                if (ans.restaurant !== 'null')
-                                    socket.broadcast.emit('match', ans.restaurant.name);
-                                break;
-                            }
-                        }
-                        ansObj[ans.user]['yay'].push(ans.restaurantPhone);
-                    }
-                    else {
-                        ansObj[ans.user]['nay'].push(ans.restaurantPhone);
-                    }
-                    console.log(ansObj);
-                });
-                socket.on('reset', () => {
-                    ansObj = {};
-                });
-                socket.on('restaurant request', (user) => {
+    let ansObj = {};
+    io.on("connection", (socket) => {
+        socket.on('new match session', (user) => {
+            console.log("starting new session");
+            ansObj[user] = {
+                yay: [],
+                nay: [],
+            };
+            const restaurants = yelp_1.getRestaurantIdsWithFilter("mexican");
+            restaurants.then((res) => {
+                yelp_1.createRestaurantProfilesArr(res).then(res => {
+                    console.log("initial load: " + res[0]);
                     const resCopy = [...res];
                     yelp_1.shuffleArray(resCopy);
-                    socket.emit('restaurant response', resCopy);
+                    socket.emit('connection', res);
                 });
-                socket.on('new category', (category) => {
-                    const restaurants = yelp_1.getRestaurantIdsWithFilter(category);
-                    restaurants.then((res) => {
-                        yelp_1.createRestaurantProfilesArr(res).then(res => {
-                            const resCopy = [...res];
-                            yelp_1.shuffleArray(resCopy);
-                            socket.emit('query response', resCopy);
-                        });
-                    });
+            });
+            console.log(ansObj);
+        });
+        socket.on('answer', (ans) => {
+            if (ans.ans === 'yay') {
+                for (const user in ansObj) {
+                    if (ansObj[user]['yay'].includes(ans.restaurantPhone)) {
+                        if (ans.restaurant !== 'null')
+                            socket.broadcast.emit('match', ans.restaurant.name);
+                        break;
+                    }
+                }
+                ansObj[ans.user]['yay'].push(ans.restaurantPhone);
+            }
+            else {
+                ansObj[ans.user]['nay'].push(ans.restaurantPhone);
+            }
+            console.log(ansObj);
+        });
+        socket.on('reset', () => {
+            ansObj = {};
+        });
+        /* socket.on('restaurant request', (user: any) => {
+          const resCopy = [...res]
+          shuffleArray(resCopy)
+          socket.emit('restaurant response', resCopy)
+        }) */
+        socket.on('new category', (category) => {
+            const restaurants = yelp_1.getRestaurantIdsWithFilter(category);
+            restaurants.then((res) => {
+                yelp_1.createRestaurantProfilesArr(res).then(res => {
+                    const resCopy = [...res];
+                    yelp_1.shuffleArray(resCopy);
+                    socket.emit('query response', resCopy);
                 });
             });
         });
