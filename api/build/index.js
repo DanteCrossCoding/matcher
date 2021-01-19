@@ -8,7 +8,6 @@ const express = require("express");
 const http = require("http");
 const app = express();
 const server = http.createServer(app);
-const users = require("./routes/users");
 const io = require("socket.io")(server);
 app.get('/test', (req, res) => {
     res.send("Backend connected!");
@@ -21,6 +20,12 @@ app.get('/', (req, res) => {
 });
 app.get('/users', (req, res) => {
     db.any('SELECT * FROM users')
+        .then((data) => {
+        res.send(data);
+    });
+});
+app.get('/matches', (req, res) => {
+    db.any('SELECT * FROM matches')
         .then((data) => {
         res.send(data);
     });

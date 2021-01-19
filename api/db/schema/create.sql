@@ -9,7 +9,7 @@ CREATE TABLE users (
 
 CREATE TABLE matches (
   id SERIAL PRIMARY KEY NOT NULL,
-  restaurant VARCHAR(10) NOT NULL,
+  restaurant VARCHAR(12) NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   partner_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
