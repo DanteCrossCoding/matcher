@@ -1,20 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const yelp_1 = require("./externalAPI/yelp");
-require('dotenv').config();
-const pg = require('pg-promise')();
+require("dotenv").config();
+const pg = require("pg-promise")();
 const db = pg(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
 const express = require("express");
 const http = require("http");
 const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server);
-app.get('/test', (req, res) => {
+app.get("/test", (req, res) => {
     res.send("Backend connected!");
 });
-app.get('/', (req, res) => {
-    db.any(`SELECT * FROM users`)
-        .then((data) => {
+app.get("/", (req, res) => {
+    db.any(`SELECT * FROM users`).then((data) => {
         res.send(data[0].name);
     });
 });
@@ -22,17 +21,17 @@ const port = process.env.PORT || 9000;
 server.listen(port, () => {
     console.log("Server started listening on port " + port);
     /* Known working queries:
-    "japanese"
-    "chinese"
-    "seafood"
-    "italian"
-    "brunch"
-    "vietnamese"
-    "mexican"
-     */
+  "japanese"
+  "chinese"
+  "seafood"
+  "italian"
+  "brunch"
+  "vietnamese"
+  "mexican"
+   */
     let ansObj = {};
     io.on("connection", (socket) => {
-        socket.on('new match session', (response) => {
+        socket.on("new match session", (response) => {
             console.log("starting new session");
             ansObj[response.user] = {
                 yay: [],
@@ -40,45 +39,46 @@ server.listen(port, () => {
             };
             const restaurants = yelp_1.getRestaurantIdsWithFilter(response.category);
             restaurants.then((res) => {
-                yelp_1.createRestaurantProfilesArr(res).then(res => {
+                yelp_1.createRestaurantProfilesArr(res).then((res) => {
                     const resCopy = [...res];
                     yelp_1.shuffleArray(resCopy);
-                    socket.emit('connection', resCopy);
+                    socket.emit("connection", resCopy);
                 });
             });
             console.log(ansObj);
         });
-        socket.on('answer', (ans) => {
-            if (ans.ans === 'yay') {
+        socket.on("answer", (ans) => {
+            // THIS IS THE MATCHER LOGIC JOHN
+            if (ans.ans === "yay") {
                 for (const user in ansObj) {
-                    if (ansObj[user]['yay'].includes(ans.restaurantPhone)) {
-                        if (ans.restaurant !== 'null')
-                            socket.broadcast.emit('match', ans.restaurant.name);
+                    if (ansObj[user]["yay"].includes(ans.restaurantPhone)) {
+                        if (ans.restaurant !== "null")
+                            socket.broadcast.emit("match", ans.restaurant.name);
                         break;
                     }
                 }
-                ansObj[ans.user]['yay'].push(ans.restaurantPhone);
+                ansObj[ans.user]["yay"].push(ans.restaurantPhone);
             }
             else {
-                ansObj[ans.user]['nay'].push(ans.restaurantPhone);
+                ansObj[ans.user]["nay"].push(ans.restaurantPhone);
             }
             console.log(ansObj);
         });
-        socket.on('reset', () => {
+        socket.on("reset", () => {
             ansObj = {};
         });
         /* socket.on('restaurant request', (user: any) => {
-          const resCopy = [...res]
-          shuffleArray(resCopy)
-          socket.emit('restaurant response', resCopy)
-        }) */
-        socket.on('new category', (category) => {
+              const resCopy = [...res]
+              shuffleArray(resCopy)
+              socket.emit('restaurant response', resCopy)
+            }) */
+        socket.on("new category", (category) => {
             const restaurants = yelp_1.getRestaurantIdsWithFilter(category);
             restaurants.then((res) => {
-                yelp_1.createRestaurantProfilesArr(res).then(res => {
+                yelp_1.createRestaurantProfilesArr(res).then((res) => {
                     const resCopy = [...res];
                     yelp_1.shuffleArray(resCopy);
-                    socket.emit('query response', resCopy);
+                    socket.emit("query response", resCopy);
                 });
             });
         });
@@ -165,4 +165,4 @@ server.listen(port, () => {
   city: 'Vancouver',
   rating: 4.5,
   price: '$$' } ]
- */ 
+ */

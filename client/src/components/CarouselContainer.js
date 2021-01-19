@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Carousel.scss";
 import FormContainer from "./FormContainer";
-import { Carousel } from "react-bootstrap";
+import { Carousel, Spinner } from "react-bootstrap";
 import Button from "./Button";
 import io from "socket.io-client";
 
@@ -14,6 +14,7 @@ export default function CarouselContainer(props) {
   const [response, setResponse] = useState([]);
   const [restaurant, setRestaurant] = useState();
   const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   const rating = restaurant ? restaurant.rating : 0;
 
@@ -23,21 +24,25 @@ export default function CarouselContainer(props) {
 
   socket.on("query response", (response) => {
     console.log("setting new restaurants...");
+    setLoading(false);
     setRestaurant(response[0])
     setRestaurants(response);
     setIndex(0)
   });
 
   socket.on("connection", (response) => {
+    setLoading(false);
     setRestaurant(response[0])
     setRestaurants(response);
   });
 
   const changeCategory = function (category) {
+    setLoading(true);
     socket.emit("new category", category);
   };
 
   const startMatch = function (category) {
+    setLoading(true);
     const responseObj = {category: category, user: props.user}
     socket.emit("new match session", responseObj);
     console.log("matching started");
@@ -47,6 +52,17 @@ export default function CarouselContainer(props) {
     socket.emit("answer", answer);
     setResponse((prev) => [...prev, `${answer.ans}: ${answer.restaurant}`]);
   };
+
+  const isLoading = function () {
+    if (loading) {
+      return (
+        <div class="spinner">
+          <h6>Loading Restaurants...</h6>
+          <Spinner animation="border" />
+        </div>
+      )
+    }
+  }
 
   const handleSelect = (selectedIndex, e) => {
     if (selectedIndex === 9 && index === 0) {
@@ -134,6 +150,9 @@ export default function CarouselContainer(props) {
               </tbody>
             </table>
           </div>
+          <div>
+            {isLoading()}
+          </div>
           <FormContainer 
             handleSelect={changeCategory}
             title={"Select New Category"}
@@ -148,6 +167,9 @@ export default function CarouselContainer(props) {
           handleSelect={startMatch}
           title={"Select a Category to Start"}
         />
+        <div>
+          {isLoading()}
+        </div>
       </div>
     )
   };
@@ -166,7 +188,6 @@ export default function CarouselContainer(props) {
 
   return (
     <div>
-
       {matchingStarted()}
     </div>
   );
