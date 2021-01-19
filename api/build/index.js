@@ -9,6 +9,7 @@ const http = require("http");
 const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server);
+const matches = require("./routes/matches");
 app.get('/test', (req, res) => {
     res.send("Backend connected!");
 });
@@ -19,17 +20,12 @@ app.get('/', (req, res) => {
     });
 });
 app.get('/users', (req, res) => {
-    db.any('SELECT * FROM users')
+    db.query('SELECT * FROM users')
         .then((data) => {
         res.send(data);
     });
 });
-app.get('/matches', (req, res) => {
-    db.any('SELECT * FROM matches')
-        .then((data) => {
-        res.send(data);
-    });
-});
+app.use('/matches/', matches(db));
 const port = process.env.PORT || 9000;
 server.listen(port, () => {
     console.log("Server started listening on port " + port);

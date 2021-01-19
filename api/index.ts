@@ -17,6 +17,7 @@ const app = express();
 const server = http.createServer(app);
 
 const io = require("socket.io")(server);
+const matches = require("./routes/matches")
 
 app.get('/test', (req: any, res: any) => {
   res.send("Backend connected!");
@@ -30,18 +31,13 @@ app.get('/', (req: any, res: any) => {
 });
 
 app.get('/users', (req: any, res: any) => {
-  db.any('SELECT * FROM users')
+  db.query('SELECT * FROM users')
   .then((data: any) => {
     res.send(data)
   });
 });
 
-app.get('/matches', (req: any, res: any) => {
-  db.any('SELECT * FROM matches')
-  .then((data: any) => {
-    res.send(data)
-  });
-});
+app.use('/matches/', matches(db));
 
 const port = process.env.PORT || 9000;
 
