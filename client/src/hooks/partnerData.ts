@@ -2,17 +2,12 @@ import axios from "axios"
 import { useState } from "react"
 
 export default function usePartnerData() {
-  const partnerTemp = [
-    { id: 1, name: "Bob Smith", email: "test@test.com" },
-    { id: 2, name: "Joe Bob", email: "abc@abc.com" },
-    { id: 3, name: "Claire Squish", email: "farts@farts.com" }
-  ]
 
-  axios.get('/users')
+  const [users] = useState(axios.get('/users'));
 
-  const [Selected, setSelected] = useState(2)
+  const [Selected, setSelected] = useState(1);
 
-  return { partnerTemp, selected: Selected, setSelected }
+  return { users, selected: Selected, setSelected }
 }
 
 
