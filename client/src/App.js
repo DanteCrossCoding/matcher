@@ -18,17 +18,6 @@ const ENDPOINT = "http://localhost:9000";
 
 const socket = io(ENDPOINT);
 
-/* const paddingRestaurant = {
-  name: "null",
-  image_url:
-    "https://s3-media3.fl.yelpcdn.com/bphoto/BhSkksnrQr2XEriwIIsacQ/o.jpg",
-  phone: "604-669-7769",
-  address: "1719 Robson Street",
-  city: "Vancouver",
-  rating: 4,
-  price: "$$",
-}; */
-
 function App() {
   const [match, setMatch] = useState();
   const { selected, setSelected, partnerTemp } = usePartnerData();
