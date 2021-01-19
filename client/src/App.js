@@ -49,7 +49,13 @@ function App() {
     document.title = "Matcher";
   }, []);
 
-  
+  const foundMatch = function () {
+    if (match) {
+      return (
+        <Alert variant={"success"}>Success! There was a match: {match}</Alert>
+      );
+    }
+  };
 
   const resetMatch = function () {
     socket.emit("reset", "reset");
@@ -71,13 +77,6 @@ function App() {
     setRestaurants(response);
   });
 
-  const foundMatch = function () {
-    if (match) {
-      return (
-        <Alert variant={"success"}>Success! There was a match: {match}</Alert>
-      );
-    }
-  };
 
   return (
     <body>

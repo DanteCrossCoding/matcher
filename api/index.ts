@@ -80,7 +80,7 @@ server.listen(port, () => {
           }
           console.log(ansObj)
         });
-
+        
         socket.on('reset', () => {
           ansObj = {};
         })

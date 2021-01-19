@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Carousel.scss";
+import FormContainer from "./FormContainer";
 import { Carousel } from "react-bootstrap";
 import Button from "./Button";
 import io from "socket.io-client";
@@ -13,11 +14,10 @@ export default function CarouselContainer(props) {
   const [response, setResponse] = useState([]);
   const [restaurant, setRestaurant] = useState();
 
-  const startMatch = function () {
-    socket.emit("new match session", props.user);
-    console.log("matching started");
-    setIndex(index + 1);
-    setRestaurant(props.restaurants[index + 1]);
+  const rating = restaurant ? restaurant.rating : 0;
+
+  const topStyle = {
+    width: `${rating * 36}%` //180% is full stars
   };
 
   socket.on("match", (match) => {
@@ -28,10 +28,11 @@ export default function CarouselContainer(props) {
     console.log("connected");
   });
 
-  const rating = restaurant ? restaurant.rating : 0;
-
-  const topStyle = {
-    width: `${rating * 36}%` //180% is full stars
+  const startMatch = function () {
+    socket.emit("new match session", props.user);
+    console.log("matching started");
+    setIndex(index + 1);
+    setRestaurant(props.restaurants[index + 1]);
   };
 
   const sendAnswerSetState = function (answer) {
@@ -150,6 +151,7 @@ export default function CarouselContainer(props) {
           </tbody>
         </table>
       </div>
+      <FormContainer changeCat={props.changeCat}/>
     </div>
   );
 }
