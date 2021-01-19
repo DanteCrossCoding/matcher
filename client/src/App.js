@@ -108,10 +108,11 @@ function App() {
         <div className="row">
           <div className="col-lg-12">
             {partnerTemp.map((partner) => {
+              
               if (partner.id === selected) {
                 return <Partner name={partner.name} email={partner.email} />;
               }
-            })}
+             })}
             <View
               foundMatch={foundMatch}
               view={view}

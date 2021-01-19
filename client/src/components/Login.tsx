@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import useMainView from '../hooks/mainView'
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import '../App.scss';
@@ -6,6 +7,7 @@ import '../bootstrap/vendor/bootstrap/css/bootstrap.css'
 import '../bootstrap/vendor/bootstrap/css/custom.css'
 
 export default function Login() {
+  const { view, pageChange } = useMainView();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,7 +17,9 @@ export default function Login() {
 
   function handleSubmit(event: any) {
     event.preventDefault();
-  }
+    if (email === 'test@test.com' && password === 'password') {
+    
+  }}
 
   return (
     <div className="Login">
