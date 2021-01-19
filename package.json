@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/xrysen/matcher#readme",
   "dependencies": {
+    "@material-ui/core": "^4.11.2",
     "@types/express": "^4.17.11",
     "@types/pg-promise": "^5.4.3",
     "@types/react": "^17.0.0",
