@@ -36,15 +36,7 @@ function App() {
   const [user, setUser] = useState("");
   
   useEffect(() => {
-    /* const getUserRestaurants = async function () {
-      socket.emit("restaurant request", "user");
-      await socket.on("restaurant response", (response) => {
-        response.unshift(paddingRestaurant);
-        setRestaurants(response);
-      });
-    }; */
     setUser(Math.floor(Math.random() * 10).toString()); // THIS ONE DANTE
-    /* getUserRestaurants(); */
     document.title = "Matcher";
   }, []);
 
