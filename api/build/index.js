@@ -41,10 +41,9 @@ server.listen(port, () => {
             const restaurants = yelp_1.getRestaurantIdsWithFilter("mexican");
             restaurants.then((res) => {
                 yelp_1.createRestaurantProfilesArr(res).then(res => {
-                    console.log("initial load: " + res[0]);
                     const resCopy = [...res];
                     yelp_1.shuffleArray(resCopy);
-                    socket.emit('connection', res);
+                    socket.emit('connection', resCopy);
                 });
             });
             console.log(ansObj);

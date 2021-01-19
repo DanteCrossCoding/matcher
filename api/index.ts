@@ -58,10 +58,9 @@ server.listen(port, () => {
           const restaurants = getRestaurantIdsWithFilter("mexican");
           restaurants.then((res: any) => {
             createRestaurantProfilesArr(res).then(res => {
-              console.log("initial load: " + res[0])
               const resCopy = [...res]
               shuffleArray(resCopy)
-              socket.emit('connection', res)
+              socket.emit('connection', resCopy)
             })
           })
           console.log(ansObj)
