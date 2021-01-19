@@ -9,6 +9,7 @@ import Partner from "./components/Partner";
 import PartnerList from "./components/PartnerList";
 import usePartnerData from "./hooks/partnerData";
 import Matcher from "./components/Matcher";
+import Login from "./components/Login"
 import Nav from "./components/Nav";
 import useMainView from "./hooks/mainView";
 import View from "./components/View";

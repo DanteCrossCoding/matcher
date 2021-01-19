@@ -5,3 +5,7 @@
 body {
   background-color: #2f4124;
 }
+
+.Login {
+  display: flex;
+}

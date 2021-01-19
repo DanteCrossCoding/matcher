@@ -3,6 +3,7 @@ import '../App.scss';
 import '../bootstrap/vendor/bootstrap/css/bootstrap.css'
 import Matcher from './Matcher'
 import PartnerList from './PartnerList'
+import Login from './Login'
 
 function View(props: any) {
   
@@ -14,6 +15,10 @@ function View(props: any) {
     changeCat={props.changeCat}
     foundMatch={props.foundMatch}
     rating={2.5}
+  />
+
+  const login = <Login
+    
   />
 
   const partnerList = <PartnerList 
@@ -28,6 +33,8 @@ function View(props: any) {
     final = match;
   } else if (props.view === 'partner') {
     final = partnerList;
+  } else if (props.view === 'login') {
+    final = login;
   }
 
   return (
