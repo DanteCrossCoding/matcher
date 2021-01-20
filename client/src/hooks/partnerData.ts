@@ -8,11 +8,18 @@ export default function usePartnerData() {
     { id: 3, name: "Claire Squish", email: "farts@farts.com" }
   ]
 
+  const [userList, setUserList] = useState([]);
+
   axios.get('/users')
+  .then((users) => {
+    setUserList(users.data);
+  })
+
+  
 
   const [Selected, setSelected] = useState(2)
 
-  return { partnerTemp, selected: Selected, setSelected }
+  return { userList, selected: Selected, setSelected }
 }
 
 

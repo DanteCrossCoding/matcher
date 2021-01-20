@@ -29,7 +29,7 @@ const paddingRestaurant = {
 function App() {
   const [restaurants, setRestaurants] = useState([]);
   const [match, setMatch] = useState();
-  const { selected, setSelected, partnerTemp } = usePartnerData();
+  const { selected, setSelected, userList } = usePartnerData();
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
 
@@ -103,7 +103,7 @@ function App() {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            {partnerTemp.map((partner) => {
+            {userList.map((partner) => {
               if (partner.id === selected) {
                 return <Partner name={partner.name} email={partner.email} />;
               }
@@ -113,7 +113,7 @@ function App() {
               view={view}
               select={setSelected}
               selected={selected}
-              partners={partnerTemp}
+              partners={userList}
               changeCat={changeCategory}
               reset={resetMatch}
               restaurants={restaurants}
