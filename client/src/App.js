@@ -107,7 +107,7 @@ function App() {
               if (partner.id === selected) {
                 return <Partner name={partner.name} email={partner.email} />;
               }
-            })} */}
+            })}
             {<View
               foundMatch={foundMatch}
               view={view}
