@@ -18,7 +18,7 @@ function View(props: any) {
   />
 
   const login = <Login
-    
+  redirect={props.redirect} 
   />
 
   const partnerList = <PartnerList 

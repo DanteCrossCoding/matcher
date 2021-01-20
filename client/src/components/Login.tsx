@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Cookies from 'universal-cookie';
 import useMainView from "../hooks/mainView";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -6,8 +7,8 @@ import '../App.scss';
 import '../bootstrap/vendor/bootstrap/css/bootstrap.css'
 import '../bootstrap/vendor/bootstrap/css/custom.css'
 
-export default function Login() {
-  const { view, pageChange } = useMainView();
+export default function Login(props: any) {
+  const cookies = new Cookies();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,7 +19,8 @@ export default function Login() {
   function handleSubmit(event: any) {
     event.preventDefault();
     if (email === 'test@test.com' && password === 'password') {
-      pageChange('partner')
+      cookies.set('email', email)
+      props.redirect() 
   } else {
     alert("Incorrect email or password")
   }

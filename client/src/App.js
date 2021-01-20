@@ -14,6 +14,7 @@ import Nav from "./components/Nav";
 import useMainView from "./hooks/mainView";
 import View from "./components/View";
 import { Alert } from "react-bootstrap";
+import Cookies from 'universal-cookie';
 
 const ENDPOINT = "http://localhost:9000";
 
@@ -31,12 +32,13 @@ const paddingRestaurant = {
 };
 
 function App() {
+  const cookies = new Cookies();
   const [restaurants, setRestaurants] = useState([]);
   const [match, setMatch] = useState();
   const { selected, setSelected, partnerTemp } = usePartnerData();
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
-  const [email, setEmail] = useState();
+  
   
   useEffect(() => {
     const getUserRestaurants = async function () {
@@ -46,12 +48,15 @@ function App() {
         setRestaurants(response);
       });
     };
-    setUser(Math.floor(Math.random() * 10).toString()); // THIS ONE DANTE
+    setUser(cookies.get('email'))
+    // setUser(Math.floor(Math.random() * 10).toString()); // THIS ONE DANTE
     getUserRestaurants();
     document.title = "Matcher";
   }, []);
 
-  
+  const loginRedirect = function () {
+    pageChange('partner') 
+  }
 
   const resetMatch = function () {
     socket.emit("reset", "reset");
@@ -124,6 +129,7 @@ function App() {
               reset={resetMatch}
               restaurants={restaurants}
               user={user}
+              redirect={loginRedirect} 
             />
           </div>
         </div>
