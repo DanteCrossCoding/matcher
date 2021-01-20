@@ -36,6 +36,7 @@ function App() {
   const { selected, setSelected, partnerTemp } = usePartnerData();
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
+  const [email, setEmail] = useState();
   
   useEffect(() => {
     const getUserRestaurants = async function () {
@@ -109,7 +110,7 @@ function App() {
           <div className="col-lg-12">
             {partnerTemp.map((partner) => {
               
-              if (partner.id === selected) {
+              if (view !== 'login' && partner.id === selected) {
                 return <Partner name={partner.name} email={partner.email} />;
               }
              })}

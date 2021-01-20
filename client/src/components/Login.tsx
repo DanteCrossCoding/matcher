@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useMainView from '../hooks/mainView'
+import useMainView from "../hooks/mainView";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import '../App.scss';
@@ -18,8 +18,11 @@ export default function Login() {
   function handleSubmit(event: any) {
     event.preventDefault();
     if (email === 'test@test.com' && password === 'password') {
-    
-  }}
+      pageChange('partner')
+  } else {
+    alert("Incorrect email or password")
+  }
+}
 
   return (
     <div className="Login">

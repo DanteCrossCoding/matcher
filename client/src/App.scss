@@ -76,10 +76,10 @@
   text-align: center;
   border-radius: 25px;
   background-color: rgb(223, 226, 226);
-  h2 {
+  h1 {
     background-color: #846c9c;
     color: white;
-    border-radius: 15px;
+    border-radius: 25px;
   }
   .rating {
     unicode-bidi: bidi-override;
@@ -119,6 +119,12 @@
   padding-right: 30px;
   margin: 50px;
   width: auto;
+  border-radius: 25px;
+  h1 {
+    background-color: #846c9c;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+  }
   h5 {
     padding: 10px;
     color: white;
