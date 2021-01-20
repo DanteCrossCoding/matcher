@@ -1,13 +1,21 @@
-import axios from "axios"
-import { useState } from "react"
+import axios, { AxiosResponse } from "axios"
+import React, { useEffect, useState } from "react"
 
-export default function usePartnerData() {
+export default async function usePartnerData() {
 
-  const [users] = useState(axios.get('/users'));
+  const [users, setUsers] = useState([] as any);
 
-  const [Selected, setSelected] = useState(1);
+  useEffect(() => {
+    const getPartnerList = async function() {
+      const partners = await axios.get('/users');
+      console.log(partners.data)
+      setUsers(partners.data);
+    }
+    getPartnerList();
+  }, [])
 
-  return { users, selected: Selected, setSelected }
+
+  return users
 }
 
 
