@@ -1,7 +1,7 @@
-import axios, { AxiosResponse } from "axios"
-import React, { useEffect, useState } from "react"
+import axios from "axios"
+import React, { useState } from "react"
 
-export default async function usePartnerData() {
+export default function usePartnerData() {
 
   const [userList, setUserList] = useState([]);
 

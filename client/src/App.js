@@ -32,8 +32,6 @@ function App() {
   const { selected, setSelected, userList } = usePartnerData();
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
-  const [selected, setSelected] = useState(1);
-  console.log(users)
 
   useEffect(() => {
     const getUserRestaurants = async function () {
@@ -46,7 +44,6 @@ function App() {
     setUser(Math.floor(Math.random() * 10).toString()); // THIS ONE DANTE
     getUserRestaurants();
     document.title = "Matcher";
-    console.log(users)
   }, []);
 
 
