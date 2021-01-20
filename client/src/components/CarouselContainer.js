@@ -14,7 +14,7 @@ export default function CarouselContainer(props) {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(false);
   const [match, setMatch] = useState('null');
-  const [state, setState] = useState({show: false, category: undefined})
+  const [state, setState] = useState({show: false, category: undefined, partner: undefined})
 
   const rating = restaurant ? restaurant.rating : 0;
 
@@ -46,14 +46,15 @@ export default function CarouselContainer(props) {
     setMatch('null')
   });
 
-  socket.on("notify", (category) => {
-    setState({show: true, category: category})
-    setTimeout(() => {setState({show: false, category: undefined})}, 10000)
+  socket.on("notify", (response) => {
+    setState({show: true, category: response.category, partner: response.user })
+    setTimeout(() => {setState({show: false, category: undefined, partner: undefined})}, 10000)
   })
 
   const changeCategory = function (category) {
+    const responseObj = { category: category, user: props.user };
     setLoading(true);
-    socket.emit("change category", category);
+    socket.emit("change category", responseObj);
   };
 
   const startMatch = function (category) {
@@ -222,7 +223,7 @@ export default function CarouselContainer(props) {
       return (
         <div>
           <Alert variant={'info'}>
-            Your partner has begun matching a new category: {state.category}
+            {state.partner} has begun matching a new category: {state.category}
           </Alert>
         </div>
       )

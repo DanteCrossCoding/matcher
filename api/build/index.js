@@ -73,11 +73,11 @@ server.listen(port, () => {
             socket.to(basket[user]).emit('resetCarousel', 'resetCarousel');
             ansObj[user] = { yay: [], nay: [] };
         });
-        socket.on("change category", (category) => {
-            const restaurants = yelp_1.getRestaurantIdsWithFilter(category);
+        socket.on("change category", (response) => {
+            const restaurants = yelp_1.getRestaurantIdsWithFilter(response.category);
             restaurants.then((res) => {
                 yelp_1.createRestaurantProfilesArr(res).then((res) => {
-                    socket.broadcast.emit("notify", category);
+                    socket.broadcast.emit("notify", response);
                     const resCopy = [...res];
                     yelp_1.shuffleArray(resCopy);
                     socket.emit("query response", resCopy);

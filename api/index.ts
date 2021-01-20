@@ -93,11 +93,11 @@ server.listen(port, () => {
       ansObj[user] = {yay: [], nay: []}
     });
 
-    socket.on("change category", (category: any) => {
-      const restaurants = getRestaurantIdsWithFilter(category);
+    socket.on("change category", (response: any) => {
+      const restaurants = getRestaurantIdsWithFilter(response.category);
       restaurants.then((res: any) => {
         createRestaurantProfilesArr(res).then((res) => {
-          socket.broadcast.emit("notify", category)
+          socket.broadcast.emit("notify", response)
           const resCopy = [...res];
           shuffleArray(resCopy);
           socket.emit("query response", resCopy);
