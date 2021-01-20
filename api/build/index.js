@@ -66,8 +66,8 @@ server.listen(port, () => {
             console.log(ansObj);
         });
         socket.on("reset", (user) => {
-            ansObj = {};
             socket.to(basket[user]).emit('resetCarousel', 'resetCarousel');
+            ansObj[user] = "";
         });
         socket.on("change category", (category) => {
             const restaurants = yelp_1.getRestaurantIdsWithFilter(category);

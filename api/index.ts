@@ -85,7 +85,6 @@ server.listen(port, () => {
     });
 
     socket.on("reset", (user: any) => {
-      ansObj = {};
       socket.to(basket[user]).emit('resetCarousel', 'resetCarousel')
     });
 
