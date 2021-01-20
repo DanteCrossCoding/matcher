@@ -48,6 +48,7 @@ export default function CarouselContainer(props) {
 
   socket.on("notify", (category) => {
     setState({show: true, category: category})
+    setTimeout(() => {setState({show: false, category: undefined})}, 10000)
   })
 
   const changeCategory = function (category) {
