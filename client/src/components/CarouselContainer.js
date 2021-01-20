@@ -14,42 +14,47 @@ export default function CarouselContainer(props) {
   const [response, setResponse] = useState([]);
   const [restaurant, setRestaurant] = useState();
   const [restaurants, setRestaurants] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [match, setMatch] = useState('null');
 
   const rating = restaurant ? restaurant.rating : 0;
 
   const topStyle = {
-    width: `${rating * 36}%` //180% is full stars
+    width: `${rating * 36}%`, //180% is full stars
   };
 
   socket.on("query response", (response) => {
     console.log("setting new restaurants...");
     setLoading(false);
-    setRestaurant(response[0])
+    setRestaurant(response[0]);
     setRestaurants(response);
-    setIndex(0)
+    setIndex(0);
+    setMatch('null')
   });
 
   socket.on("connection", (response) => {
-    setLoading(false);
-    setRestaurant(response[0])
     setRestaurants(response);
+    setRestaurant(response[0]);
+    setLoading(false);
+    setIndex(0)
   });
 
-  socket.on('resetCarousel', () => {
-    setRestaurant()
+  socket.on("resetCarousel", () => {
+    console.log('carousel reset')
+    setRestaurant();
     setRestaurants();
-    setIndex(0)
-  })
+    setIndex(0);
+    setMatch('null')
+  });
 
   const changeCategory = function (category) {
     setLoading(true);
-    socket.emit("new category", category);
+    socket.emit("change category", category);
   };
 
   const startMatch = function (category) {
     setLoading(true);
-    const responseObj = {category: category, user: props.user}
+    const responseObj = { category: category, user: props.user };
     socket.emit("new match session", responseObj);
     console.log("matching started");
   };
@@ -66,9 +71,9 @@ export default function CarouselContainer(props) {
           <h6>Loading Restaurants...</h6>
           <Spinner animation="border" />
         </div>
-      )
+      );
     }
-  }
+  };
 
   const handleSelect = (selectedIndex, e) => {
     if (selectedIndex === 9 && index === 0) {
@@ -79,26 +84,64 @@ export default function CarouselContainer(props) {
         restaurant: restaurants[index],
       });
     } else if (selectedIndex > index) {
-      sendAnswerSetState({
-        ans: "yay",
-        user: props.user,
-        restaurantPhone: restaurants[index].phone,
-        restaurant: restaurants[index],
-      });
+        sendAnswerSetState({
+          ans: "yay",
+          user: props.user,
+          restaurantPhone: restaurants[index].phone,
+          restaurant: restaurants[index],
+        });
+        if (index === 8) {
+          setMatch('false')
+        }
     } else {
-      sendAnswerSetState({
-        ans: "nay",
-        user: props.user,
-        restaurantPhone: restaurants[index].phone,
-        restaurant: restaurants[index],
-      });
+        sendAnswerSetState({
+          ans: "nay",
+          user: props.user,
+          restaurantPhone: restaurants[index].phone,
+          restaurant: restaurants[index],
+        });
+        if (index === 8) {
+          setMatch('false')
+        }
     }
     setIndex(index + 1);
     setRestaurant(restaurants[index + 1]);
   };
 
   const matchingStarted = function () {
-    if (restaurant) {
+    if ((match === 'false')) {
+      return (
+        <div>
+          <h1>No matches found yet</h1>
+          <h3>Keep Matching:</h3>
+          <FormContainer
+            handleSelect={changeCategory}
+            title={"Select another Category"}
+          />
+          <h3>
+            Or find a {
+              <a rel="noreferrer" target="_blank" href={`http://www.google.com/search?q=Marriage+counsellor`}>
+              marriage counsellor
+            </a>
+            }
+          </h3>
+          <div>{isLoading()}</div>
+        </div>
+      );
+    } 
+    if (restaurant === undefined && match === 'null') {
+      return (
+        <div>
+          <h1>Welcome!</h1>
+          <FormContainer
+            handleSelect={startMatch}
+            title={"Select a Category to Start"}
+          />
+          <div>{isLoading()}</div>
+        </div>
+      );
+    }
+    else {
       const carouselItems = restaurants.map((restaurant, index) => {
         return (
           <Carousel.Item key={index}>
@@ -122,8 +165,7 @@ export default function CarouselContainer(props) {
           >
             {carouselItems}
           </Carousel>
-          <div className="button-row">
-          </div>
+          <div className="button-row"></div>
           <div className="rating">
             <div className="top" style={topStyle}>
               <span>★</span>
@@ -162,33 +204,15 @@ export default function CarouselContainer(props) {
               </tbody>
             </table>
           </div>
-          <div>
-            {isLoading()}
-          </div>
-          <FormContainer 
+          <div>{isLoading()}</div>
+          <FormContainer
             handleSelect={changeCategory}
             title={"Select New Category"}
           />
         </div>
-      ); 
+      );
     }
-    return (
-      <div>
-        <h1>Welcome!</h1>
-        <FormContainer 
-          handleSelect={startMatch}
-          title={"Select a Category to Start"}
-        />
-        <div>
-          {isLoading()}
-        </div>
-      </div>
-    )
   };
 
-  return (
-    <div>
-      {matchingStarted()}
-    </div>
-  );
+  return <div>{matchingStarted()}</div>;
 }

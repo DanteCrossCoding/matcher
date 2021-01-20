@@ -24,7 +24,6 @@ server.listen(port, () => {
     let basket = {};
     io.on("connection", (socket) => {
         socket.on('disconnect', () => {
-            console.log('socket id:' + socket.id);
             for (const user in basket) {
                 if (basket[user] = socket.id) {
                     basket[user] = "";
@@ -70,7 +69,7 @@ server.listen(port, () => {
             ansObj = {};
             socket.to(basket[user]).emit('resetCarousel', 'resetCarousel');
         });
-        socket.on("new category", (category) => {
+        socket.on("change category", (category) => {
             const restaurants = yelp_1.getRestaurantIdsWithFilter(category);
             restaurants.then((res) => {
                 yelp_1.createRestaurantProfilesArr(res).then((res) => {

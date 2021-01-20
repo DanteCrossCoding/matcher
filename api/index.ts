@@ -89,7 +89,7 @@ server.listen(port, () => {
       socket.to(basket[user]).emit('resetCarousel', 'resetCarousel')
     });
 
-    socket.on("new category", (category: any) => {
+    socket.on("change category", (category: any) => {
       const restaurants = getRestaurantIdsWithFilter(category);
       restaurants.then((res: any) => {
         createRestaurantProfilesArr(res).then((res) => {
@@ -99,6 +99,7 @@ server.listen(port, () => {
         });
       });
     });
+
   });
 });
 
