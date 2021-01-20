@@ -97,6 +97,7 @@ server.listen(port, () => {
       const restaurants = getRestaurantIdsWithFilter(category);
       restaurants.then((res: any) => {
         createRestaurantProfilesArr(res).then((res) => {
+          socket.broadcast.emit("notify", category)
           const resCopy = [...res];
           shuffleArray(resCopy);
           socket.emit("query response", resCopy);

@@ -77,6 +77,7 @@ server.listen(port, () => {
             const restaurants = yelp_1.getRestaurantIdsWithFilter(category);
             restaurants.then((res) => {
                 yelp_1.createRestaurantProfilesArr(res).then((res) => {
+                    socket.broadcast.emit("notify", category);
                     const resCopy = [...res];
                     yelp_1.shuffleArray(resCopy);
                     socket.emit("query response", resCopy);

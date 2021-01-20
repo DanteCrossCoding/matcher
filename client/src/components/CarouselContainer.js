@@ -1,7 +1,7 @@
 import "./Carousel.scss";
 import React, { useState } from "react";
 import FormContainer from "./FormContainer";
-import { Carousel, Spinner } from "react-bootstrap";
+import { Carousel, Spinner, Alert } from "react-bootstrap";
 import io from "socket.io-client";
 
 const ENDPOINT = "http://localhost:9000";
@@ -14,6 +14,7 @@ export default function CarouselContainer(props) {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(false);
   const [match, setMatch] = useState('null');
+  const [state, setState] = useState({show: false, category: undefined})
 
   const rating = restaurant ? restaurant.rating : 0;
 
@@ -44,6 +45,10 @@ export default function CarouselContainer(props) {
     setIndex(0);
     setMatch('null')
   });
+
+  socket.on("notify", (category) => {
+    setState({show: true, category: category})
+  })
 
   const changeCategory = function (category) {
     setLoading(true);
@@ -211,5 +216,23 @@ export default function CarouselContainer(props) {
     }
   };
 
-  return <div>{matchingStarted()}</div>;
+  const newPartnerMatch = function () {
+    if (state.show) {
+      return (
+        <div>
+          <Alert variant={'info'}>
+            Your partner has begun matching a new category: {state.category}
+          </Alert>
+        </div>
+      )
+    }
+  }
+
+  return (
+    <div>
+        {newPartnerMatch()}
+        {matchingStarted()}
+    </div>
+    )
+    
 }
