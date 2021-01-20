@@ -10,6 +10,7 @@ import Nav from "./components/Nav";
 import useMainView from "./hooks/mainView";
 import View from "./components/View";
 import { Alert } from "react-bootstrap";
+import useMatchData from "./hooks/getMatchData";
 
 const ENDPOINT = "http://localhost:9000";
 
@@ -32,6 +33,7 @@ function App() {
   const { selected, setSelected, userList } = usePartnerData();
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
+  const { matchData, setMatchData } = useMatchData();
 
   useEffect(() => {
     const getUserRestaurants = async function () {
@@ -45,7 +47,6 @@ function App() {
     getUserRestaurants();
     document.title = "Matcher";
   }, []);
-
 
 
   const resetMatch = function () {

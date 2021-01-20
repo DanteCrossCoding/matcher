@@ -12,5 +12,6 @@ module.exports = (db: any) => {
         res.send(err)
       })
   });
+  
   return router;
 }
