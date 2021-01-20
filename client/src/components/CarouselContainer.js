@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
 import "./Carousel.scss";
+import React, { useState } from "react";
 import FormContainer from "./FormContainer";
 import { Carousel, Spinner } from "react-bootstrap";
-import Button from "./Button";
 import io from "socket.io-client";
 
 const ENDPOINT = "http://localhost:9000";
@@ -11,7 +10,6 @@ const socket = io(ENDPOINT);
 
 export default function CarouselContainer(props) {
   const [index, setIndex] = useState(0);
-  const [response, setResponse] = useState([]);
   const [restaurant, setRestaurant] = useState();
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -61,7 +59,6 @@ export default function CarouselContainer(props) {
 
   const sendAnswerSetState = function (answer) {
     socket.emit("answer", answer);
-    setResponse((prev) => [...prev, `${answer.ans}: ${answer.restaurant}`]);
   };
 
   const isLoading = function () {
@@ -83,14 +80,14 @@ export default function CarouselContainer(props) {
         restaurantPhone: restaurants[index].phone,
         restaurant: restaurants[index],
       });
-    } else if (selectedIndex > index) {
+    } else if (selectedIndex > index || (selectedIndex === 0 && index === 9)) {
         sendAnswerSetState({
           ans: "yay",
           user: props.user,
           restaurantPhone: restaurants[index].phone,
           restaurant: restaurants[index],
         });
-        if (index === 8) {
+        if (index === 9) {
           setMatch('false')
         }
     } else {
@@ -100,7 +97,7 @@ export default function CarouselContainer(props) {
           restaurantPhone: restaurants[index].phone,
           restaurant: restaurants[index],
         });
-        if (index === 8) {
+        if (index === 9) {
           setMatch('false')
         }
     }

@@ -1,18 +1,13 @@
+import "./App.scss";
+import "./bootstrap/vendor/bootstrap/css/bootstrap.css";
 import React, { useState, useEffect } from "react";
-import "./App.scss";
-import "./bootstrap/vendor/bootstrap/css/bootstrap.css";
 import io from "socket.io-client";
-import "./App.scss";
-import "./bootstrap/vendor/bootstrap/css/bootstrap.css";
-import axios from "axios";
 import Partner from "./components/Partner";
-import PartnerList from "./components/PartnerList";
 import usePartnerData from "./hooks/partnerData";
-import Matcher from "./components/Matcher";
 import Nav from "./components/Nav";
 import useMainView from "./hooks/mainView";
 import View from "./components/View";
-import { Alert, Modal, Button } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 
 const ENDPOINT = "http://localhost:9000";
 

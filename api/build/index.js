@@ -27,6 +27,7 @@ server.listen(port, () => {
             for (const user in basket) {
                 if (basket[user] = socket.id) {
                     basket[user] = "";
+                    ansObj[user] = { yay: [], nay: [] };
                     console.log(`removed user ${user}`);
                 }
             }
@@ -52,22 +53,25 @@ server.listen(port, () => {
             // THIS IS THE MATCHER LOGIC JOHN
             if (ans.ans === "yay") {
                 for (const user in ansObj) {
-                    if (ansObj[user]["yay"].includes(ans.restaurantPhone)) {
-                        if (ans.restaurant !== "null")
-                            socket.broadcast.emit("match", ans.restaurant.name);
+                    if (ansObj[user]["yay"].includes(ans.restaurantPhone) && user !== ans.user) {
+                        socket.broadcast.emit("match", ans.restaurant.name);
                         break;
                     }
                 }
-                ansObj[ans.user]["yay"].push(ans.restaurantPhone);
+                if (!ansObj[ans.user]["yay"].includes(ans.restaurantPhone))
+                    ansObj[ans.user]["yay"].push(ans.restaurantPhone);
             }
             else {
+                if (ansObj[ans.user]["yay"].includes(ans.restaurantPhone)) {
+                    ansObj[ans.user]["yay"].splice(ansObj[ans.user]["yay"].indexOf(ans.restaurantPhone), 1);
+                }
                 ansObj[ans.user]["nay"].push(ans.restaurantPhone);
             }
             console.log(ansObj);
         });
         socket.on("reset", (user) => {
             socket.to(basket[user]).emit('resetCarousel', 'resetCarousel');
-            ansObj[user] = "";
+            ansObj[user] = { yay: [], nay: [] };
         });
         socket.on("change category", (category) => {
             const restaurants = yelp_1.getRestaurantIdsWithFilter(category);
