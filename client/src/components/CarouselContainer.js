@@ -36,6 +36,12 @@ export default function CarouselContainer(props) {
     setRestaurants(response);
   });
 
+  socket.on('resetCarousel', () => {
+    setRestaurant()
+    setRestaurants();
+    setIndex(0)
+  })
+
   const changeCategory = function (category) {
     setLoading(true);
     socket.emit("new category", category);
@@ -93,6 +99,17 @@ export default function CarouselContainer(props) {
 
   const matchingStarted = function () {
     if (restaurant) {
+      const carouselItems = restaurants.map((restaurant, index) => {
+        return (
+          <Carousel.Item key={index}>
+            <img
+              className="d-block w-100 carousel-img"
+              src={restaurant.image_url}
+              alt="First slide"
+            />
+          </Carousel.Item>
+        );
+      });
       return (
         <div>
           <h1>{restaurant.name}</h1>
@@ -106,11 +123,6 @@ export default function CarouselContainer(props) {
             {carouselItems}
           </Carousel>
           <div className="button-row">
-            <Button
-              class={"button button--danger"}
-              onClick={props.reset}
-              name={"Reset"}
-            />
           </div>
           <div className="rating">
             <div className="top" style={topStyle}>
@@ -173,18 +185,6 @@ export default function CarouselContainer(props) {
       </div>
     )
   };
-
-  const carouselItems = restaurants.map((restaurant, index) => {
-    return (
-      <Carousel.Item key={index}>
-        <img
-          className="d-block w-100 carousel-img"
-          src={restaurant.image_url}
-          alt="First slide"
-        />
-      </Carousel.Item>
-    );
-  });
 
   return (
     <div>

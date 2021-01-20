@@ -35,19 +35,22 @@ const port = process.env.PORT || 9000;
 server.listen(port, () => {
   console.log("Server started listening on port " + port);
 
-  /* Known working queries:
-"japanese"
-"chinese"
-"seafood"
-"italian"
-"brunch"
-"vietnamese"
-"mexican"
- */
   let ansObj: any = {};
+  let basket: any = {};
 
   io.on("connection", (socket: any) => {
+
+    socket.on('disconnect', () => {
+      for (const user in basket) {
+        if (basket[user] = socket.id) {
+          basket[user] = ""
+          console.log(`removed user ${user}`)
+        }
+      }
+    })
+
     socket.on("new match session", (response: any) => {
+      basket[response.user] = socket.id;
       console.log("starting new session");
       ansObj[response.user] = {
         yay: [],
@@ -81,15 +84,10 @@ server.listen(port, () => {
       console.log(ansObj);
     });
 
-    socket.on("reset", () => {
+    socket.on("reset", (user: any) => {
       ansObj = {};
+      socket.to(basket[user]).emit('resetCarousel', 'resetCarousel')
     });
-
-    /* socket.on('restaurant request', (user: any) => {
-          const resCopy = [...res]
-          shuffleArray(resCopy)
-          socket.emit('restaurant response', resCopy)
-        }) */
 
     socket.on("new category", (category: any) => {
       const restaurants = getRestaurantIdsWithFilter(category);

@@ -9,7 +9,7 @@ function View(props: any) {
   const match = <Matcher 
     reset={props.reset}
     user={props.user}
-    foundMatch={props.foundMatch}
+    /* foundMatch={props.foundMatch} */
   />
 
   const partnerList = <PartnerList 

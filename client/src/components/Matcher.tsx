@@ -7,7 +7,7 @@ function Matcher(props: any) {
 
   return (
     <div className="restaurant">
-      {props.foundMatch()}
+      {/* {props.foundMatch()} */}
       <div>
         <CarouselContainer
           reset={props.reset}

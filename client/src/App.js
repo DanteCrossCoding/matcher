@@ -12,7 +12,7 @@ import Matcher from "./components/Matcher";
 import Nav from "./components/Nav";
 import useMainView from "./hooks/mainView";
 import View from "./components/View";
-import { Alert } from "react-bootstrap";
+import { Alert, Modal, Button } from "react-bootstrap";
 
 const ENDPOINT = "http://localhost:9000";
 
@@ -23,22 +23,20 @@ function App() {
   const { selected, setSelected, partnerTemp } = usePartnerData();
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
-  
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+    setShow(false)
+    resetMatch();
+  };
+
   useEffect(() => {
     setUser(Math.floor(Math.random() * 10).toString()); // THIS ONE DANTE
     document.title = "Matcher";
   }, []);
 
-  const foundMatch = function () {
-    if (match) {
-      return (
-        <Alert variant={"success"}>Success! There was a match: {match}</Alert>
-      );
-    }
-  };
-
   const resetMatch = function () {
-    socket.emit("reset", "reset");
+    socket.emit("reset", user);
     console.log("match reset");
     setMatch();
   };
@@ -46,6 +44,7 @@ function App() {
   socket.on("match", (match) => {
     console.log(`We have a match!! ${match}`);
     setMatch(match);
+    setShow(true);
   });
 
   return (
@@ -80,8 +79,23 @@ function App() {
                 return <Partner name={partner.name} email={partner.email} />;
               }
             })}
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>We Got One!</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Woohoo we found a match! {<a rel="noreferrer" target="_blank" href={`http://www.google.com/search?q=${match}`}>
+                {match}
+                </a>}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Modal>
             <View
-              foundMatch={foundMatch}
+              /* foundMatch={foundMatch} */
               view={view}
               select={setSelected}
               selected={selected}
