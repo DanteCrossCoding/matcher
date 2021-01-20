@@ -74,6 +74,8 @@ server.listen(port, () => {
         for (const user in ansObj) {
           if (ansObj[user]["yay"].includes(ans.restaurantPhone) && user !== ans.user) {
             socket.broadcast.emit("match", ans.restaurant.name);
+
+            // send ans.user, user, ans.restaurant to DB as Match
             break;
           }
         }
