@@ -32,6 +32,8 @@ function App() {
   const { selected, setSelected, userList } = usePartnerData();
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
+  const [selected, setSelected] = useState(1);
+  console.log(users)
 
   useEffect(() => {
     const getUserRestaurants = async function () {
@@ -44,6 +46,7 @@ function App() {
     setUser(Math.floor(Math.random() * 10).toString()); // THIS ONE DANTE
     getUserRestaurants();
     document.title = "Matcher";
+    console.log(users)
   }, []);
 
 
@@ -77,7 +80,7 @@ function App() {
   };
 
   return (
-    <body>
+    <main>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <div className="container">
           <a className="navbar-brand" href="/">
@@ -107,8 +110,8 @@ function App() {
               if (partner.id === selected) {
                 return <Partner name={partner.name} email={partner.email} />;
               }
-            })}
-            <View
+            })} */}
+            {<View
               foundMatch={foundMatch}
               view={view}
               select={setSelected}
@@ -118,11 +121,11 @@ function App() {
               reset={resetMatch}
               restaurants={restaurants}
               user={user}
-            />
+            />}
           </div>
         </div>
       </div>
-    </body>
+    </main>
   );
 }
 

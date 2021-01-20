@@ -33,8 +33,9 @@ app.get('/', (req: any, res: any) => {
 app.get('/users', (req: any, res: any) => {
   db.query('SELECT * FROM users')
   .then((data: any) => {
-    res.send(data)
-  });
+    res.send(data);
+  })
+  .catch((err: any) => console.log(err));
 });
 
 app.use('/matches/', matches(db));

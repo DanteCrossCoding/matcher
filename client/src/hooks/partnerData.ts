@@ -1,12 +1,7 @@
-import axios from "axios"
-import { useState } from "react"
+import axios, { AxiosResponse } from "axios"
+import React, { useEffect, useState } from "react"
 
-export default function usePartnerData() {
-  const partnerTemp = [
-    { id: 1, name: "Bob Smith", email: "test@test.com" },
-    { id: 2, name: "Joe Bob", email: "abc@abc.com" },
-    { id: 3, name: "Claire Squish", email: "farts@farts.com" }
-  ]
+export default async function usePartnerData() {
 
   const [userList, setUserList] = useState([]);
 

@@ -23,7 +23,8 @@ app.get('/users', (req, res) => {
     db.query('SELECT * FROM users')
         .then((data) => {
         res.send(data);
-    });
+    })
+        .catch((err) => console.log(err));
 });
 app.use('/matches/', matches(db));
 const port = process.env.PORT || 9000;
