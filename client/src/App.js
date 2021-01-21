@@ -36,8 +36,6 @@ function App() {
 
   useEffect(() => {
     document.title = "Matcher";
-    getUserList()
-    getMatchData()
   }, []);
 
   const loginRedirect = function () {
