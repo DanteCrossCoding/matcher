@@ -3,9 +3,9 @@ import '../App.scss';
 import '../bootstrap/vendor/bootstrap/css/bootstrap.css'
 
 function Nav(props: any) {
-  let partner: string = "nav-item";
+  let partner: string = "nav-item right";
 
-  let match: string = "nav-item";
+  let match: string = "nav-item right";
 
   if (props.view === "match") {
     match += " active";
