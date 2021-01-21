@@ -21,7 +21,7 @@ function App() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
-    setShow(false)
+    setShow(false);
     resetMatch();
   };
 
@@ -43,10 +43,10 @@ function App() {
   });
 
   return (
-    <body>
+    <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-        <div className="container">
-          <a className="navbar-brand" href="/">
+        <div className="navbar-container">
+          <a className="nav-item navbar-brand" href="/">
             Matcher
           </a>
           <button
@@ -65,43 +65,51 @@ function App() {
           </div>
         </div>
       </nav>
-
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12">
-            {partnerTemp.map((partner) => {
-              if (partner.id === selected) {
-                return <Partner name={partner.name} email={partner.email} />;
-              }
-            })}
-            <Modal show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>We Got One!</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                Woohoo we found a match! {<a rel="noreferrer" target="_blank" href={`http://www.google.com/search?q=${match}`}>
-                {match}
-                </a>}
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                  Close
-                </Button>
-              </Modal.Footer>
-            </Modal>
-            <View
-              /* foundMatch={foundMatch} */
-              view={view}
-              select={setSelected}
-              selected={selected}
-              partners={partnerTemp}
-              reset={resetMatch}
-              user={user}
-            />
+      <div className="body">
+        <div className="main-container main-view">
+          <div className="row">
+            <div className="col-lg-12">
+              {partnerTemp.map((partner) => {
+                if (partner.id === selected) {
+                  return <Partner name={partner.name} email={partner.email} />;
+                }
+              })}
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>We Got One!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Woohoo we found a match!{" "}
+                  {
+                    <a
+                      rel="noreferrer"
+                      target="_blank"
+                      href={`http://www.google.com/search?q=${match}`}
+                    >
+                      {match}
+                    </a>
+                  }
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+              <View
+                /* foundMatch={foundMatch} */
+                view={view}
+                select={setSelected}
+                selected={selected}
+                partners={partnerTemp}
+                reset={resetMatch}
+                user={user}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </body>
+    </>
   );
 }
 

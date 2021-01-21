@@ -1,46 +1,3 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 
 .partners {
   display: flex;
@@ -140,7 +97,68 @@
 
 .col-lg-12 {
   display: flex;
-  justify-content: space-around;
   background-color: #b9c5cf;
-  border-radius: 25px;
+}
+
+.navbar {
+
+}
+
+.navbar-container {
+  height: 65px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.navbar-brand {
+  align-self: center
+}
+
+.nav-item {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.main-container {
+  width: 90%;
+}
+
+.body {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.restaurant {
+  margin-left: auto; 
+  margin-right: auto;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.current-partner {
+  height: 375px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10%;
+  align-items: center;
+}
+
+.description {
+  display: flex;
+  justify-content: center;
+}
+
+.dropdown {
+  margin-bottom: 20px
+}
+
+.carousel-inner {
+  border-radius: 10%;
 }
