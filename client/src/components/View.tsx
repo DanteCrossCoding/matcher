@@ -4,10 +4,11 @@ import '../bootstrap/vendor/bootstrap/css/bootstrap.css'
 import Matcher from './Matcher'
 import PartnerList from './PartnerList'
 import Login from './Login'
+import MatchList from './MatchList';
 
 function View(props: any) {
-  
-  const match = <Matcher 
+
+  const match = <Matcher
     start={props.start}
     reset={props.reset}
     restaurants={props.restaurants}
@@ -18,14 +19,16 @@ function View(props: any) {
   />
 
   const login = <Login
-    
+
   />
 
-  const partnerList = <PartnerList 
-      select={props.select} 
-      selected={props.selected} 
-      partners={props.partners} 
-    />
+  const matchList = <MatchList />
+
+  const partnerList = <PartnerList
+    select={props.select}
+    selected={props.selected}
+    partners={props.partners}
+  />
 
   let final;
 
@@ -35,13 +38,15 @@ function View(props: any) {
     final = partnerList;
   } else if (props.view === 'login') {
     final = login;
+  } else if (props.view === 'match-list') {
+    final = matchList;
   }
 
   return (
-    <>
-    {final}
-    </>
-  );
+      <>
+        {final}
+      </>
+    );
 }
 
 export default View;
