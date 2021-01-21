@@ -22,7 +22,7 @@ function View(props: any) {
 
   />
 
-  const matchList = <MatchList />
+  const matchList = <MatchList partner={props.selected} matchList={props.matchList}/>
 
   const partnerList = <PartnerList
     select={props.select}

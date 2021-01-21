@@ -5,10 +5,12 @@ export default function useMatchData() {
 
   const [matchData, setMatchData] = useState([]);
 
-  axios.get('/matches/:1')
-    .then((data) => {
-      setMatchData(data.data);
-    })
 
-  return { matchData, setMatchData }
+  const getMatchData = () => {
+    axios.get('/matches/:1/:2')
+      .then((data) => {
+        setMatchData(data.data);
+      })
+  }
+  return { matchData, setMatchData, getMatchData }
 }

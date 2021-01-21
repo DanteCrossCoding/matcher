@@ -33,7 +33,7 @@ function App() {
   const { selected, setSelected, userList, getUserList } = usePartnerData();
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
-  const { matchData, setMatchData } = useMatchData();
+  const { matchData, getMatchData } = useMatchData();
 
   useEffect(() => {
     const getUserRestaurants = async function () {
@@ -46,7 +46,8 @@ function App() {
     setUser(Math.floor(Math.random() * 10).toString()); // THIS ONE DANTE
     getUserRestaurants();
     document.title = "Matcher";
-    getUserList()
+    getUserList();
+    getMatchData();
   }, []);
 
 
@@ -120,6 +121,7 @@ function App() {
               reset={resetMatch}
               restaurants={restaurants}
               user={user}
+              matchList={matchData}
             />}
           </div>
         </div>
