@@ -8,6 +8,7 @@ import Nav from "./components/Nav";
 import useMainView from "./hooks/mainView";
 import View from "./components/View";
 import { Modal, Button } from "react-bootstrap";
+import Cookies from 'universal-cookie';
 
 const ENDPOINT = "http://localhost:9000";
 
@@ -19,16 +20,24 @@ function App() {
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
   const [show, setShow] = useState(false);
+  const cookies = new Cookies();
 
   const handleClose = () => {
     setShow(false);
     resetMatch();
   };
 
+  const successfulLogin = function () {
+    setUser(cookies.get('email'));
+  }
+  
   useEffect(() => {
-    setUser(Math.floor(Math.random() * 10).toString()); // THIS ONE DANTE
     document.title = "Matcher";
   }, []);
+
+  const loginRedirect = function () {
+    pageChange('partner') 
+  }
 
   const resetMatch = function () {
     socket.emit("reset", user);
@@ -43,7 +52,7 @@ function App() {
   });
 
   return (
-    <>
+    <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <div className="navbar-container">
           <a className="nav-item navbar-brand" href="/">
@@ -65,13 +74,14 @@ function App() {
           </div>
         </div>
       </nav>
+
       <div className="body">
         <div className="main-container main-view">
           <div className="row">
             <div className="col-lg-12">
               {partnerTemp.map((partner) => {
                 if (partner.id === selected) {
-                  return <Partner name={partner.name} email={partner.email} />;
+                  return <Partner name={partner.name} email={partner.email} />
                 }
               })}
               <Modal show={show} onHide={handleClose}>
@@ -97,7 +107,9 @@ function App() {
                 </Modal.Footer>
               </Modal>
               <View
-                /* foundMatch={foundMatch} */
+                cookies={cookies}
+                success={successfulLogin}
+                redirect={loginRedirect}
                 view={view}
                 select={setSelected}
                 selected={selected}
@@ -109,8 +121,8 @@ function App() {
           </div>
         </div>
       </div>
-    </>
-  );
+    </div>
+  )
 }
 
 export default App;
