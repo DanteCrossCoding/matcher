@@ -6,8 +6,7 @@ import CarouselContainer from "./CarouselContainer";
 function Matcher(props: any) {
 
   return (
-    <div className="restaurant">
-      {/* {props.foundMatch()} */}
+    <div className="content-card restaurant">
       <div>
         <CarouselContainer
           reset={props.reset}
