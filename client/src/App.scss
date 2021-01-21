@@ -109,7 +109,7 @@
 }
 
 .main-container {
-  width: 90%;
+  width: 80%;
   margin-top: 65px;
   margin-bottom: 65px;
 }
@@ -157,9 +157,10 @@
   background-color: #ABC798; //USER BADGE
 }
 
-.body {
-  background-color: #FFFDF1 // MAIN BACKGROUND
-}
+/* .body {
+  background-color: #fffdf1;
+  background-image: url("https://www.transparenttextures.com/patterns/triangles.png");
+} */
 
 .carousel-inner {
   border-radius: 5%;
@@ -183,5 +184,6 @@
   display: flex;
   background-color: #FFFDFD; // MAIN CONTAINER
   border-radius: 30px;
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
+
