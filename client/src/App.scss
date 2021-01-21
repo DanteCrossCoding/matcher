@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;600&display=swap');
+$accent:  #85CDC9;
 
 .partners {
   display: flex;
@@ -54,7 +55,7 @@
     padding: 0;
     text-shadow: 0px 1px 0px;
     .top {
-      color: gold;
+      color: $accent;
       padding: 0;
       position: absolute;
       z-index: 1;
@@ -161,12 +162,12 @@
 }
 
 .current-partner h5 {
-  background-color: #ABC798; //USER BADGE
+  background-color: $accent; //USER BADGE
 }
 
 .carousel-inner {
   border-radius: 5%;
-  border: 5px solid #ABC798; // RESTAURANT BORDER
+  /* border: 5px solid $accent; // RESTAURANT BORDER */
 }
 
 .content-card {
@@ -194,8 +195,8 @@ body {
 }
 
 .btn-primary {
-  background-color: #ABC798 !important;
-  border-color: #ABC798 !important;
+  background-color: $accent !important;
+  border-color: $accent !important;
 }
 
 
