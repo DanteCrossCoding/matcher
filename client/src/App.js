@@ -47,7 +47,7 @@ function App() {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <div className="navbar-container">
           <a className="nav-item navbar-brand" href="/">
-            Matcher
+            Matchr
           </a>
           <button
             className="navbar-toggler"
