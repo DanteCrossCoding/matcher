@@ -7,7 +7,7 @@ function Partner(props :any) {
     <div className="current-partner">
       <h1>{props.name}</h1>
       <img id='profile' src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="Profile"/>
-  <h5>{props.email}</h5>
+  <h5 className="user-badge">{props.email}</h5>
     </div>
   );
 }
