@@ -7,6 +7,7 @@ function Nav(props: any) {
   let partner: string = "nav-item";
   let login: string = "nav-item";
   let match: string = "nav-item";
+  let matchList: string = "nav-item";
 
   if (props.view === "login") {
     login += " active";
@@ -17,7 +18,11 @@ function Nav(props: any) {
   }
 
   if (props.view === 'partner') {
-    partner += " active"
+    partner += " active";
+  }
+
+  if (props.view === 'match-list') {
+    matchList += ' active';
   }
 
   return (
@@ -28,6 +33,10 @@ function Nav(props: any) {
       </li>
       <li className={match}>
         <span className="nav-link" onClick={() => props.pageChange('match')}>Match
+        </span>
+      </li>
+      <li className={matchList}>
+        <span className="nav-link" onClick={() => props.pageChange('match-list')}>My Matches
         </span>
       </li>
       <li className={login}>

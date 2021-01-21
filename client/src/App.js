@@ -30,7 +30,7 @@ const paddingRestaurant = {
 function App() {
   const [restaurants, setRestaurants] = useState([]);
   const [match, setMatch] = useState();
-  const { selected, setSelected, userList } = usePartnerData();
+  const { selected, setSelected, userList, getUserList } = usePartnerData();
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
   const { matchData, setMatchData } = useMatchData();
@@ -46,6 +46,7 @@ function App() {
     setUser(Math.floor(Math.random() * 10).toString()); // THIS ONE DANTE
     getUserRestaurants();
     document.title = "Matcher";
+    getUserList()
   }, []);
 
 
