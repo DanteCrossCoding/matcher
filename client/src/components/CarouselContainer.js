@@ -124,8 +124,8 @@ export default function CarouselContainer(props) {
           />
           <h3>
             Or find a {
-              <a rel="noreferrer" target="_blank" href={`http://www.google.com/search?q=Marriage+counsellor`}>
-              marriage counsellor
+              <a rel="noreferrer" target="_blank" href={`http://www.google.com/search?q=Relationship+counsellor`}>
+              relationship counsellor
             </a>
             }
           </h3>
