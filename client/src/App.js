@@ -35,7 +35,7 @@ function App() {
   const { matchData, getMatchData } = useMatchData();
 
   useEffect(() => {
-    document.title = "Matcher";
+    document.title = "Matchr";
   }, []);
 
   const loginRedirect = function () {
