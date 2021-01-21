@@ -9,6 +9,7 @@ const http = require("http");
 const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server);
+const matches = require("./routes/matches");
 app.get("/test", (req, res) => {
     res.send("Backend connected!");
 });
@@ -17,6 +18,14 @@ app.get("/", (req, res) => {
         res.send(data[0].name);
     });
 });
+app.get('/users', (req, res) => {
+    db.query('SELECT * FROM users')
+        .then((data) => {
+        res.send(data);
+    })
+        .catch((err) => console.log(err));
+});
+app.use('/matches/', matches(db));
 const port = process.env.PORT || 9000;
 server.listen(port, () => {
     console.log("Server started listening on port " + port);
@@ -55,6 +64,7 @@ server.listen(port, () => {
                 for (const user in ansObj) {
                     if (ansObj[user]["yay"].includes(ans.restaurantPhone) && user !== ans.user) {
                         socket.broadcast.emit("match", ans.restaurant.name);
+                        // send ans.user, user, ans.restaurant to DB as Match
                         break;
                     }
                 }

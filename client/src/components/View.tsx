@@ -3,6 +3,7 @@ import "../App.scss";
 import "../bootstrap/vendor/bootstrap/css/bootstrap.css";
 import Matcher from "./Matcher";
 import PartnerList from "./PartnerList";
+import MatchList from "./MatchList";
 import Login from "./Login";
 import Cookies from "universal-cookie";
 
@@ -15,6 +16,10 @@ function View(props: any) {
       success={props.success}
       cookies={props.cookies}
     />
+  );
+
+  const matchList = (
+    <MatchList partner={props.selected} matchList={props.matchList} />
   );
 
   const partnerList = (
@@ -31,8 +36,10 @@ function View(props: any) {
     final = match;
   } else if (props.view === "partner") {
     final = partnerList;
-  } else if (!props.cookies.get('email')) {
+  } else if (!props.cookies.get("email")) {
     final = login;
+  } else if (props.view === "match-list") {
+    final = matchList;
   } else {
     final = match;
   }

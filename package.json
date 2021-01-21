@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node api/build/index.js",
     "server": "nodemon api/build/index.js",
-    "client": "cd client && npm run start"
+    "client": "cd client && npm run start",
+    "reset": "psql -U matcher -d matcher < ./api/db/schema/create.sql && psql -U matcher -d matcher < ./api/db/schema/development.sql"
   },
   "repository": {
     "type": "git",

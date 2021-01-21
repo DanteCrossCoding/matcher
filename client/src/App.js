@@ -7,6 +7,7 @@ import usePartnerData from "./hooks/partnerData";
 import Nav from "./components/Nav";
 import useMainView from "./hooks/mainView";
 import View from "./components/View";
+import useMatchData from "./hooks/getMatchData";
 import { Modal, Button } from "react-bootstrap";
 import Cookies from 'universal-cookie';
 
@@ -16,7 +17,7 @@ const socket = io(ENDPOINT);
 
 function App() {
   const [match, setMatch] = useState();
-  const { selected, setSelected, partnerTemp } = usePartnerData();
+  const { selected, setSelected, userList, getUserList } = usePartnerData();
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
   const [show, setShow] = useState(false);
@@ -31,8 +32,12 @@ function App() {
     setUser(cookies.get('email'));
   }
   
+  const { matchData, getMatchData } = useMatchData();
+
   useEffect(() => {
     document.title = "Matcher";
+    getUserList()
+    getMatchData()
   }, []);
 
   const loginRedirect = function () {
@@ -79,7 +84,7 @@ function App() {
         <div className="main-container main-view">
           <div className="row">
             <div className="col-lg-12">
-              {partnerTemp.map((partner) => {
+              {userList.map((partner) => {
                 if (partner.id === selected) {
                   return <Partner name={partner.name} email={partner.email} />
                 }
@@ -107,15 +112,18 @@ function App() {
                 </Modal.Footer>
               </Modal>
               <View
+                getUserList={getUserList}
+                getMatchData={getMatchData}
                 cookies={cookies}
                 success={successfulLogin}
                 redirect={loginRedirect}
                 view={view}
                 select={setSelected}
                 selected={selected}
-                partners={partnerTemp}
+                partners={userList}
                 reset={resetMatch}
                 user={user}
+                matchList={matchData}
               />
             </div>
           </div>
