@@ -5,7 +5,7 @@ export default function usePartnerData() {
 
   const [userList, setUserList] = useState([]);
 
-  
+
   const getUserList = () => {
 
     axios.get('/users')
@@ -14,13 +14,10 @@ export default function usePartnerData() {
       })
       .catch((err) => {
         console.error(err);
-    })
+      })
   }
+
+  const [Selected, setSelected] = useState(2);
+
+  return { userList, selected: Selected, setSelected, getUserList };
 }
-
-  const [Selected, setSelected] = useState(2)
-
-  return { userList, selected: Selected, setSelected, getUserList }
-}
-
-
