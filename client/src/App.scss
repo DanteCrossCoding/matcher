@@ -1,4 +1,6 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;600&display=swap');
+
 .partners {
   display: flex;
   flex-direction: column;
@@ -100,7 +102,8 @@
 }
 
 .navbar-brand {
-  align-self: center
+  align-self: center;
+  font-family: 'Pacifico', cursive;
 }
 
 .nav-item {
@@ -157,11 +160,6 @@
   background-color: #ABC798; //USER BADGE
 }
 
-/* .body {
-  background-color: #fffdf1;
-  background-image: url("https://www.transparenttextures.com/patterns/triangles.png");
-} */
-
 .carousel-inner {
   border-radius: 5%;
   border: 5px solid #ABC798; // RESTAURANT BORDER
@@ -187,3 +185,6 @@
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
+body {
+  font-family: 'Quicksand', sans-serif;
+}
