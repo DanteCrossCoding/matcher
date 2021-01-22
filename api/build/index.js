@@ -6,7 +6,11 @@ const pg = require("pg-promise")();
 const db = pg(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
 const express = require("express");
 const http = require("http");
+const bodyParser = require("body-parser");
 const app = express();
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 const server = http.createServer(app);
 const io = require("socket.io")(server);
 const matches = require("./routes/matches");
@@ -25,7 +29,7 @@ app.get('/users', (req, res) => {
     })
         .catch((err) => console.log("user call error", err));
 });
-app.use('/matches/', matches(db));
+app.use('/matches', matches(db));
 const port = process.env.PORT || 9000;
 server.listen(port, () => {
     console.log("Server started listening on port " + port);

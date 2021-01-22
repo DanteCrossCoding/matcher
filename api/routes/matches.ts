@@ -12,6 +12,14 @@ module.exports = (db: any) => {
         res.send(err)
       })
   });
+  router.post('/', (req: any, res: any) => {
+    db.query('INSERT INTO matches (user_id, partner_id, restaurant) VALUES ($1, $2, $3), ($2, $1, $3);', [req.body.user_id, req.body.partner_id, req.body.restaurant])
+    .then((data: any) => {
+      console.log(data)
+      res.send('data updated')
+    })
+    .catch((err: any) => console.log(err))
+  })
   
   return router;
 }

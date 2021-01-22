@@ -4,7 +4,7 @@ import usePartnerData from "./partnerData";
 
 export default function useMatchData() {
 
-  const { userList, getUserList} = usePartnerData()
+  const { userList, getUserList } = usePartnerData()
   getUserList();
 
   const [matchData, setMatchData] = useState([]);
@@ -23,9 +23,18 @@ export default function useMatchData() {
     let user = getUserByEmail(email) || { id: 0 };
     axios.get(`/matches/:${user.id}/:${partner}`)
       .then((data) => {
-        console.log(data)
         setMatchData(data.data);
       })
   }
+
+  const addMatchData = (email: string, partner: number, restaurant: any) => {
+    let user = getUserByEmail(email) || { id: 0 };
+    axios.post('/matches', { 'user_id': user.id, 'partner_id': partner, 'restaurant': restaurant })
+    .then((res) => {
+      console.log(res)
+    })
+  }
+
+
   return { matchData, setMatchData, getMatchData }
 }
