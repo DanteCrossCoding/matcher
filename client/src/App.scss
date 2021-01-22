@@ -20,7 +20,7 @@ $accent:  #85CDC9;
   .list-item {
     padding: 5px;
     text-align: center;
-
+    cursor: pointer;
   }
   :hover {
     background-color: $accent;
