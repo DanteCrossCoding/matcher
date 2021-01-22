@@ -7,7 +7,7 @@ export default function useMatchData() {
 
 
   const getMatchData = () => {
-    axios.get('/matches/:1/:2')
+    axios.get(`/matches/:1/:2`)
       .then((data) => {
         setMatchData(data.data);
       })

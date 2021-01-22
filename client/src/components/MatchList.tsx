@@ -5,11 +5,11 @@ import MatchListItem from './MatchListItem';
 
 function MatchList(props: any) {
   return (
-    <div className="partners">
+    <div className="matches">
       <h1 className="mt-5">Matches</h1>
-      <ul className="list">
+      <ul className="match-list">
       {props.matchList && props.matchList.map((match: any) => {
-        <MatchListItem match={match}/>
+        return (<MatchListItem match={match}/>)
       })}
       </ul>
     </div>
