@@ -79,9 +79,6 @@ function App() {
       </nav>
 
       <div className="body">
-        <div className="main-container main-view">
-          <div className="row">
-            <div className="col-lg-12">
               {userList.map((partner) => {
                 if (partner.id === selected) {
                   return <Partner name={partner.name} email={partner.email} />
@@ -123,9 +120,6 @@ function App() {
                 user={user}
                 matchList={matchData}
               />
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   )

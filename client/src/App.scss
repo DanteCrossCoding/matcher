@@ -6,12 +6,13 @@ $accent:  #85CDC9;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   margin-left: auto;
   margin-right: auto;
 }
 
 .list {
-  background-color: gainsboro;
+  font-size: 1.5em;
   color: black;
   list-style-type: none;
   padding: 0%;
@@ -19,15 +20,14 @@ $accent:  #85CDC9;
   .list-item {
     padding: 5px;
     text-align: center;
-    border: 1px solid black;
 
   }
   :hover {
-    background-color: blue;
+    background-color: $accent;
     color: white;
   }
   .selected {
-    background-color: blue;
+    background-color: $accent;
     color: white;
   }
 }
@@ -128,7 +128,7 @@ $accent:  #85CDC9;
 .restaurant {
   margin-left: auto; 
   margin-right: auto;
-  width: 700px;
+  width: 550px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -136,7 +136,6 @@ $accent:  #85CDC9;
 }
 
 .current-partner {
-  height: 375px;
   width: 320px;
   display: flex;
   flex-direction: column;
@@ -196,4 +195,10 @@ body {
   border-color: $accent !important;
 }
 
+.nav-item {
+  cursor: pointer;
+}
 
+.quicksand {
+  font-family: 'Quicksand', sans-serif !important;
+}

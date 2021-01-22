@@ -25,9 +25,11 @@ export default function Login(props: any) {
 }
 
   return (
-    <div className="Login">
+    <div className="content-card restaurant">
+      <div className="Login">
       <p>
         <h1>Matchr</h1>
+        <h1 className="quicksand">Please Log In</h1>
         </p>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="email">
@@ -52,5 +54,8 @@ export default function Login(props: any) {
         </Button>
       </Form>
     </div>
+    </div>
+
+    
   );
 }
