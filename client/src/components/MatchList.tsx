@@ -9,7 +9,7 @@ function MatchList(props: any) {
       <h1 className="mt-5">Matches</h1>
       <ul className="list">
       {props.matchList && props.matchList.map((match: any) => {
-        <MatchListItem match={match}/>
+        return (<MatchListItem match={match}/>)
       })}
       </ul>
     </div>
