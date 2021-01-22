@@ -10,6 +10,7 @@ function Matcher(props: any) {
     <div className="content-card restaurant">
       <div>
         <CarouselContainer
+          username={props.username}
           reset={props.reset}
           user={props.user}
         />

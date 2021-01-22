@@ -107,6 +107,7 @@ server.listen(port, () => {
     });
 
     socket.on("change category", (response: any) => {
+      console.log("response: " + response.partner)
       const restaurants = getRestaurantIdsWithFilter(response.category);
       restaurants.then((res: any) => {
         createRestaurantProfilesArr(res).then((res) => {

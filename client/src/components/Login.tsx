@@ -15,7 +15,7 @@ export default function Login(props: any) {
 
   function handleSubmit(event: any) {
     event.preventDefault();
-    if ((email === 'test@test.com' || 'bob@bob.com') && password === 'password') {
+    if ((email === 'test@test.com' || 'bob@bob.com' || 'bob@mango.com' || 'sue@mango.com')) {
       props.cookies.set('email', email)
       props.success();
       props.redirect(); 

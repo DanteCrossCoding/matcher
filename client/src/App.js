@@ -16,20 +16,36 @@ const ENDPOINT = "http://localhost:9000";
 const socket = io(ENDPOINT);
 
 function App() {
+  const cookies = new Cookies();
   const [match, setMatch] = useState();
   const { selected, setSelected, userList, getUserList } = usePartnerData();
   const { view, pageChange } = useMainView();
   const [user, setUser] = useState("");
+  const [username, setUsername] = useState(cookies.get('username') ? cookies.get('username') : "");
   const [show, setShow] = useState(false);
-  const cookies = new Cookies();
+  
 
   const handleClose = () => {
     setShow(false);
     resetMatch();
   };
 
+  const usernameAssign = function(user) {
+    if (user === "bob@mango.com") {
+      setUsername("Bob Mango")
+      cookies.set('username', "Bob Mango")
+    }
+
+    if (user === "sue@mango.com") {
+      setUsername("Sue Mango")
+      cookies.set('username', "Sue Mango")
+    }
+    
+  }
+
   const successfulLogin = function () {
     setUser(cookies.get('email'));
+    usernameAssign(cookies.get('email'));
   }
   
   const { matchData, getMatchData } = useMatchData();
@@ -73,7 +89,7 @@ function App() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarResponsive">
-            <Nav view={view} pageChange={pageChange} />
+            <Nav username={username} view={view} pageChange={pageChange} />
           </div>
         </div>
       </nav>
@@ -107,6 +123,7 @@ function App() {
                 </Modal.Footer>
               </Modal>
               <View
+                username={username}
                 getUserList={getUserList}
                 getMatchData={getMatchData}
                 cookies={cookies}

@@ -8,7 +8,7 @@ import Login from "./Login";
 import Cookies from "universal-cookie";
 
 function View(props: any) {
-  const match = <Matcher reset={props.reset} user={props.user} />;
+  const match = <Matcher username={props.username} reset={props.reset} user={props.user} />;
 
   const login = (
     <Login

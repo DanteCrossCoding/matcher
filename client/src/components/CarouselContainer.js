@@ -52,7 +52,7 @@ export default function CarouselContainer(props) {
   })
 
   const changeCategory = function (category) {
-    const responseObj = { category: category, user: props.user };
+    const responseObj = { category: category, user: props.username};
     setLoading(true);
     socket.emit("change category", responseObj);
   };

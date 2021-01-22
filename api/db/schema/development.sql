@@ -6,6 +6,8 @@ INSERT INTO users (name, email) VALUES
   ('Arthur Remy', 'remy_29@msn.com'),
   ('Sean Oyler', 'sean.oyler@gmail.com'),
   ('John Oke', 'jooke98@outlook.com');
+  ('Bob Mango', 'bob@mango.com');
+  ('Sue Mango', 'sue@mango.com');
 
 INSERT INTO matches (restaurant, user_id, partner_id) VALUES
   ('604-669-7769', 1, 2),
