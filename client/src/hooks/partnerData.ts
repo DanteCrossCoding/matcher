@@ -17,16 +17,6 @@ export default function usePartnerData() {
       })
   }
 
-  const getUserByEmail = (email: string) => {
-    let user;
-    userList.map((element: any) => {
-      if (element.email === email) {
-        return element;
-      }
-    })
-    return user;
-  }
-
   const [Selected, setSelected] = useState(2);
 
   return { userList, selected: Selected, setSelected, getUserList };
