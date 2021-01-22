@@ -6,8 +6,8 @@ export default function useMatchData() {
   const [matchData, setMatchData] = useState([]);
 
 
-  const getMatchData = () => {
-    axios.get(`/matches/:1/:2`)
+  const getMatchData = (partner: number) => {
+    axios.get(`/matches/:1/:${partner}`)
       .then((data) => {
         setMatchData(data.data);
       })
