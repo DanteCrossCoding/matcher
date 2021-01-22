@@ -27,14 +27,15 @@ export default function useMatchData() {
       })
   }
 
-  const addMatchData = (email: string, partner: number, restaurant: any) => {
+  const postMatchData = (email: string, partner: number, restaurant: any) => {
     let user = getUserByEmail(email) || { id: 0 };
     axios.post('/matches', { 'user_id': user.id, 'partner_id': partner, 'restaurant': restaurant })
     .then((res) => {
       console.log(res)
     })
+    .catch((err) => console.error(err));
   }
 
 
-  return { matchData, setMatchData, getMatchData }
+  return { matchData, setMatchData, getMatchData, postMatchData }
 }

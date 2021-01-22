@@ -13,12 +13,11 @@ module.exports = (db: any) => {
       })
   });
   router.post('/', (req: any, res: any) => {
-    db.query('INSERT INTO matches (user_id, partner_id, restaurant) VALUES ($1, $2, $3), ($2, $1, $3);', [req.body.user_id, req.body.partner_id, req.body.restaurant])
+    db.query('INSERT INTO matches (user_id, partner_id, restaurant) VALUES ($1, $2, $3);', [req.body.user_id, req.body.partner_id, req.body.restaurant])
     .then((data: any) => {
-      console.log(data)
-      res.send('data updated')
+      res.send('data updated');
     })
-    .catch((err: any) => console.log(err))
+    .catch((err: any) => console.error(err))
   })
   
   return router;
