@@ -17,7 +17,7 @@ export default function usePartnerData() {
       })
   }
 
-  const [Selected, setSelected] = useState(2);
+  const [Selected, setSelected] = useState(1);
 
   return { userList, selected: Selected, setSelected, getUserList };
 }
