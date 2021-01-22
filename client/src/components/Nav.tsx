@@ -13,7 +13,6 @@ function Nav(props: any) {
 
   function logout() {
     cookies.remove('email');
-    props.pageChange('login');
     window.location.reload();
     return false;
   }
