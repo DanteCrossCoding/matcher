@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;600&display=swap');
+
 .bg-dark {
   background-color:#846c9c;
 }
@@ -10,6 +12,13 @@ body {
 
 .Login {
   justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
   margin-left: auto;
-  margin-right: auto
+  margin-right: auto;
+}
+
+.Login h1 {
+  font-family: 'Pacifico', cursive;
+  text-align: center;
 }

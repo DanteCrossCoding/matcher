@@ -12,8 +12,10 @@ function Nav(props: any) {
   const cookies = new Cookies();
 
   function logout() {
-    cookies.remove('email')
-    props.pageChange('login')
+    cookies.remove('email');
+    props.pageChange('login');
+    window.location.reload();
+    return false;
   }
 
   if (props.view === "login") {

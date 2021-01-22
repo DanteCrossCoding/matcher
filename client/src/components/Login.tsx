@@ -26,6 +26,9 @@ export default function Login(props: any) {
 
   return (
     <div className="Login">
+      <p>
+        <h1>Matchr</h1>
+        </p>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="email">
           <Form.Label>Email</Form.Label>
