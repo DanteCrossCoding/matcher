@@ -24,6 +24,10 @@ function Nav(props: any) {
     match += " active";
   }
 
+  if (props.view === "match-list") {
+    match += " active";
+  }
+
   if (props.view === 'partner') {
     partner += " active"
   }
@@ -37,6 +41,10 @@ function Nav(props: any) {
       </li>
       <li className={match}>
         <span className="nav-link" onClick={() => props.pageChange('match')}>Match
+        </span>
+      </li>
+      <li className={matchList}>
+        <span className="nav-link" onClick={() => props.pageChange('match-list')}>My Matches
         </span>
       </li>
       <li>
