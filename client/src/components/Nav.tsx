@@ -25,7 +25,7 @@ function Nav(props: any) {
   }
 
   if (props.view === "match-list") {
-    match += " active";
+    matchList += " active";
   }
 
   if (props.view === 'partner') {
