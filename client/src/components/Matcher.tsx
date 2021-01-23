@@ -12,6 +12,7 @@ function Matcher(props: any) {
         <CarouselContainer
           reset={props.reset}
           user={props.user}
+          partner={props.partner}
         />
       </div>
     </div>

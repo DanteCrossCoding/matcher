@@ -27,19 +27,19 @@ function App() {
     setShow(false);
     resetMatch();
   };
+  const { matchData, getMatchData, getUserByEmail } = useMatchData()
+
 
   const successfulLogin = function () {
-    setUser(cookies.get('email'));
+    setUser({ email: cookies.get('email'), id: getUserByEmail(cookies.get('email')) });
   }
-  
-  const { matchData, getMatchData } = useMatchData();
 
   useEffect(() => {
     document.title = "Matchr";
   }, []);
 
   const loginRedirect = function () {
-    pageChange('partner') 
+    pageChange('partner')
   }
 
   const resetMatch = function () {

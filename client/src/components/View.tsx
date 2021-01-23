@@ -7,7 +7,7 @@ import MatchList from "./MatchList";
 import Login from "./Login";
 
 function View(props: any) {
-  const match = <Matcher reset={props.reset} user={props.user} />;
+  const match = <Matcher reset={props.reset} user={props.user} partner={props.selected}/>;
 
   const login = (
     <Login

@@ -7,6 +7,8 @@ import {
   shuffleArray,
 } from "./externalAPI/yelp";
 
+import axios from "axios";
+
 require("dotenv").config();
 const pg = require("pg-promise")();
 const db = pg(
@@ -91,7 +93,7 @@ server.listen(port, () => {
         for (const user in ansObj) {
           if (ansObj[user]["yay"].includes(ans.restaurantPhone) && user !== ans.user) {
             socket.broadcast.emit("match", ans.restaurant.name);
-
+            db.query('INSERT INTO matches (user_id, partner_id, restaurant) VALUES ($1, $2, $3);', [ans.user_id, ans.partner_id, ans.restaurantPhone]);
             // send ans.user, user, ans.restaurant to DB as Match
             break;
           }

@@ -52,14 +52,14 @@ export default function CarouselContainer(props) {
   })
 
   const changeCategory = function (category) {
-    const responseObj = { category: category, user: props.user };
+    const responseObj = { category: category, user: props.user.email };
     setLoading(true);
     socket.emit("change category", responseObj);
   };
 
   const startMatch = function (category) {
     setLoading(true);
-    const responseObj = { category: category, user: props.user };
+    const responseObj = { category: category, user: props.user.email };
     socket.emit("new match session", responseObj);
     console.log("matching started");
   };
@@ -83,14 +83,16 @@ export default function CarouselContainer(props) {
     if (selectedIndex === 9 && index === 0) {
       sendAnswerSetState({
         ans: "nay",
-        user: props.user,
+        user: props.user.email,
         restaurantPhone: restaurants[index].phone,
         restaurant: restaurants[index],
       });
     } else if (selectedIndex > index || (selectedIndex === 0 && index === 9)) {
         sendAnswerSetState({
           ans: "yay",
-          user: props.user,
+          user: props.user.email,
+          user_id: props.user.id,
+          partner_id: props.partner,
           restaurantPhone: restaurants[index].phone,
           restaurant: restaurants[index],
         });
@@ -100,7 +102,7 @@ export default function CarouselContainer(props) {
     } else {
         sendAnswerSetState({
           ans: "nay",
-          user: props.user,
+          user: props.user.email,
           restaurantPhone: restaurants[index].phone,
           restaurant: restaurants[index],
         });

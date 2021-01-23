@@ -37,5 +37,5 @@ export default function useMatchData() {
   }
 
 
-  return { matchData, setMatchData, getMatchData, postMatchData }
+  return { matchData, setMatchData, getMatchData, postMatchData, getUserByEmail }
 }
