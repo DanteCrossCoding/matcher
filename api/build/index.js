@@ -66,21 +66,23 @@ server.listen(port, () => {
             // THIS IS THE MATCHER LOGIC JOHN
             if (ans.ans === "yay") {
                 for (const user in ansObj) {
-                    if (ansObj[user]["yay"].includes(ans.restaurantPhone) && user !== ans.user) {
+                    if (ansObj[user]["yay"].includes(ans.restaurantPhone) && user !== ans.user.email) {
                         socket.broadcast.emit("match", ans.restaurant.name);
-                        db.query('INSERT INTO matches (user_id, partner_id, restaurant) VALUES ($1, $2, $3);', [ans.user_id, ans.partner_id, ans.restaurantPhone]);
+                        console.log(ans);
+                        db.query('INSERT INTO matches (user_id, partner_id, restaurant) VALUES ($1, $2, $3);', [ans.user_id, ans.partner_id, ans.restaurantPhone])
+                            .catch((err) => console.error('Match query error', err));
                         // send ans.user, user, ans.restaurant to DB as Match
                         break;
                     }
                 }
-                if (!ansObj[ans.user]["yay"].includes(ans.restaurantPhone))
-                    ansObj[ans.user]["yay"].push(ans.restaurantPhone);
+                if (!ansObj[ans.user.email]["yay"].includes(ans.restaurantPhone))
+                    ansObj[ans.user.email]["yay"].push(ans.restaurantPhone);
             }
             else {
-                if (ansObj[ans.user]["yay"].includes(ans.restaurantPhone)) {
-                    ansObj[ans.user]["yay"].splice(ansObj[ans.user]["yay"].indexOf(ans.restaurantPhone), 1);
+                if (ansObj[ans.user.email]["yay"].includes(ans.restaurantPhone)) {
+                    ansObj[ans.user.email]["yay"].splice(ansObj[ans.user.email]["yay"].indexOf(ans.restaurantPhone), 1);
                 }
-                ansObj[ans.user]["nay"].push(ans.restaurantPhone);
+                ansObj[ans.user.email]["nay"].push(ans.restaurantPhone);
             }
             console.log(ansObj);
         });

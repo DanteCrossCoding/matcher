@@ -83,14 +83,14 @@ export default function CarouselContainer(props) {
     if (selectedIndex === 9 && index === 0) {
       sendAnswerSetState({
         ans: "nay",
-        user: props.user.email,
+        user: props.user,
         restaurantPhone: restaurants[index].phone,
         restaurant: restaurants[index],
       });
     } else if (selectedIndex > index || (selectedIndex === 0 && index === 9)) {
         sendAnswerSetState({
           ans: "yay",
-          user: props.user.email,
+          user: props.user,
           user_id: props.user.id,
           partner_id: props.partner,
           restaurantPhone: restaurants[index].phone,
@@ -102,7 +102,7 @@ export default function CarouselContainer(props) {
     } else {
         sendAnswerSetState({
           ans: "nay",
-          user: props.user.email,
+          user: props.user,
           restaurantPhone: restaurants[index].phone,
           restaurant: restaurants[index],
         });

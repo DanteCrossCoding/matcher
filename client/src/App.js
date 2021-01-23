@@ -19,7 +19,7 @@ function App() {
   const [match, setMatch] = useState();
   const { selected, setSelected, userList, getUserList } = usePartnerData();
   const { view, pageChange } = useMainView();
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({});
   const [show, setShow] = useState(false);
   const cookies = new Cookies();
 
@@ -31,7 +31,7 @@ function App() {
 
 
   const successfulLogin = function () {
-    setUser({ email: cookies.get('email'), id: getUserByEmail(cookies.get('email')) });
+    setUser(getUserByEmail(cookies.get('email')));
   }
 
   useEffect(() => {
