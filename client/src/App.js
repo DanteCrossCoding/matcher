@@ -111,6 +111,7 @@ function App() {
               </Modal>
               <View
                 getUserList={getUserList}
+                getUserByEmail={getUserByEmail}
                 getMatchData={getMatchData}
                 cookies={cookies}
                 success={successfulLogin}

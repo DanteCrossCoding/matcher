@@ -26,6 +26,8 @@ function View(props: any) {
       select={props.select}
       selected={props.selected}
       partners={props.partners}
+      cookies={props.cookies}
+      getUserByEmail={props.getUserByEmail}
     />
   );
 
