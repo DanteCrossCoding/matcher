@@ -8,6 +8,7 @@ function PartnerListItem(props: any) {
 
   if (props.selected === props.id) {
     partnerClass += " selected"
+    
   }
   return (
     <li className={partnerClass} onClick={() => props.select(props.id)} >{props.name}</li>

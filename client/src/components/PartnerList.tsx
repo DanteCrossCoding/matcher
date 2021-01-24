@@ -2,6 +2,7 @@ import React from 'react';
 import '../App.scss';
 import '../bootstrap/vendor/bootstrap/css/bootstrap.css'
 import PartnerListItem from './PartnerListItem';
+import { Button } from "react-bootstrap"
 
 function PartnerList(props: any) {
   return (
