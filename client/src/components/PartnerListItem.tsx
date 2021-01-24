@@ -8,10 +8,17 @@ function PartnerListItem(props: any) {
 
   if (props.selected === props.id) {
     partnerClass += " selected"
-    
   }
   return (
-    <li className={partnerClass} onClick={() => props.select(props.id)} >{props.name}</li>
+    <li 
+      className={partnerClass} 
+      onClick={() => {
+        props.select(props.id)
+        props.partnerSelect(props.name)
+      }} 
+    >
+      {props.name}
+    </li>
   );
 }
 

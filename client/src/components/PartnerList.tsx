@@ -9,12 +9,15 @@ function PartnerList(props: any) {
     <div className="content-card restaurant">
       <div className="partners">
       <h1 className="bold">Partners</h1>
-      <ul className="list">
-      {props.partners && props.partners.map((element: any) => {
-        return <PartnerListItem select={props.select} selected={props.selected} id={element.id} name={element.name}/>
-      })}
-      </ul>
-    </div>
+        <ul className="list">
+          {props.partners && props.partners.map((element: any) => {
+            return <PartnerListItem partnerSelect={props.partnerSelect} select={props.select} selected={props.selected} id={element.id} name={element.name}/>
+          })}
+        </ul>
+      </div>
+      <Button onClick={props.inviteConfirm} className="invite">
+        Invite
+      </Button> 
     </div>
   );
 }

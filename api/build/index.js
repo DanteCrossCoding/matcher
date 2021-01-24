@@ -83,6 +83,9 @@ server.listen(port, () => {
             socket.to(basket[user]).emit('resetCarousel', 'resetCarousel');
             ansObj[user] = { yay: [], nay: [] };
         });
+        socket.on('invite', (response) => {
+            socket.broadcast.emit('invitation', response)
+        })
         socket.on("change category", (response) => {
             const restaurants = yelp_1.getRestaurantIdsWithFilter(response.category);
             restaurants.then((res) => {

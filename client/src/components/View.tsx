@@ -24,6 +24,8 @@ function View(props: any) {
 
   const partnerList = (
     <PartnerList
+      inviteConfirm={props.inviteConfirm}
+      partnerSelect={props.partnerSelect}
       select={props.select}
       selected={props.selected}
       partners={props.partners}

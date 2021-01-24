@@ -106,6 +106,10 @@ server.listen(port, () => {
       ansObj[user] = {yay: [], nay: []}
     });
 
+    socket.on('invite', (response) => {
+      socket.broadcast.emit('invitation', response)
+    })
+
     socket.on("change category", (response: any) => {
       console.log("response: " + response.partner)
       const restaurants = getRestaurantIdsWithFilter(response.category);
