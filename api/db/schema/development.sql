@@ -8,17 +8,17 @@ INSERT INTO users (name, email) VALUES
   ('John Oke', 'jooke98@outlook.com');
 
 INSERT INTO matches (restaurant, user_id, partner_id) VALUES
-  ('604-669-7769', 1, 2),
-  ('604-669-7769', 2, 1),
-  ('604-879-9878', 2, 3),
-  ('604-879-9878', 3, 2),
-  ('604-266-1428', 1, 2),
-  ('604-266-1428', 2, 1),
-  ('604-266-1428', 2, 3),
-  ('604-266-1428', 3, 2),
-  ('604-266-1428', 4, 2),
-  ('604-266-1428', 5, 2),
-  ('604-266-1428', 6, 2),
-  ('604-266-1428', 2, 4),
-  ('604-266-1428', 2, 5),
-  ('604-266-1428', 2, 6);
+  ('Dinesty Dumpling House', 1, 2),
+  ('Dinesty Dumpling House', 2, 1),
+  ('Peaceful Restaurant', 2, 3),
+  ('Peaceful Restaurant', 3, 2),
+  ('Ajisai Sushi Bar', 1, 2),
+  ('Ajisai Sushi Bar', 2, 1),
+  ('Ajisai Sushi Bar', 2, 3),
+  ('Ajisai Sushi Bar', 3, 2),
+  ('Ajisai Sushi Bar', 4, 2),
+  ('Ajisai Sushi Bar', 5, 2),
+  ('Ajisai Sushi Bar', 6, 2),
+  ('Ajisai Sushi Bar', 2, 4),
+  ('Ajisai Sushi Bar', 2, 5),
+  ('Ajisai Sushi Bar', 2, 6);

@@ -93,8 +93,8 @@ server.listen(port, () => {
         for (const user in ansObj) {
           if (ansObj[user]["yay"].includes(ans.restaurantPhone) && user !== ans.user.email) {
             socket.broadcast.emit("match", ans.restaurant.name);
-            db.query('INSERT INTO matches (user_id, partner_id, restaurant) VALUES ($1, $2, $3);', [ans.user_id, ans.partner_id, ans.restaurantPhone])
-            .catch((err: any) => console.error('Match query error', err))
+            db.query('INSERT INTO matches (user_id, partner_id, restaurant) VALUES ($1, $2, $3);', [ans.user_id, ans.partner_id, ans.restaurant.name])
+              .catch((err: any) => console.error('Match query error', err))
             // send ans.user, user, ans.restaurant to DB as Match
             break;
           }
