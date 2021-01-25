@@ -3,6 +3,7 @@ import "../App.scss";
 import "../bootstrap/vendor/bootstrap/css/bootstrap.css";
 import PartnerListItem from "./PartnerListItem";
 import { Button } from "react-bootstrap";
+import add from "./add.png"
 
 function PartnerList(props: any) {
   let button;
@@ -36,15 +37,10 @@ function PartnerList(props: any) {
             })}
         </ul>
       </div>
-      {button}
       <div>
-        <Button
-          className="new-partner-button"
-          as="input"
-          type="submit"
-          value="Add New Partner"
-        />
+      <img className="add-friend-button" src={add} aria-hidden="true" alt="add"></img>
       </div>
+      {button}
     </div>
   );
 }
