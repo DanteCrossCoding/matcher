@@ -5,7 +5,7 @@ import '../bootstrap/vendor/bootstrap/css/bootstrap.css'
 function MatchListItem(props: any) {
   return (
     <div>
-      <a href={`https://www.google.com/search?q=${props.match.restaurant}`}>{props.match.restaurant}</a>
+      <a rel="noreferrer" target="_blank" href={`https://www.google.com/search?q=${props.match.restaurant}`}>{props.match.restaurant}</a>
     </div>
   )
 }
