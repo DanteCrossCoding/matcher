@@ -141,7 +141,7 @@ export default function CarouselContainer(props) {
     if (restaurant === undefined && match === 'null') {
       return (
         <div>
-          <h1>Welcome!</h1>
+          <h1 className="bold">Welcome!</h1>
           <FormContainer
             handleSelect={startMatch}
             title={"Select a Category to Start"}
@@ -173,7 +173,7 @@ export default function CarouselContainer(props) {
       )
       return (
         <div>
-          <a className="black-link" rel="noreferrer" target="_blank" href={`http://www.google.com/search?q=${restaurant.name}`}><h1 className="black-link">{restaurant.name}</h1></a>
+          <a className="black-link" rel="noreferrer" target="_blank" href={`http://www.google.com/search?q=${restaurant.name}`}><h1 className="black-link bold">{restaurant.name}</h1></a>
           <Carousel
             indicators={false}
             interval={null}
