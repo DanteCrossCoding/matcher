@@ -98,6 +98,7 @@ function App() {
     socket.emit("reset", user.email);
     console.log("match reset");
     setMatch();
+    pageChange("match-list")
   };
 
   socket.on("match", (match) => {
