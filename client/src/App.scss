@@ -86,7 +86,7 @@ $accent:  #85CDC9;
     border-bottom-right-radius: 25px;
   }
   #profile {
-    height: auto;
+    height: 200px;
     width: 200px;
     border-radius: 50%;
   }
@@ -165,7 +165,6 @@ $accent:  #85CDC9;
 
 .carousel-inner {
   border-radius: 5%;
-  /* border: 5px solid $accent; // RESTAURANT BORDER */
 }
 
 .content-card {
@@ -215,6 +214,15 @@ body {
   width: 150px;
 }
 
+.footer {
+  background-color: black;
+  text-align: center;
+}
+
+.new-partner-button {
+  margin-top: 5px;
+}
+
 .modal-button {
   background-color: $accent !important;
 }
@@ -255,4 +263,14 @@ body {
 
 .form-label {
   font-size: 1.25em;
+}
+
+.footer-div {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
 }

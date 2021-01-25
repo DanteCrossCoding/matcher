@@ -5,14 +5,13 @@ import PartnerListItem from "./PartnerListItem";
 import { Button } from "react-bootstrap";
 
 function PartnerList(props: any) {
-
   let button;
   if (props.partner) {
     button = (
       <Button onClick={props.inviteConfirm} className="invite">
         Invite
       </Button>
-    )
+    );
   }
   return (
     <div className="content-card restaurant">
@@ -38,6 +37,14 @@ function PartnerList(props: any) {
         </ul>
       </div>
       {button}
+      <div>
+        <Button
+          className="new-partner-button"
+          as="input"
+          type="submit"
+          value="Add New Partner"
+        />
+      </div>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import ModalContainer from "./components/ModalContainer";
 import useMainView from "./hooks/mainView";
 import View from "./components/View";
 import useMatchData from "./hooks/getMatchData";
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 
 const ENDPOINT = "http://localhost:9000";
 
@@ -18,93 +18,96 @@ const socket = io(ENDPOINT);
 function App() {
   const cookies = new Cookies();
   const [match, setMatch] = useState();
-  const [partner, setPartner] = useState()
+  const [partner, setPartner] = useState();
   const { selected, setSelected, userList } = usePartnerData();
   const { view, pageChange } = useMainView();
-  const { matchData, getMatchData, getUserByEmail } = useMatchData()
+  const { matchData, getMatchData, getUserByEmail } = useMatchData();
   const [user, setUser] = useState({});
-  const [username, setUsername] = useState(cookies.get('username') ? cookies.get('username') : "");
+  const [username, setUsername] = useState(
+    cookies.get("username") ? cookies.get("username") : ""
+  );
   const [show, setShow] = useState(false);
   const [showInvite, setShowInvite] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [request, setRequest] = useState();
-  
-  const partnerSelect = function(partner) {
-    setPartner(partner)
-  }
 
-  const inviteConfirm = function() {
-    setShowConfirm(true)
-  }
+  const partnerSelect = function (partner) {
+    setPartner(partner);
+  };
 
-  socket.on('invitation', (response) => {
-    setRequest({...response})
-    setShowInvite(true)
-  })
+  const inviteConfirm = function () {
+    setShowConfirm(true);
+  };
+
+  socket.on("invitation", (response) => {
+    setRequest({ ...response });
+    setShowInvite(true);
+  });
 
   const handleCloseMatch = (type) => {
     setShow(false);
     setShowConfirm(false);
     setShowInvite(false);
     resetMatch();
-   };
+  };
 
   const handleClose = (type) => {
     setShow(false);
     setShowConfirm(false);
     setShowInvite(false);
-   };
+  };
 
-   const handleCloseSend = function () {
-      const responseObj = {user: user.email, username: username, parter: partner}
-      socket.emit('invite', responseObj)
-      pageChange('match')
-      setShowConfirm(false);
-   }
+  const handleCloseSend = function () {
+    const responseObj = {
+      user: user.email,
+      username: username,
+      parter: partner,
+    };
+    socket.emit("invite", responseObj);
+    pageChange("match");
+    setShowConfirm(false);
+  };
 
-   const handleCloseAccept = function () {
-     setShowInvite(false);
-     for (const partner of userList) {
-       if (partner.email === request.user) {
-         setSelected(partner.id);
-        }
+  const handleCloseAccept = function () {
+    setShowInvite(false);
+    for (const partner of userList) {
+      if (partner.email === request.user) {
+        setSelected(partner.id);
       }
-      pageChange('match')
     }
+    pageChange("match");
+  };
 
-
-  const usernameAssign = function(user) {
+  const usernameAssign = function (user) {
     if (user === "bob@mango.com") {
-      setUsername("Bob Mango")
-      cookies.set('username', "Bob Mango")
+      setUsername("Bob Mango");
+      cookies.set("username", "Bob Mango");
     }
 
     if (user === "sue@mango.com") {
-      setUsername("Sue Mango")
-      cookies.set('username', "Sue Mango")
+      setUsername("Sue Mango");
+      cookies.set("username", "Sue Mango");
     }
-    
-  }
+  };
 
   const successfulLogin = function () {
-    setUser(getUserByEmail(cookies.get('email')));
-    usernameAssign(cookies.get('email'));
-  }
+    setUser(getUserByEmail(cookies.get("email")));
+    usernameAssign(cookies.get("email"));
+  };
 
   useEffect(() => {
     document.title = "Matchr";
-    /* getUserList(); */
   }, []);
 
   const loginRedirect = function () {
-    pageChange('partner')
-  }
+    pageChange("partner");
+  };
 
   const resetMatch = function () {
     socket.emit("reset", user.email);
     console.log("match reset");
     setMatch();
-    pageChange("match-list")
+    pageChange("match-list");
   };
 
   socket.on("match", (match) => {
@@ -138,56 +141,66 @@ function App() {
       </nav>
 
       <div className="body">
-              {userList.map((partner) => {
-                if (partner.id === selected) {
-                  return <Partner name={partner.name} email={partner.email} />
-                }
-              })}
-              <ModalContainer 
-                show={show}
-                handleClose={handleClose}
-                handleCloseMatch={handleCloseMatch}
-                match={match}
-                type={"match"}
+        {userList.map((partner) => {
+          if (partner.id === selected) {
+            return (
+              <Partner
+                name={partner.name}
+                email={partner.email}
+                avatar={partner.avatar}
               />
-              <ModalContainer 
-                request={request}
-                show={showInvite}
-                handleClose={handleClose}
-                handleCloseAccept={handleCloseAccept}
-                match={match}
-                type={"invite"}
-              />
-              <ModalContainer
-                partner={partner} 
-                show={showConfirm}
-                handleClose={handleClose}
-                handleCloseSend={handleCloseSend}
-                match={match}
-                type={"confirm"}
-              />
-              <View
-                partner={partner}
-                inviteConfirm={inviteConfirm}
-                partnerSelect={partnerSelect}
-                username={username}
-                /* getUserList={getUserList} */
-                getUserByEmail={getUserByEmail}
-                getMatchData={getMatchData}
-                cookies={cookies}
-                success={successfulLogin}
-                redirect={loginRedirect}
-                view={view}
-                select={setSelected}
-                selected={selected}
-                partners={userList}
-                reset={resetMatch}
-                user={user}
-                matchList={matchData}
-              />
+            );
+          }
+        })}
+        <ModalContainer
+          show={show}
+          handleClose={handleClose}
+          handleCloseMatch={handleCloseMatch}
+          match={match}
+          type={"match"}
+        />
+        <ModalContainer
+          request={request}
+          show={showInvite}
+          handleClose={handleClose}
+          handleCloseAccept={handleCloseAccept}
+          match={match}
+          type={"invite"}
+        />
+        <ModalContainer
+          partner={partner}
+          show={showConfirm}
+          handleClose={handleClose}
+          handleCloseSend={handleCloseSend}
+          match={match}
+          type={"confirm"}
+        />
+        <View
+          partner={partner}
+          inviteConfirm={inviteConfirm}
+          partnerSelect={partnerSelect}
+          username={username}
+          getUserByEmail={getUserByEmail}
+          getMatchData={getMatchData}
+          cookies={cookies}
+          success={successfulLogin}
+          redirect={loginRedirect}
+          view={view}
+          select={setSelected}
+          selected={selected}
+          partners={userList}
+          reset={resetMatch}
+          user={user}
+          matchList={matchData}
+        />
+      </div>
+      <div className="footer-div">
+        
+            <span class="text-muted">Copyright Matchr 2021</span>
+
       </div>
     </div>
-  )
+  );
 }
 
 export default App;
