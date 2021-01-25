@@ -1,90 +1,65 @@
+import "./App.scss";
+import "./bootstrap/vendor/bootstrap/css/bootstrap.css";
 import React, { useState, useEffect } from "react";
-import "./App.scss";
-import "./bootstrap/vendor/bootstrap/css/bootstrap.css";
 import io from "socket.io-client";
-import "./App.scss";
-import "./bootstrap/vendor/bootstrap/css/bootstrap.css";
-import axios from "axios";
 import Partner from "./components/Partner";
-import PartnerList from "./components/PartnerList";
 import usePartnerData from "./hooks/partnerData";
-import Matcher from "./components/Matcher";
 import Nav from "./components/Nav";
 import useMainView from "./hooks/mainView";
 import View from "./components/View";
-import { Alert } from "react-bootstrap";
+import useMatchData from "./hooks/getMatchData";
+import { Modal, Button } from "react-bootstrap";
+import Cookies from 'universal-cookie';
 
 const ENDPOINT = "http://localhost:9000";
 
 const socket = io(ENDPOINT);
 
-const paddingRestaurant = {
-  name: "null",
-  image_url:
-    "https://s3-media3.fl.yelpcdn.com/bphoto/BhSkksnrQr2XEriwIIsacQ/o.jpg",
-  phone: "604-669-7769",
-  address: "1719 Robson Street",
-  city: "Vancouver",
-  rating: 4,
-  price: "$$",
-};
-
 function App() {
-  const [restaurants, setRestaurants] = useState([]);
   const [match, setMatch] = useState();
-  const { selected, setSelected, partnerTemp } = usePartnerData();
+  const { selected, setSelected, userList, getUserList } = usePartnerData();
   const { view, pageChange } = useMainView();
-  const [user, setUser] = useState("");
-  
+  const [user, setUser] = useState({});
+  const [show, setShow] = useState(false);
+  const cookies = new Cookies();
+
+  const handleClose = () => {
+    setShow(false);
+    resetMatch();
+  };
+  const { matchData, getMatchData, getUserByEmail } = useMatchData()
+
+
+  const successfulLogin = function () {
+    setUser(getUserByEmail(cookies.get('email')));
+  }
+
   useEffect(() => {
-    const getUserRestaurants = async function () {
-      socket.emit("restaurant request", "user");
-      await socket.on("restaurant response", (response) => {
-        response.unshift(paddingRestaurant);
-        setRestaurants(response);
-      });
-    };
-    setUser(Math.floor(Math.random() * 10).toString()); // THIS ONE DANTE
-    getUserRestaurants();
-    document.title = "Matcher";
+    document.title = "Matchr";
   }, []);
 
-  
+  const loginRedirect = function () {
+    pageChange('partner')
+  }
 
   const resetMatch = function () {
-    socket.emit("reset", "reset");
+    socket.emit("reset", user);
     console.log("match reset");
     setMatch();
-  };
-
-  const changeCategory = function (category) {
-    socket.emit("new category", category);
   };
 
   socket.on("match", (match) => {
     console.log(`We have a match!! ${match}`);
     setMatch(match);
+    setShow(true);
   });
-
-  socket.on("query response", (response) => {
-    console.log("setting new restaurants...");
-    setRestaurants(response);
-  });
-
-  const foundMatch = function () {
-    if (match) {
-      return (
-        <Alert variant={"success"}>Success! There was a match: {match}</Alert>
-      );
-    }
-  };
 
   return (
-    <body>
+    <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-        <div className="container">
-          <a className="navbar-brand" href="/">
-            Matcher
+        <div className="navbar-container">
+          <a className="nav-item navbar-brand" href="/">
+            Matchr
           </a>
           <button
             className="navbar-toggler"
@@ -103,30 +78,58 @@ function App() {
         </div>
       </nav>
 
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12">
-            {partnerTemp.map((partner) => {
-              if (partner.id === selected) {
-                return <Partner name={partner.name} email={partner.email} />;
-              }
-            })}
-            <View
-              foundMatch={foundMatch}
-              view={view}
-              select={setSelected}
-              selected={selected}
-              partners={partnerTemp}
-              changeCat={changeCategory}
-              reset={resetMatch}
-              restaurants={restaurants}
-              user={user}
-            />
+      <div className="body">
+        <div className="main-container main-view">
+          <div className="row">
+            <div className="col-lg-12">
+              {userList.map((partner) => {
+                if (partner.id === selected) {
+                  return <Partner name={partner.name} email={partner.email} />
+                }
+              })}
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>We Got One!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Woohoo we found a match!{" "}
+                  {
+                    <a
+                      rel="noreferrer"
+                      target="_blank"
+                      href={`http://www.google.com/search?q=${match}`}
+                    >
+                      {match}
+                    </a>
+                  }
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+              <View
+                getUserList={getUserList}
+                getUserByEmail={getUserByEmail}
+                getMatchData={getMatchData}
+                cookies={cookies}
+                success={successfulLogin}
+                redirect={loginRedirect}
+                view={view}
+                select={setSelected}
+                selected={selected}
+                partners={userList}
+                reset={resetMatch}
+                user={user}
+                matchList={matchData}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </body>
-  );
+    </div>
+  )
 }
 
 export default App;
