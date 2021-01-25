@@ -11,7 +11,9 @@ INSERT INTO users (name, email) VALUES
   ('Dante Cross', 'dantecross@outlook.com'),
   ('Arthur Remy', 'remy_29@msn.com'),
   ('Sean Oyler', 'sean.oyler@gmail.com'),
-  ('John Oke', 'jooke98@outlook.com');
+  ('John Oke', 'jooke98@outlook.com'),
+  ('Bob Mango', 'bob@mango.com'),
+  ('Sue Mango', 'sue@mango.com');
 
 INSERT INTO matches (restaurant, user_id, partner_id) VALUES
   ('Dinesty Dumpling House', 1, 2),
