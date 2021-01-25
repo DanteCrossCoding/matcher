@@ -42,11 +42,17 @@ function App() {
     setShowInvite(true)
   })
 
-  const handleClose = (type) => {
+  const handleCloseMatch = (type) => {
     setShow(false);
     setShowConfirm(false);
     setShowInvite(false);
     resetMatch();
+   };
+
+  const handleClose = (type) => {
+    setShow(false);
+    setShowConfirm(false);
+    setShowInvite(false);
    };
 
    const handleCloseSend = function () {
@@ -140,6 +146,7 @@ function App() {
               <ModalContainer 
                 show={show}
                 handleClose={handleClose}
+                handleCloseMatch={handleCloseMatch}
                 match={match}
                 type={"match"}
               />

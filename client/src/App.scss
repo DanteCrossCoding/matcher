@@ -148,6 +148,7 @@ $accent:  #85CDC9;
 .description {
   display: flex;
   justify-content: center;
+  font-size: 1.5em;
 }
 
 .dropdown {
@@ -209,6 +210,7 @@ body {
 }
 
 .invite {
+  font-size: 1.25em !important;
   height: 50px;
   width: 150px;
 }
@@ -241,4 +243,16 @@ body {
 .match-list {
   padding-inline-start: 0px;
   font-size: 1.5em;
+}
+
+.dropdown-toggle {
+  font-size: 1.25em !important;
+}
+
+.dropdown-menu {
+  font-size: 1.25em !important;
+}
+
+.form-label {
+  font-size: 1.25em;
 }

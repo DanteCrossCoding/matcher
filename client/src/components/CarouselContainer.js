@@ -75,7 +75,7 @@ export default function CarouselContainer(props) {
     if (loading) {
       return (
         <div class="spinner">
-          <h6>Loading Restaurants...</h6>
+          <h5>Loading Restaurants...</h5>
           <Spinner animation="border" />
         </div>
       );

@@ -32,7 +32,7 @@ function ModalContainer(props) {
     )
 
     buttons = (
-      <Button className="modal-button" variant="secondary" onClick={props.handleClose}>
+      <Button className="modal-button" variant="secondary" onClick={props.handleCloseMatch}>
             Close
       </Button>
     )
@@ -55,6 +55,9 @@ function ModalContainer(props) {
         <Button className="modal-button" variant="secondary" onClick={props.handleCloseAccept}>
           Accept
         </Button>
+        <Button variant="secondary" onClick={props.handleClose}>
+            Close
+        </Button>
       </>
     )
   }
@@ -76,13 +79,16 @@ function ModalContainer(props) {
         <Button className="modal-button" variant="secondary" onClick={props.handleCloseSend}>
           Send
         </Button>
+        <Button variant="secondary" onClick={props.handleClose}>
+            Close
+        </Button>
       </>
     )
   }
 
   return (
-    <Modal show={props.show} onHide={props.handleClose}>
-      <Modal.Header closeButton>
+    <Modal show={props.show}>
+      <Modal.Header>
         {title}
       </Modal.Header>
       {body}
