@@ -1,7 +1,7 @@
 INSERT INTO users (name, email, avatar) VALUES
   ('Bob Ross', 'test@test.com', 'https://yt3.ggpht.com/ytc/AAUvwnhkZjfj3AhZNOvbxzIzVLTKZZHGLAlIHVstuYx1=s88-c-k-c0x00ffffff-no-rj'),
   ('Bart Simpson', 'fart@farts.com', 'https://images.newrepublic.com/5485c82606455ce71f6659fc57975a096a291c11.jpeg'),
-  ('Bob Mango', 'bob@mango.com', 'https://static.wikia.nocookie.net/annoyingorange/images/4/46/MangoLeStache.png/revision/latest?cb=20140720020208'),
+  ('Bob Mango', 'bob@mango.com', 'https://fscomps.fotosearch.com/compc/CSP/CSP893/plumber-green-mango-isolated-with-the-clipart__k66024850.jpg'),
   ('Sue Mango', 'sue@mango.com', 'https://www.seekpng.com/png/full/18-181383_mango-clipart-apple-clip-art-mango-png.png');
   
 INSERT INTO users (name, email) VALUES
