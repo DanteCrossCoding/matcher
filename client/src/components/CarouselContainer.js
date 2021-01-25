@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import FormContainer from "./FormContainer";
 import { Carousel, Spinner, Alert } from "react-bootstrap";
 import io from "socket.io-client";
+import check from "./check.png"
+import close from "./close.png"
+/* import close from "../images/close.png" */
 
 const ENDPOINT = "http://localhost:9000";
 
@@ -161,6 +164,13 @@ export default function CarouselContainer(props) {
           </Carousel.Item>
         );
       });
+
+      const nextIcon = (
+        <img className="carousel-button" src={check} aria-hidden="true" alt="next"></img>
+      )
+      const prevIcon = (
+        <img className="carousel-button" src={close} aria-hidden="true" alt="next"></img>
+      )
       return (
         <div>
           <a className="black-link" rel="noreferrer" target="_blank" href={`http://www.google.com/search?q=${restaurant.name}`}><h1 className="black-link">{restaurant.name}</h1></a>
@@ -170,6 +180,8 @@ export default function CarouselContainer(props) {
             activeIndex={index}
             onSelect={handleSelect}
             fade={true}
+            nextIcon={nextIcon}
+            prevIcon={prevIcon}
           >
             {carouselItems}
           </Carousel>
