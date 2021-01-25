@@ -13,6 +13,7 @@ function Matcher(props: any) {
           username={props.username}
           reset={props.reset}
           user={props.user}
+          partner={props.partner}
         />
       </div>
     </div>

@@ -59,7 +59,7 @@ export default function CarouselContainer(props) {
 
   const startMatch = function (category) {
     setLoading(true);
-    const responseObj = { category: category, user: props.user };
+    const responseObj = { category: category, user: props.user.email };
     socket.emit("new match session", responseObj);
     console.log("matching started");
   };
@@ -91,6 +91,8 @@ export default function CarouselContainer(props) {
         sendAnswerSetState({
           ans: "yay",
           user: props.user,
+          user_id: props.user.id,
+          partner_id: props.partner,
           restaurantPhone: restaurants[index].phone,
           restaurant: restaurants[index],
         });

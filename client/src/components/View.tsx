@@ -5,10 +5,9 @@ import Matcher from "./Matcher";
 import PartnerList from "./PartnerList";
 import MatchList from "./MatchList";
 import Login from "./Login";
-import Cookies from "universal-cookie";
 
 function View(props: any) {
-  const match = <Matcher username={props.username} reset={props.reset} user={props.user} />;
+  const match = <Matcher partner={props.selected} username={props.username} reset={props.reset} user={props.user} />;
 
   const login = (
     <Login
@@ -19,16 +18,20 @@ function View(props: any) {
   );
 
   const matchList = (
-    <MatchList partner={props.selected} matchList={props.matchList} />
+    <MatchList cookies={props.cookies} getMatchData={props.getMatchData} partner={props.selected} matchList={props.matchList} />
   );
 
   const partnerList = (
     <PartnerList
+      partner={props.partner}
       inviteConfirm={props.inviteConfirm}
       partnerSelect={props.partnerSelect}
       select={props.select}
       selected={props.selected}
       partners={props.partners}
+      cookies={props.cookies}
+      getUserByEmail={props.getUserByEmail}
+    /*   onLoad={props.getUserList()} */
     />
   );
 
@@ -37,12 +40,12 @@ function View(props: any) {
   if (props.view === "match") {
     final = match;
   } else if (props.view === "partner") {
-    props.getUserList();
+    /* props.getUserList(); */
     final = partnerList;
   } else if (!props.cookies.get("email")) {
     final = login;
   } else if (props.view === "match-list") {
-    props.getMatchData();
+    /* props.getMatchData(props.cookies.get('email'), props.selected); */
     final = matchList;
   } else {
     final = match;

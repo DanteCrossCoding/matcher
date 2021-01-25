@@ -1,23 +1,25 @@
 import axios from "axios"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function usePartnerData() {
 
   const [userList, setUserList] = useState([]);
 
 
-  const getUserList = () => {
+
+  useEffect(() => {
 
     axios.get('/users')
       .then((users) => {
         setUserList(users.data);
+        console.log("User list fetched")
       })
       .catch((err) => {
         console.error(err);
       })
-  }
+  }, [])
 
-  const [Selected, setSelected] = useState(1);
+  const [Selected, setSelected] = useState(0);
 
-  return { userList, selected: Selected, setSelected, getUserList };
+  return { userList, selected: Selected, setSelected };
 }

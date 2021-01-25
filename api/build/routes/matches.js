@@ -11,5 +11,12 @@ module.exports = (db) => {
             res.send(err);
         });
     });
+    router.post('/', (req, res) => {
+        db.query('INSERT INTO matches (user_id, partner_id, restaurant) VALUES ($1, $2, $3);', [req.body.user_id, req.body.partner_id, req.body.restaurant])
+            .then((data) => {
+            res.send('data updated');
+        })
+            .catch((err) => console.error(err));
+    });
     return router;
 };

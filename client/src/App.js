@@ -18,10 +18,11 @@ const socket = io(ENDPOINT);
 function App() {
   const cookies = new Cookies();
   const [match, setMatch] = useState();
-  const [partner, setPartner] = useState('Bob Ross')
-  const { selected, setSelected, userList, getUserList } = usePartnerData();
+  const [partner, setPartner] = useState()
+  const { selected, setSelected, userList } = usePartnerData();
   const { view, pageChange } = useMainView();
-  const [user, setUser] = useState("");
+  const { matchData, getMatchData, getUserByEmail } = useMatchData()
+  const [user, setUser] = useState({});
   const [username, setUsername] = useState(cookies.get('username') ? cookies.get('username') : "");
   const [show, setShow] = useState(false);
   const [showInvite, setShowInvite] = useState(false);
@@ -49,20 +50,20 @@ function App() {
    };
 
    const handleCloseSend = function () {
-      const responseObj = {user: user, username: username, parter: partner}
+      const responseObj = {user: user.email, username: username, parter: partner}
       socket.emit('invite', responseObj)
       pageChange('match')
       setShowConfirm(false);
    }
 
    const handleCloseAccept = function () {
-      pageChange('match')
-      setShowInvite(false);
-      for (const partner of userList) {
-        if (partner.email === request.user) {
-          setSelected(partner.id);
+     setShowInvite(false);
+     for (const partner of userList) {
+       if (partner.email === request.user) {
+         setSelected(partner.id);
         }
       }
+      pageChange('match')
     }
 
 
@@ -80,22 +81,21 @@ function App() {
   }
 
   const successfulLogin = function () {
-    setUser(cookies.get('email'));
+    setUser(getUserByEmail(cookies.get('email')));
     usernameAssign(cookies.get('email'));
   }
-  
-  const { matchData, getMatchData } = useMatchData();
 
   useEffect(() => {
     document.title = "Matchr";
+    /* getUserList(); */
   }, []);
 
   const loginRedirect = function () {
-    pageChange('partner') 
+    pageChange('partner')
   }
 
   const resetMatch = function () {
-    socket.emit("reset", user);
+    socket.emit("reset", user.email);
     console.log("match reset");
     setMatch();
   };
@@ -143,8 +143,6 @@ function App() {
                 type={"match"}
               />
               <ModalContainer 
-                partner={partner}
-                user={user}
                 request={request}
                 show={showInvite}
                 handleClose={handleClose}
@@ -152,9 +150,8 @@ function App() {
                 match={match}
                 type={"invite"}
               />
-              <ModalContainer 
-                partner={partner}
-                user={user}
+              <ModalContainer
+                partner={partner} 
                 show={showConfirm}
                 handleClose={handleClose}
                 handleCloseSend={handleCloseSend}
@@ -162,10 +159,12 @@ function App() {
                 type={"confirm"}
               />
               <View
+                partner={partner}
                 inviteConfirm={inviteConfirm}
                 partnerSelect={partnerSelect}
                 username={username}
-                getUserList={getUserList}
+                /* getUserList={getUserList} */
+                getUserByEmail={getUserByEmail}
                 getMatchData={getMatchData}
                 cookies={cookies}
                 success={successfulLogin}
