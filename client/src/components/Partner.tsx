@@ -10,7 +10,7 @@ function Partner(props :any) {
         <h3>Matching With:</h3>
         <h1>{props.name}</h1>
       </div>
-      <img id='profile' src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="Profile"/>
+      <img id='profile' src={props.avatar} alt="Profile"/>
   <h5 className="user-badge">{props.email}</h5>
     </div>
   );

@@ -87,7 +87,6 @@ function App() {
 
   useEffect(() => {
     document.title = "Matchr";
-    /* getUserList(); */
   }, []);
 
   const loginRedirect = function () {
@@ -134,7 +133,7 @@ function App() {
       <div className="body">
               {userList.map((partner) => {
                 if (partner.id === selected) {
-                  return <Partner name={partner.name} email={partner.email} />
+                  return <Partner name={partner.name} email={partner.email} avatar={partner.avatar} />
                 }
               })}
               <ModalContainer 
@@ -164,7 +163,7 @@ function App() {
                 inviteConfirm={inviteConfirm}
                 partnerSelect={partnerSelect}
                 username={username}
-                /* getUserList={getUserList} */
+                // getUserList={getUserList}
                 getUserByEmail={getUserByEmail}
                 getMatchData={getMatchData}
                 cookies={cookies}
