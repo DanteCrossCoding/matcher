@@ -181,7 +181,7 @@ function App() {
 
       <footer class="footer mt-auto py-3">
         <div class="container">
-          <span class="text-muted">Copyright Machr 2021</span>
+          <span class="text-muted">Copyright Matchr 2021</span>
         </div>
       </footer>
     </div>
