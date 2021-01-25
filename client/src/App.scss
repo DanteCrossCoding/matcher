@@ -216,3 +216,11 @@ body {
 .modal-button {
   background-color: $accent !important;
 }
+
+.black-link {
+  color: black;
+}
+
+.black-link:hover {
+  text-decoration: none;
+}

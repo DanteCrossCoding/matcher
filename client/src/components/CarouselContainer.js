@@ -151,17 +151,19 @@ export default function CarouselContainer(props) {
       const carouselItems = restaurants.map((restaurant, index) => {
         return (
           <Carousel.Item key={index}>
+            <a rel="noreferrer" target="_blank" href={`http://www.google.com/search?q=${restaurant.name}`}>
             <img
               className="d-block w-100 carousel-img"
               src={restaurant.image_url}
               alt="First slide"
             />
+            </a> 
           </Carousel.Item>
         );
       });
       return (
         <div>
-          <h1>{restaurant.name}</h1>
+          <a className="black-link" rel="noreferrer" target="_blank" href={`http://www.google.com/search?q=${restaurant.name}`}><h1 className="black-link">{restaurant.name}</h1></a>
           <Carousel
             indicators={false}
             interval={null}
