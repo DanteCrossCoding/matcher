@@ -1,114 +1,136 @@
-import { 
+import {
   getRestaurants,
   getRestaurantIdsWithFilter,
   getImageById,
   createRestaurantProfile,
   createRestaurantProfilesArr,
-  shuffleArray
- } from "./externalAPI/yelp"
- 
-require('dotenv').config();
-const pg = require('pg-promise')();
-const db = pg(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
+  shuffleArray,
+} from "./externalAPI/yelp";
+
+import axios from "axios";
+
+require("dotenv").config();
+const pg = require("pg-promise")();
+const db = pg(
+  `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
+);
 const express = require("express");
 const http = require("http");
+const bodyParser = require("body-parser");
 
 const app = express();
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
 const server = http.createServer(app);
 
 const io = require("socket.io")(server);
+const matches = require("./routes/matches")
 
-app.get('/test', (req: any, res: any) => {
+app.get("/test", (req: any, res: any) => {
   res.send("Backend connected!");
 });
 
-app.get('/', (req: any, res: any) => {
-  db.any(`SELECT * FROM users`)
-  .then((data: any) => {
-    res.send(data[0].name);
-  });
+app.get('/users', (req: any, res: any) => {
+  db.query('SELECT * FROM users')
+    .then((data: any) => {
+      res.send(data);
+    })
+    .catch((err: any) => console.log("user call error", err));
 });
+
+
+
+app.use('/matches', matches(db));
 
 const port = process.env.PORT || 9000;
 
 server.listen(port, () => {
   console.log("Server started listening on port " + port);
 
-/* Known working queries:
-"japanese"
-"chinese"
-"seafood"
-"italian"
-"brunch"
-"vietnamese"
-"mexican"
- */
-  const restaurants = getRestaurantIdsWithFilter("mexican");
-  restaurants.then((res: any) => {
+  let ansObj: any = {};
+  let basket: any = {};
 
-    createRestaurantProfilesArr(res).then(res => {
+  io.on("connection", (socket: any) => {
 
-      let ansObj: any = {};
-
-    
-      io.on("connection", (socket: any) => {
-      
-    
-        socket.on('new match session', (user: any) => {
-          console.log("starting new session");
-          ansObj[user] = {
-            yay: [],
-            nay: [],
-          }
-          console.log(ansObj)
-          socket.emit('connection', ansObj[user])
-        })
-    
-        socket.on('answer', (ans: any) => { // THIS IS THE MATCHER LOGIC JOHN
-          if (ans.ans === 'yay') {
-            for (const user in ansObj) {
-              if (ansObj[user]['yay'].includes(ans.restaurantPhone)) {
-                if (ans.restaurant !== 'null')
-                socket.broadcast.emit('match', ans.restaurant.name)
-                break;
-              }
-            }
-            ansObj[ans.user]['yay'].push(ans.restaurantPhone);
-          } else {
-            ansObj[ans.user]['nay'].push(ans.restaurantPhone);
-
-          }
-          console.log(ansObj)
-        });
-
-        socket.on('reset', () => {
-          ansObj = {};
-        })
-
-        socket.on('restaurant request', (user: any) => {
-          const resCopy = [...res]
-          shuffleArray(resCopy)
-          socket.emit('restaurant response', resCopy)
-        })
-
-        socket.on('new category', (category: any) => {
-          const restaurants = getRestaurantIdsWithFilter(category);
-          restaurants.then((res: any) => {
-
-            createRestaurantProfilesArr(res).then(res => {
-              const resCopy = [...res]
-              shuffleArray(resCopy)
-              socket.emit('query response', resCopy)
-            })
-          })
-
-        })
-      });
+    socket.on('disconnect', () => {
+      for (const user in basket) {
+        if (basket[user] = socket.id) {
+          basket[user] = ""
+          ansObj[user] = { yay: [], nay: [] }
+          console.log(`removed user ${user}`)
+        }
+      }
     })
-  })
+
+    socket.on("new match session", (response: any) => {
+      basket[response.user] = socket.id;
+      console.log("starting new session");
+      ansObj[response.user] = {
+        yay: [],
+        nay: [],
+      };
+      const restaurants = getRestaurantIdsWithFilter(response.category);
+      restaurants.then((res: any) => {
+        createRestaurantProfilesArr(res).then((res) => {
+          const resCopy = [...res];
+          shuffleArray(resCopy);
+          socket.emit("connection", resCopy);
+        });
+      });
+      console.log(ansObj);
+    });
+
+    socket.on("answer", (ans: any) => {
+      // THIS IS THE MATCHER LOGIC JOHN
+      if (ans.ans === "yay") {
+        for (const user in ansObj) {
+          if (ansObj[user]["yay"].includes(ans.restaurantPhone) && user !== ans.user.email) {
+            db.query('INSERT INTO matches (user_id, partner_id, restaurant) VALUES ($1, $2, $3);', [ans.user_id, ans.partner_id, ans.restaurant.name])
+              .catch((err: any) => console.error('Match query error', err))
+            db.query('INSERT INTO matches (user_id, partner_id, restaurant) VALUES ($1, $2, $3);', [ans.partner_id, ans.user_id, ans.restaurant.name])
+              .catch((err: any) => console.error('Match query error', err))
+            socket.broadcast.emit("match", ans.restaurant.name)
+            break;
+          }
+        }
+        if (!ansObj[ans.user.email]["yay"].includes(ans.restaurantPhone))
+          ansObj[ans.user.email]["yay"].push(ans.restaurantPhone);
+      } else {
+        if (ansObj[ans.user.email]["yay"].includes(ans.restaurantPhone)) {
+          ansObj[ans.user.email]["yay"].splice(ansObj[ans.user.email]["yay"].indexOf(ans.restaurantPhone), 1)
+        }
+        ansObj[ans.user.email]["nay"].push(ans.restaurantPhone);
+      }
+      console.log(ansObj);
+    });
+
+    socket.on("reset", (user: any) => {
+      socket.to(basket[user]).emit('resetCarousel', 'resetCarousel')
+      ansObj[user] = { yay: [], nay: [] }
+    });
+
+    socket.on('invite', (response: any) => {
+      socket.broadcast.emit('invitation', response)
+    })
+
+    socket.on("change category", (response: any) => {
+      console.log("response: " + response.partner)
+      const restaurants = getRestaurantIdsWithFilter(response.category);
+      restaurants.then((res: any) => {
+        createRestaurantProfilesArr(res).then((res) => {
+          socket.broadcast.emit("notify", response)
+          const resCopy = [...res];
+          shuffleArray(resCopy);
+          socket.emit("query response", resCopy);
+        });
+      });
+    });
+
+  });
 });
 
-/* const testorants =  
+/* const testorants =
 [ { name: 'Dumpling House',
   image_url:
    'https://s3-media3.fl.yelpcdn.com/bphoto/BhSkksnrQr2XEriwIIsacQ/o.jpg',

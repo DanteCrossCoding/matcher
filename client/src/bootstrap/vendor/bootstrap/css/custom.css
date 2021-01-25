@@ -1,7 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;600&display=swap');
+
 .bg-dark {
-  background-color: black;
+  background-color:#846c9c;
 }
 
 body {
-  background-color: #2f4124;
+  background-color: #fffdf1;
+  background-image: url("https://www.transparenttextures.com/patterns/triangles.png");
+  font-family: 'Quicksand', sans-serif;
+}
+
+.Login {
+  justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Login h1 {
+  font-family: 'Pacifico', cursive;
+  text-align: center;
 }

@@ -1,90 +1,127 @@
+import "./App.scss";
+import "./bootstrap/vendor/bootstrap/css/bootstrap.css";
 import React, { useState, useEffect } from "react";
-import "./App.scss";
-import "./bootstrap/vendor/bootstrap/css/bootstrap.css";
 import io from "socket.io-client";
-import "./App.scss";
-import "./bootstrap/vendor/bootstrap/css/bootstrap.css";
-import axios from "axios";
 import Partner from "./components/Partner";
-import PartnerList from "./components/PartnerList";
 import usePartnerData from "./hooks/partnerData";
-import Matcher from "./components/Matcher";
 import Nav from "./components/Nav";
+import ModalContainer from "./components/ModalContainer";
 import useMainView from "./hooks/mainView";
 import View from "./components/View";
-import { Alert } from "react-bootstrap";
+import useMatchData from "./hooks/getMatchData";
+import Cookies from "universal-cookie";
 
 const ENDPOINT = "http://localhost:9000";
 
 const socket = io(ENDPOINT);
 
-const paddingRestaurant = {
-  name: "null",
-  image_url:
-    "https://s3-media3.fl.yelpcdn.com/bphoto/BhSkksnrQr2XEriwIIsacQ/o.jpg",
-  phone: "604-669-7769",
-  address: "1719 Robson Street",
-  city: "Vancouver",
-  rating: 4,
-  price: "$$",
-};
-
 function App() {
-  const [restaurants, setRestaurants] = useState([]);
+  const cookies = new Cookies();
   const [match, setMatch] = useState();
-  const { selected, setSelected, partnerTemp } = usePartnerData();
+  const [partner, setPartner] = useState();
+  const { selected, setSelected, userList } = usePartnerData();
   const { view, pageChange } = useMainView();
-  const [user, setUser] = useState("");
-  
-  useEffect(() => {
-    const getUserRestaurants = async function () {
-      socket.emit("restaurant request", "user");
-      await socket.on("restaurant response", (response) => {
-        response.unshift(paddingRestaurant);
-        setRestaurants(response);
-      });
-    };
-    setUser(Math.floor(Math.random() * 10).toString()); // THIS ONE DANTE
-    getUserRestaurants();
-    document.title = "Matcher";
-  }, []);
+  const { matchData, getMatchData, getUserByEmail } = useMatchData();
+  const [user, setUser] = useState({});
+  const [username, setUsername] = useState(
+    cookies.get("username") ? cookies.get("username") : ""
+  );
+  const [show, setShow] = useState(false);
+  const [showInvite, setShowInvite] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [request, setRequest] = useState();
 
-  
-
-  const resetMatch = function () {
-    socket.emit("reset", "reset");
-    console.log("match reset");
-    setMatch();
+  const partnerSelect = function (partner) {
+    setPartner(partner);
   };
 
-  const changeCategory = function (category) {
-    socket.emit("new category", category);
+  const inviteConfirm = function () {
+    setShowConfirm(true);
+  };
+
+  socket.on("invitation", (response) => {
+    setRequest({ ...response });
+    setShowInvite(true);
+  });
+
+  const handleCloseMatch = (type) => {
+    setShow(false);
+    setShowConfirm(false);
+    setShowInvite(false);
+    resetMatch();
+  };
+
+  const handleClose = (type) => {
+    setShow(false);
+    setShowConfirm(false);
+    setShowInvite(false);
+  };
+
+  const handleCloseSend = function () {
+    const responseObj = {
+      user: user.email,
+      username: username,
+      parter: partner,
+    };
+    socket.emit("invite", responseObj);
+    pageChange("match");
+    setShowConfirm(false);
+  };
+
+  const handleCloseAccept = function () {
+    setShowInvite(false);
+    for (const partner of userList) {
+      if (partner.email === request.user) {
+        setSelected(partner.id);
+      }
+    }
+    pageChange("match");
+  };
+
+  const usernameAssign = function (user) {
+    if (user === "bob@mango.com") {
+      setUsername("Bob Mango");
+      cookies.set("username", "Bob Mango");
+    }
+
+    if (user === "sue@mango.com") {
+      setUsername("Sue Mango");
+      cookies.set("username", "Sue Mango");
+    }
+  };
+
+  const successfulLogin = function () {
+    setUser(getUserByEmail(cookies.get("email")));
+    usernameAssign(cookies.get("email"));
+  };
+
+  useEffect(() => {
+    document.title = "Matchr";
+  }, []);
+
+  const loginRedirect = function () {
+    pageChange("partner");
+  };
+
+  const resetMatch = function () {
+    socket.emit("reset", user.email);
+    console.log("match reset");
+    setMatch();
+    pageChange("match-list");
   };
 
   socket.on("match", (match) => {
     console.log(`We have a match!! ${match}`);
+    setShow(true);
     setMatch(match);
   });
 
-  socket.on("query response", (response) => {
-    console.log("setting new restaurants...");
-    setRestaurants(response);
-  });
-
-  const foundMatch = function () {
-    if (match) {
-      return (
-        <Alert variant={"success"}>Success! There was a match: {match}</Alert>
-      );
-    }
-  };
-
   return (
-    <body>
+    <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-        <div className="container">
-          <a className="navbar-brand" href="/">
-            Matcher
+        <div className="navbar-container">
+          <a className="nav-item navbar-brand" href="/">
+            Matchr
           </a>
           <button
             className="navbar-toggler"
@@ -98,34 +135,71 @@ function App() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarResponsive">
-            <Nav view={view} pageChange={pageChange} />
+            <Nav username={username} view={view} pageChange={pageChange} />
           </div>
         </div>
       </nav>
 
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12">
-            {partnerTemp.map((partner) => {
-              if (partner.id === selected) {
-                return <Partner name={partner.name} email={partner.email} />;
-              }
-            })}
-            <View
-              foundMatch={foundMatch}
-              view={view}
-              select={setSelected}
-              selected={selected}
-              partners={partnerTemp}
-              changeCat={changeCategory}
-              reset={resetMatch}
-              restaurants={restaurants}
-              user={user}
-            />
-          </div>
-        </div>
+      <div className="body">
+        {userList.map((partner) => {
+          if (partner.id === selected) {
+            return (
+              <Partner
+                name={partner.name}
+                email={partner.email}
+                avatar={partner.avatar}
+              />
+            );
+          }
+        })}
+        <ModalContainer
+          show={show}
+          handleClose={handleClose}
+          handleCloseMatch={handleCloseMatch}
+          match={match}
+          type={"match"}
+        />
+        <ModalContainer
+          request={request}
+          show={showInvite}
+          handleClose={handleClose}
+          handleCloseAccept={handleCloseAccept}
+          match={match}
+          type={"invite"}
+        />
+        <ModalContainer
+          partner={partner}
+          show={showConfirm}
+          handleClose={handleClose}
+          handleCloseSend={handleCloseSend}
+          match={match}
+          type={"confirm"}
+        />
+        <View
+          partner={partner}
+          inviteConfirm={inviteConfirm}
+          partnerSelect={partnerSelect}
+          username={username}
+          getUserByEmail={getUserByEmail}
+          getMatchData={getMatchData}
+          cookies={cookies}
+          success={successfulLogin}
+          redirect={loginRedirect}
+          view={view}
+          select={setSelected}
+          selected={selected}
+          partners={userList}
+          reset={resetMatch}
+          user={user}
+          matchList={matchData}
+        />
       </div>
-    </body>
+      <div className="footer-div">
+        
+            <span class="text-muted">Copyright Matchr 2021</span>
+
+      </div>
+    </div>
   );
 }
 
