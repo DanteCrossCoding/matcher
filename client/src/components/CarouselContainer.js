@@ -5,7 +5,6 @@ import { Carousel, Spinner, Alert } from "react-bootstrap";
 import io from "socket.io-client";
 import check from "./check.png"
 import close from "./close.png"
-/* import close from "../images/close.png" */
 
 const ENDPOINT = "http://localhost:9000";
 

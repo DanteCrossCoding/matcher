@@ -12,14 +12,13 @@ export default function usePartnerData() {
     axios.get('/users')
       .then((users) => {
         setUserList(users.data);
-        console.log("User list fetched")
       })
       .catch((err) => {
         console.error(err);
       })
   }, [])
 
-  const [Selected, setSelected] = useState(0);
+  const [Selected, setSelected] = useState(0); //selected partner id
 
   return { userList, selected: Selected, setSelected };
 }

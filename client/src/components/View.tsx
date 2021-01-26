@@ -40,12 +40,10 @@ function View(props: any) {
   if (props.view === "match") {
     final = match;
   } else if (props.view === "partner") {
-    /* props.getUserList(); */
     final = partnerList;
   } else if (!props.cookies.get("email")) {
     final = login;
   } else if (props.view === "match-list") {
-    /* props.getMatchData(props.cookies.get('email'), props.selected); */
     final = matchList;
   } else {
     final = match;
