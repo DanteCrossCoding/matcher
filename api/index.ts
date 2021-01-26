@@ -1,13 +1,8 @@
 import {
-  getRestaurants,
   getRestaurantIdsWithFilter,
-  getImageById,
-  createRestaurantProfile,
   createRestaurantProfilesArr,
   shuffleArray,
 } from "./externalAPI/yelp";
-
-import axios from "axios";
 
 require("dotenv").config();
 const pg = require("pg-promise")();

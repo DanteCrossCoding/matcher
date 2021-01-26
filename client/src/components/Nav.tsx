@@ -6,7 +6,6 @@ import Cookies from 'universal-cookie';
 
 function Nav(props: any) {
   let partner: string = "nav-item right";
-  let login: string = "nav-item right";
   let match: string = "nav-item right";
   let matchList: string = "nav-item right";
   const cookies = new Cookies();
@@ -15,10 +14,6 @@ function Nav(props: any) {
     cookies.remove('email');
     window.location.reload();
     return false;
-  }
-
-  if (props.view === "login") {
-    login += " active";
   }
 
   if (props.view === "match") {

@@ -24,7 +24,7 @@ function PartnerList(props: any) {
               if (
                 element.id !==
                 props.getUserByEmail(props.cookies.get("email")).id
-              )
+              ) {
                 return (
                   <PartnerListItem
                     partnerSelect={props.partnerSelect}
@@ -34,11 +34,14 @@ function PartnerList(props: any) {
                     name={element.name}
                   />
                 );
+              } else {
+                return <span></span>
+              }
             })}
         </ul>
       </div>
       <div>
-      <img className="add-friend-button" src={add} aria-hidden="true" alt="add"></img>
+        <img className="add-friend-button" src={add} aria-hidden="true" alt="add"></img>
       </div>
       {button}
     </div>

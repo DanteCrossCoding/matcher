@@ -10,7 +10,4 @@ function MatchListItem(props: any) {
   )
 }
 
-// https://www.google.com/search?q=${props.name} 
-// https://maps.google.com/?q=${props.address},${props.city} 
-
 export default MatchListItem

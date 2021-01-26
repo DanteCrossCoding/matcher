@@ -6,7 +6,7 @@ import MatchListItem from "./MatchListItem";
 function MatchList(props: any) {
   useEffect(() => {
     props.getMatchData(props.cookies.get("email"), props.partner);
-  }, []);
+  });
 
   let noMatches;
 

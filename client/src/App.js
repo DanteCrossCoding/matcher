@@ -149,7 +149,9 @@ function App() {
                 email={partner.email}
                 avatar={partner.avatar}
               />
-            );
+            ); 
+          } else {
+            return <span></span>;
           }
         })}
         <ModalContainer
