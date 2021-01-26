@@ -31,6 +31,10 @@ function App() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [request, setRequest] = useState();
 
+  useEffect(() => {
+    document.title = "Matchr";
+  }, []);
+
   const partnerSelect = function (partner) {
     setPartner(partner);
   };
@@ -38,11 +42,6 @@ function App() {
   const inviteConfirm = function () {
     setShowConfirm(true);
   };
-
-  socket.on("invitation", (response) => {
-    setRequest({ ...response });
-    setShowInvite(true);
-  });
 
   const handleCloseMatch = (type) => {
     setShow(false);
@@ -95,10 +94,6 @@ function App() {
     usernameAssign(cookies.get("email"));
   };
 
-  useEffect(() => {
-    document.title = "Matchr";
-  }, []);
-
   const loginRedirect = function () {
     pageChange("partner");
   };
@@ -114,6 +109,11 @@ function App() {
     console.log(`We have a match!! ${match}`);
     setShow(true);
     setMatch(match);
+  });
+
+  socket.on("invitation", (response) => {
+    setRequest({ ...response });
+    setShowInvite(true);
   });
 
   return (
