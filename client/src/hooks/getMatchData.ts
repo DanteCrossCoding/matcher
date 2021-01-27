@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import usePartnerData from "./partnerData";
 
 export default function useMatchData() {
@@ -7,7 +7,7 @@ export default function useMatchData() {
 
   const [matchData, setMatchData] = useState([]);
 
-  const getUserByEmail = (email: string) => {
+  const getUserByEmail = (email: string) => { //returns user object
     let user;
     userList.map((element: any) => {
       if (element.email === email) {
@@ -24,7 +24,7 @@ export default function useMatchData() {
     });
   };
 
-  const postMatchData = (
+  const postMatchData = ( //sends new match to database
     email: string,
     partner: number,
     restaurant: string
@@ -36,8 +36,8 @@ export default function useMatchData() {
         partner_id: partner,
         restaurant: restaurant,
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        console.log("Match added to database");
       })
       .catch((err) => console.error(err));
   };

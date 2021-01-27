@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import FormContainer from "./FormContainer";
 import { Carousel, Spinner, Alert } from "react-bootstrap";
 import io from "socket.io-client";
+import check from "./check.png"
+import close from "./close.png"
 
 const ENDPOINT = "http://localhost:9000";
 
@@ -72,7 +74,7 @@ export default function CarouselContainer(props) {
     if (loading) {
       return (
         <div class="spinner">
-          <h6>Loading Restaurants...</h6>
+          <h5>Loading Restaurants...</h5>
           <Spinner animation="border" />
         </div>
       );
@@ -138,7 +140,7 @@ export default function CarouselContainer(props) {
     if (restaurant === undefined && match === 'null') {
       return (
         <div>
-          <h1>Welcome!</h1>
+          <h1 className="bold">Welcome!</h1>
           <FormContainer
             handleSelect={startMatch}
             title={"Select a Category to Start"}
@@ -151,23 +153,34 @@ export default function CarouselContainer(props) {
       const carouselItems = restaurants.map((restaurant, index) => {
         return (
           <Carousel.Item key={index}>
+            <a rel="noreferrer" target="_blank" href={`http://www.google.com/search?q=${restaurant.name}`}>
             <img
               className="d-block w-100 carousel-img"
               src={restaurant.image_url}
               alt="First slide"
             />
+            </a> 
           </Carousel.Item>
         );
       });
+
+      const nextIcon = (
+        <img className="carousel-button" src={check} aria-hidden="true" alt="next"></img>
+      )
+      const prevIcon = (
+        <img className="carousel-button" src={close} aria-hidden="true" alt="next"></img>
+      )
       return (
         <div>
-          <h1>{restaurant.name}</h1>
+          <a className="black-link" rel="noreferrer" target="_blank" href={`http://www.google.com/search?q=${restaurant.name}`}><h1 className="black-link bold">{restaurant.name}</h1></a>
           <Carousel
             indicators={false}
             interval={null}
             activeIndex={index}
             onSelect={handleSelect}
             fade={true}
+            nextIcon={nextIcon}
+            prevIcon={prevIcon}
           >
             {carouselItems}
           </Carousel>
