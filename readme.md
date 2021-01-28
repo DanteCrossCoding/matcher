@@ -1,3 +1,24 @@
+![Logo](https://raw.githubusercontent.com/xrysen/matcher/master/client/public/matchrLogo.png)
+
+# About
+
+Is there a worse argument out there than over where to go to eat? You ask "Where would you like to go?" only to have them reply "I don't know, what do you feel like?"
+
+Round and round, with maybe's and I don't knows. The longer you sit in that cycle of indecision the harder it gets to decide! It could even devolve into a fight about food! And not the fun kind...
+
+No one wants that kind of stress, especially for something like choosing a restaurant. But what could you do to avoid it?
+
+You could use Matchr!
+
+Matchr uses a clean, simple, familiar interface that lets both you and your partner swipe or click your way through highly rated restaurants in your local area, until you’ve both swiped YES on the same delightful establishment!
+
+You’re both notified immediately of the match, no fuss, no fight!
+
+Can’t remember where you both agreed on last week? Well there’s a match history that shows you all the places you’ve both said yes to before!
+
+Matchr, time to stop the fighting, and start dining!
+
+
 # Setup
 
 Quick setup guide for you guys:
