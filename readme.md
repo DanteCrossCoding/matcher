@@ -1,7 +1,7 @@
 
-<div style="text-align:center">
-<img src="https://raw.githubusercontent.com/xrysen/matcher/master/client/public/matchrLogo.png">
-</div>
+
+![Logo](https://raw.githubusercontent.com/xrysen/matcher/master/client/public/matchrLogo.png)
+
 
 # About
 
