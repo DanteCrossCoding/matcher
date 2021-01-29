@@ -27,7 +27,7 @@ Matchr, time to stop the fighting, and start dining!
 <img src = "https://github.com/xrysen/matcher/blob/master/client/public/matchr%20screenshots/carousel.png?raw=true">
 
 ## Partner Select
-<img src = "https://github.com/xrysen/matcher/blob/master/client/public/matchr%20screenshots/match.png?raw=true">
+<img src = "https://github.com/xrysen/matcher/blob/master/client/public/matchr%20screenshots/partner_select.png?raw=true">
 
 ## Match
 <img src = "https://github.com/xrysen/matcher/blob/master/client/public/matchr%20screenshots/match.png?raw=true">
