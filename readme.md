@@ -1,4 +1,4 @@
-
+Check out the mobile version of this app at <a href = "https://github.com/xrysen/matchr-mobile">Matchr Mobile</a>
 
 ![Logo](https://raw.githubusercontent.com/xrysen/matcher/master/client/public/matchrLogo.png)
 
