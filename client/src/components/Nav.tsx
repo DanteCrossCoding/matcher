@@ -60,7 +60,10 @@ function Nav(props: any) {
          <li>
            <span className="nav-link right" onClick={() => props.pageChange('login')}>Login
            </span>
-
+         </li>
+         <li>
+           <span className="nav-link right" onClick={() => props.pageChange('register')}>Register 
+           </span>
          </li>
        </ul>
      )

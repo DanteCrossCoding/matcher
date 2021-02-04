@@ -31,7 +31,7 @@ function View(props: any) {
       partners={props.partners}
       cookies={props.cookies}
       getUserByEmail={props.getUserByEmail}
-    /*   onLoad={props.getUserList()} */
+    
     />
   );
 
